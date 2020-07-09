@@ -43,3 +43,7 @@ yarn-debug.log*
 # Ignore swap file for Vim and Emacs.
 *~
 *.swp
+
+# Ignore vendor/bundle, but keep the directory.
+/vendor/bundle/*
+!/vendor/bundle/.keep
