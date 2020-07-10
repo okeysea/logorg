@@ -17,8 +17,9 @@ module Logorg
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
-    # bin/rails g [model] xxx のときテストを自動生成するかの設定
     config.generators do |g|
+
+      # bin/rails g [model] xxx のときテストを自動生成するかの設定
       g.test_framework :rspec,
         fixtures:         true,
         view_specs:       false,
@@ -28,6 +29,10 @@ module Logorg
         request_specs:    false
       # fixtureを生成する場所
       g.fixture_replacement :factory_bot, dir: 'spec/factories'
+
+      # テンプレートエンジンをSlimへ
+      g.template_engine = :slim
+
     end
   end
 end
