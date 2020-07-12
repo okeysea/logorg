@@ -8,4 +8,22 @@ html
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
   body
-    = yield
+    header
+      h1 title
+    #branding
+      p Simple Design
+    nav
+      ul
+        li #{link_to "ナビ1", "#"}
+        li #{link_to "ナビ2", "#"}
+        li #{link_to "ナビ3", "#"}
+        li #{link_to "ナビ4", "#"}
+    section
+      article
+        span.date ここに日付
+        h2 ここにタイトル
+        p ここにテキスト
+        a.btn href="#" もっとみる
+        = yield
+    footer
+      address Copyright(C) 2020 logorg, Allright Reserved.
