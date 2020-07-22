@@ -1,0 +1,4 @@
+## Environment
+.bundle
+vendor/bundle
+node_modules
