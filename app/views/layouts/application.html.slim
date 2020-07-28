@@ -9,23 +9,91 @@ html
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'hello_react'
   body
-    header
-      h1 title
-    #branding
-      p Simple Design
-    nav
-      ul
-        li #{link_to "ナビ1", "#"}
-        li #{link_to "ナビ2", "#"}
-        li #{link_to "ナビ3", "#"}
-        li #{link_to "ナビ4", "#"}
-    section
-      article
-        span.date ここに日付
-        h2 ここにタイトル
-        p ここにテキスト
-        a.btn href="#" もっとみる
-        = yield
-        = react_component("HelloWorld", {greeting: "こんばんは！"})
+    header#g_header
+      div#g_header_inner
+        h2#g_header_logo =link_to '#' do
+          span
+            | LogOrg
+
+        #g_header_rightarea
+          nav#g_header_navigate
+            ul
+              li #{link_to "ホットトピック", "#"}
+              li #{link_to "カテゴリ", "#"}
+              li#g_header_navi_division
+              li #{link_to "Visit GitHub", "#"}
+              li#g_header_navi_division
+              li #{link_to "ユーザ登録", "#", class:"navi_attension"}
+              li #{link_to "ログイン", "#"}
+
+    #content
+      #branding
+        h1 LogOrg
+
+      #articles 
+        .card_container_title トレンド
+        .card_layout
+          .card
+            article.article 
+              span.date 2020.07.27
+              h2 コロナウイルスが突然変異！大丈夫なのか日本！？
+              p コロナウイルスの遺伝子配列が変化し、感染力は大幅に強化され、致死率もアップしたという研究結果が先日公表されました。この事実に...
+              a.btn href="#" もっとみる
+          .card
+            article.article 
+              span.date 2020.07.27
+              h2 コロナウイルスが突然変異！大丈夫なのか日本！？
+              p コロナウイルスの遺伝子配列が変化し、感染力は大幅に強化され、致死率もアップしたという研究結果が先日公表されました。この事実に...
+              a.btn href="#" もっとみる
+          .card
+            article.article 
+              span.date 2020.07.27
+              h2 コロナウイルスが突然変異！大丈夫なのか日本！？
+              p コロナウイルスの遺伝子配列が変化し、感染力は大幅に強化され、致死率もアップしたという研究結果が先日公表されました。この事実に...
+              a.btn href="#" もっとみる
+          .card
+            article.article 
+              span.date 2020.07.27
+              h2 コロナウイルスが突然変異！大丈夫なのか日本！？
+              p コロナウイルスの遺伝子配列が変化し、感染力は大幅に強化され、致死率もアップしたという研究結果が先日公表されました。この事実に...
+              a.btn href="#" もっとみる
+          .card
+            article.article 
+              span.date 2020.07.27
+              h2 コロナウイルスが突然変異！大丈夫なのか日本！？
+              p コロナウイルスの遺伝子配列が変化し、感染力は大幅に強化され、致死率もアップしたという研究結果が先日公表されました。この事実に...
+              a.btn href="#" もっとみる
+          .card
+            article.article 
+              span.date 2020.07.27
+              h2 コロナウイルスが突然変異！大丈夫なのか日本！？
+              p コロナウイルスの遺伝子配列が変化し、感染力は大幅に強化され、致死率もアップしたという研究結果が先日公表されました。この事実に...
+              a.btn href="#" もっとみる
+          .card
+            article.article 
+              span.date 2020.07.27
+              h2 コロナウイルスが突然変異！大丈夫なのか日本！？
+              p コロナウイルスの遺伝子配列が変化し、感染力は大幅に強化され、致死率もアップしたという研究結果が先日公表されました。この事実に...
+              a.btn href="#" もっとみる
+
+      #c_base.c_sample
+        span.c_font_dark base color
+      #c_sub.c_sample
+        span.c_font_dark sub color
+      #c_accent.c_sample
+        span.c_font_dark accent color
+      #c_accent2.c_sample
+        span.c_font_light accent 2 color
+      #c_accent3.c_sample
+        span.c_font_light accent 3 color
+
+      section
+        article
+          span.date ここに日付
+          h2 ここにタイトル
+          p ここにテキスト
+          a.btn href="#" もっとみる
+          = yield
+          = react_component("HelloWorld", {greeting: "こんばんは！"})
     footer
       address Copyright(C) 2020 logorg, Allright Reserved.
