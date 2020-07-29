@@ -15,6 +15,12 @@ RUN touch ~/.bashrc \
   && curl -o- -L https://yarnpkg.com/install.sh | bash \
   && ln -s "$HOME/.yarn/bin/yarn" /usr/local/bin/yarn
 
+RUN apt-get update -qq && apt-get -y install gosu
+
+# Host User
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 WORKDIR /project
 
@@ -30,7 +36,4 @@ RUN yarn upgrade
 RUN yarn install --check-files
 
 ADD . /project
-
-
-
 
