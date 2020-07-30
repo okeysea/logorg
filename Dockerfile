@@ -1,7 +1,8 @@
 FROM ruby:2.7.1
+MAINTAINER okeysea
 
-ENV LANG C.UTF-8 \
-  TZ Asia/Tokyo
+#ENV LANG C.UTF-8 
+#   TZ Asia/Tokyo
 
 RUN apt-get update && apt-get install -y nodejs --no-install-recommends \
   && rm -rf /var/lib/apt/lists/*

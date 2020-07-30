@@ -8,4 +8,6 @@ useradd -u $USER_ID -o -m user
 groupmod -g $GROUP_ID user
 export HOME=/home/user
 
+id
+
 exec /usr/sbin/gosu user "$@"
