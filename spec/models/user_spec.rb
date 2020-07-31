@@ -31,6 +31,14 @@ RSpec.describe User, type: :model do
     end
   end
 
+  context "public_id empty" do
+    let(:public_id){ "      " }
+    # 公開IDがなければ無効
+    it "is invalid without public_id" do
+      is_expected.to eq(false)
+    end
+  end
+
   context "name nil" do
     let(:name){ nil }
     # 名前がなければ無効
@@ -108,12 +116,41 @@ RSpec.describe User, type: :model do
     it "is valid" do
       ["example@example.com",
        "example@example.co.jp",
-       "example+foo@gmail.com",
-       "example@mail.a-b-c.com"].each do | adr |
+       "example+foo@example.com",
+       "example@mail.example.com"].each do | adr |
         u = User.new(
           public_id: public_id,
           name: name,
           email: adr,
+          password: password,
+          password_confirmation: password_confirmation
+        )
+        expect(u.valid?).to eq(true)
+      end
+    end
+  end
+
+  # emailのダウンケース
+  context "email has mixed-case" do
+    let(:email){ "MiXeD@eXaMpLe.cOm" }
+    it "is should be saved as lower-case" do
+      user.save
+      expect(user.reload.email).to eq(email.downcase)
+    end
+  end
+
+
+  # public_idの書式が正しいなら有効
+  context "right format public_id" do
+    it "is valid" do
+      ["isvalid",
+       "isValid",
+       "isvalid_VALID",
+       "is-_-Valid-_-si"].each do | pub_id |
+        u = User.new(
+          public_id: pub_id,
+          name: name,
+          email: email,
           password: password,
           password_confirmation: password_confirmation
         )
@@ -172,4 +209,88 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  # public_idの書式があやまっているなら無効
+  context "strong password" do
+    it "is valid" do
+      ["password",
+       "paid response",
+       "validPassWord#!",
+       "*!@#$%^*&"].each do | pswd |
+        u = User.new(
+          public_id: public_id,
+          name: name,
+          email: email,
+          password: pswd,
+          password_confirmation: pswd
+        )
+        expect(u.valid?).to eq(true)
+      end
+    end
+  end
+
+  context "password has reject characters" do
+    it "is invalid" do
+      ["あいうえおかきくけこ",
+       "\u202dcontrolcharactor\u202c",
+       "\ub001Hangulcharactor" ].each do | pswd |
+        u = User.new(
+          public_id: public_id,
+          name: name,
+          email: email,
+          password: pswd,
+          password_confirmation: pswd
+        )
+        expect(u.valid?).to eq(false)
+      end
+    end
+  end
+
+  # 弱いパスワードなら無効
+  context "weak password" do
+    pw = 'aaaapassword'
+    let(:password){ pw }
+    let(:password_confirmation){ pw }
+    it "'#{pw}' is invalid" do
+      is_expected.to eq(false)
+    end
+  end
+
+  context "weak password" do
+    pw = 'passsssword'
+    let(:password){ pw }
+    let(:password_confirmation){ pw }
+    it "'#{pw}' is invalid" do
+      is_expected.to eq(false)
+    end
+  end
+
+  context "weak password" do
+    pw = '123456789'
+    let(:password){ pw }
+    let(:password_confirmation){ pw }
+    it "'#{pw}' is invalid" do
+      is_expected.to eq(false)
+    end
+  end
+
+  context "weak password" do
+    let(:public_id){ "ducplicateid" } 
+    pw = "sand_ducplicateid_sand"
+    let(:password){ pw }
+    let(:password_confirmation){ pw }
+    it "'#{pw}' is invalid" do
+      is_expected.to eq(false)
+    end
+  end
+
+  context "short password (6-)" do
+    pw = 'passw'
+    let(:password){ pw }
+    let(:password_confirmation){ pw }
+    it "'#{pw}' is invalid" do
+      is_expected.to eq(false)
+    end
+  end
+
 end
