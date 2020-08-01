@@ -270,6 +270,9 @@ div#articles
   border-left: 1px solid $cAccent2;
   border-right: 1px solid $cAccent2;
 
+div#content_container
+  @extend .vSiteColumn;
+
 
 /* web components */
 @mixin card-layout($column, $cardmerginside, $cardmerginbottom)
@@ -300,10 +303,13 @@ div#articles
 
 /* color samples */
 
+.color_palette
+  @extend .vSiteColumn;
+  @include card-layout(5,0px,12px);
+  
 div.c_sample
   border: solid 1px #000;
-  height: 100px;
-  width: 100px;
+  height: 100px
 
 div#c_base
   background-color: $cBase;

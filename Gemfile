@@ -27,6 +27,9 @@ gem 'html2slim'
 
 gem 'react-rails'
 
+# for internationalization
+gem 'rails-i18n'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

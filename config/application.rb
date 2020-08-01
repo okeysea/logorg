@@ -34,5 +34,11 @@ module Logorg
       g.template_engine = :slim
 
     end
+
+    # for i18n
+    config.time_zone = 'Tokyo'
+    config.active_record.default_timezone = :local
+    config.i18n.default_locale = :ja
+
   end
 end

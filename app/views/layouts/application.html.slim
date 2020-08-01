@@ -27,74 +27,25 @@ html
               li #{link_to "ログイン", "#"}
 
     #content
-      #branding
-        h1 LogOrg
+      = yield
 
-      #articles 
-        .card_container_title トレンド
-        .card_layout
-          .card
-            article.article 
-              span.date 2020.07.27
-              h2 コロナウイルスが突然変異！大丈夫なのか日本！？
-              p コロナウイルスの遺伝子配列が変化し、感染力は大幅に強化され、致死率もアップしたという研究結果が先日公表されました。この事実に...
-              a.btn href="#" もっとみる
-          .card
-            article.article 
-              span.date 2020.07.27
-              h2 コロナウイルスが突然変異！大丈夫なのか日本！？
-              p コロナウイルスの遺伝子配列が変化し、感染力は大幅に強化され、致死率もアップしたという研究結果が先日公表されました。この事実に...
-              a.btn href="#" もっとみる
-          .card
-            article.article 
-              span.date 2020.07.27
-              h2 コロナウイルスが突然変異！大丈夫なのか日本！？
-              p コロナウイルスの遺伝子配列が変化し、感染力は大幅に強化され、致死率もアップしたという研究結果が先日公表されました。この事実に...
-              a.btn href="#" もっとみる
-          .card
-            article.article 
-              span.date 2020.07.27
-              h2 コロナウイルスが突然変異！大丈夫なのか日本！？
-              p コロナウイルスの遺伝子配列が変化し、感染力は大幅に強化され、致死率もアップしたという研究結果が先日公表されました。この事実に...
-              a.btn href="#" もっとみる
-          .card
-            article.article 
-              span.date 2020.07.27
-              h2 コロナウイルスが突然変異！大丈夫なのか日本！？
-              p コロナウイルスの遺伝子配列が変化し、感染力は大幅に強化され、致死率もアップしたという研究結果が先日公表されました。この事実に...
-              a.btn href="#" もっとみる
-          .card
-            article.article 
-              span.date 2020.07.27
-              h2 コロナウイルスが突然変異！大丈夫なのか日本！？
-              p コロナウイルスの遺伝子配列が変化し、感染力は大幅に強化され、致死率もアップしたという研究結果が先日公表されました。この事実に...
-              a.btn href="#" もっとみる
-          .card
-            article.article 
-              span.date 2020.07.27
-              h2 コロナウイルスが突然変異！大丈夫なのか日本！？
-              p コロナウイルスの遺伝子配列が変化し、感染力は大幅に強化され、致死率もアップしたという研究結果が先日公表されました。この事実に...
-              a.btn href="#" もっとみる
-
-      #c_base.c_sample
-        span.c_font_dark base color
-      #c_sub.c_sample
-        span.c_font_dark sub color
-      #c_accent.c_sample
-        span.c_font_dark accent color
-      #c_accent2.c_sample
-        span.c_font_light accent 2 color
-      #c_accent3.c_sample
-        span.c_font_light accent 3 color
-
-      section
-        article
-          span.date ここに日付
-          h2 ここにタイトル
-          p ここにテキスト
-          a.btn href="#" もっとみる
-          = yield
-          = react_component("HelloWorld", {greeting: "こんばんは！"})
     footer
       address Copyright(C) 2020 logorg, Allright Reserved.
       = debug(params) if Rails.env.development?
+
+      .color_palette
+        .card
+          #c_base.c_sample
+            span.c_font_dark base color
+        .card
+          #c_sub.c_sample
+            span.c_font_dark sub color
+        .card
+          #c_accent.c_sample
+            span.c_font_dark accent color
+        .card
+          #c_accent2.c_sample
+            span.c_font_light accent 2 color
+        .card
+          #c_accent3.c_sample
+            span.c_font_light accent 3 color
