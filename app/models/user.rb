@@ -7,8 +7,8 @@ class User < ApplicationRecord
   # 空文字は許可しない
   validates :public_id, :name, :email, presence: true
 
-  # 一意である
-  validates :public_id, :email, uniqueness: true
+  # 一意である( 大文字小文字は区別しない )
+  validates :public_id, :email, uniqueness: { case_sensitive: false }
 
   # メールアドレスバリデーション
   validates :email, format: {

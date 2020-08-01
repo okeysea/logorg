@@ -2,7 +2,7 @@ doctype html
 html
   head
     title
-      | Logorg
+      = full_title(yield(:title))
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
@@ -97,3 +97,4 @@ html
           = react_component("HelloWorld", {greeting: "こんばんは！"})
     footer
       address Copyright(C) 2020 logorg, Allright Reserved.
+      = debug(params) if Rails.env.development?

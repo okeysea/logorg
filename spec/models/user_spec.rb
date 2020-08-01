@@ -68,7 +68,7 @@ RSpec.describe User, type: :model do
     # public_idが重複していたら無効
     it "is invalid with a duplicate public_id" do
       User.create(
-        public_id: public_id,
+        public_id: public_id.upcase,
         name: "hugehuge",
         email: "hugeman@example.com",
         password: "password",
@@ -130,7 +130,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  # emailのダウンケース
+  # emailのダウンケースの検証
   context "email has mixed-case" do
     let(:email){ "MiXeD@eXaMpLe.cOm" }
     it "is should be saved as lower-case" do
