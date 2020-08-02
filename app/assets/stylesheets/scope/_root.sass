@@ -1,0 +1,93 @@
+/* meta */
+html
+  font-size: 62.5%
+
+body
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+  color: $cFontDark;
+  font-size: 1.4em;
+  background-color: $cBase;
+
+/* Header, Navigation */
+
+header#g_header
+  background-color: $cAccent;
+  color: $cFontLight;
+  font-size: 1.3rem;
+
+  div#g_header_inner
+    display: flex;
+    @extend .vSiteColumn;
+
+  h2#g_header_logo
+    width: 34px;
+    height: 34px;
+    background-color: $cSub;
+
+    a
+      width: 34px;
+      height: 34px;
+      display: block;
+      background-image: image-url('/logo_white_ico2.svg');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: 28px 28px;
+
+      span
+        display: none;
+  
+  div#g_header_rightarea
+    width: 100%;
+    display: flex;
+
+  nav#g_header_navigate
+    margin-left: auto;
+
+    ul
+      list-style: none;
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+
+      li
+        padding: 0 10px;
+        // width: 140px;
+        text-align: center;
+        height: 34px;
+        line-height: 34px;
+        margin-right: 2px;
+
+        a
+          text-decoration: none;
+          // font-weight: bold;
+          // padding: 20px;
+          color: $cFontLight;
+
+          &:hover
+            color: $cSub;
+
+      li#g_header_navi_division
+        width: 10px;
+        height: 15px;
+        padding: 0 0px;
+
+        &:before
+          content: "";
+          height: 100%;
+          width: 1px;
+          display: block;
+          border-left: 1px solid $cBase;
+          position: relative;
+          left: 50%;
+
+      .navi_attension
+        border: 1px solid $cBase;
+        border-radius: 3px;
+        padding: 2px 7px;
+        transition: background-color 0.2s;
+
+        &:hover
+          background-color: rgba(255,255,255,0.3);
+          transition: background-color 0.5s;
+          color: $cBase;
+

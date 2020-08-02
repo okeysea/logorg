@@ -1,0 +1,34 @@
+/* debug dump */
+.debug_dump
+  @extend .vSiteColumn;
+  background-color: $cAccent2;
+  border: 1px solid $cAccent3;
+  border-radius: 3px;
+  padding: 8px;
+  box-sizing: border-box;
+
+/* color samples */
+.color_palette
+  @extend .vSiteColumn;
+  @include card-layout(5,0px,12px);
+  
+div.c_sample
+  border: solid 1px #000;
+  height: 100px
+
+div#c_base
+  background-color: $cBase;
+
+div#c_sub
+  background-color: $cSub;
+
+div#c_accent
+  background-color: $cAccent;
+  color: $cFontLight;
+
+div#c_accent2
+  background-color: $cAccent2;
+
+div#c_accent3
+  background-color: $cAccent3;
+

@@ -1,0 +1,28 @@
+/* main page */
+
+div#branding
+  @extend .vSiteColumn;
+
+div#articles
+  @extend .vSiteColumn;
+  border-left: 1px solid $cAccent2;
+  border-right: 1px solid $cAccent2;
+
+div#content_container
+  @extend .vSiteColumn;
+
+.card_container_title
+  padding: 8px;
+  font-size: 1.5em;
+
+.card_layout
+  @include card-layout(4,0px,12px);
+
+  .card:nth-child(4n)
+    .article
+      border-right: none;
+
+  .article
+    padding: 8px;
+    border-right: 1px solid $cAccent2;
+

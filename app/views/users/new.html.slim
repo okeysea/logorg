@@ -1,6 +1,6 @@
 = provide(:title, 'ユーザー登録')
 
-#content_container
+#content_container data-scope-path="users/new"
   = form_with( model:@user, local: true ) do |f|
     = f.label :name
     = f.text_field :name

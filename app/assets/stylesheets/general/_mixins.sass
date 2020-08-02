@@ -1,0 +1,10 @@
+@mixin card-layout($column, $cardmerginside, $cardmerginbottom)
+  display: flex;
+  flex-wrap: wrap;
+  mergin-left: $cardmerginside * -1;
+  mergin-right: $cardmerginside * -1;
+
+  .card
+    flex-basis: calc( (100% / #{$column} ) - (#{$cardmerginside} * 2) );
+    padding: 0 $cardmerginside;
+    margin-bottom: $cardmerginbottom;
