@@ -1,5 +1,6 @@
-= provide(:title, "users page")
+= provide(:title, t('.title', username: @user.name) )
 
 h1
   = @user.name
   = @user.email
+  = t '.title', username: @user.name

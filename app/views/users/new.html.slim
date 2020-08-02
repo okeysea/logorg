@@ -1,4 +1,4 @@
-= provide(:title, 'ログイン')
+= provide(:title, 'ユーザー登録')
 
 #content_container
   = form_with( model:@user, local: true ) do |f|
@@ -11,7 +11,7 @@
     = f.label :password
     = f.password_field :password
 
-    = f.label :password_confirmation, "Confirmation"
+    = f.label :password_confirmation, t('.password_confirmation')
     = f.password_field :password_confirmation
 
     = f.submit "Create my account"

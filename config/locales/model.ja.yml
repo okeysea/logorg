@@ -1,0 +1,15 @@
+ja:
+  activerecord:
+    models:
+      user: 'ユーザ'
+    attributes:
+      user:
+        id: 'secret_id'
+        public_id: '公開ID'
+        email: 'メールアドレス'
+        password: 'パスワード'
+        password_confirmation: '再確認パスワード'
+  attributes:
+    created_at: '作成日'
+    updated_at: '更新日'
+

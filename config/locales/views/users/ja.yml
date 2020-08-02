@@ -1,0 +1,8 @@
+ja:
+  users:
+    index:
+      title: 'ユーザー一覧'
+    show:
+      title: '%{username}'
+    new:
+      password_confirmation: 'パスワードの再確認'
