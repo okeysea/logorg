@@ -1,8 +1,15 @@
 ja:
   users:
     index:
-      title: 'ユーザー一覧'
+      title: 'ユーザ一覧'
     show:
       title: '%{username}'
     new:
+      title: 'ユーザ登録'
+      welcome_to_logorg: 'LogOrg へようこそ!'
+      lets_join_logorg: '新規ユーザ登録(無料)して、Logを残しましょう。'
+      name: '名前(公開)'
+      email: 'メールアドレス(非公開)'
+      password: 'パスワード'
       password_confirmation: 'パスワードの再確認'
+      regist: '登録する'

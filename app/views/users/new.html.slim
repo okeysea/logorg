@@ -1,17 +1,26 @@
-= provide(:title, 'ユーザー登録')
+= provide(:title, t('.title'))
 
 #content_container data-scope-path="users/new"
-  = form_with( model:@user, local: true ) do |f|
-    = f.label :name
-    = f.text_field :name
+  .logo
 
-    = f.label :email
-    = f.text_field :email
+  .welcome
+    h2
+      = t('.welcome_to_logorg')
+    span
+      = t('.lets_join_logorg')
 
-    = f.label :password
-    = f.password_field :password
+  .signup
+    = form_with( model:@user, local: true ) do |f|
+      .row.input
+        = f.text_field :name, :placeholder => t('.name')
 
-    = f.label :password_confirmation, t('.password_confirmation')
-    = f.password_field :password_confirmation
+      .row.input
+        = f.text_field :email, :placeholder => t('.email')
 
-    = f.submit "Create my account"
+      .row.input
+        = f.password_field :password, :placeholder => t('.password')
+
+      .row.input
+        = f.password_field :password_confirmation, :placeholder => t('.password_confirmation')
+
+      = f.submit t('.regist')
