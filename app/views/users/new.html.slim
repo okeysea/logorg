@@ -10,7 +10,9 @@
       = t('.lets_join_logorg')
 
   .signup
-    = form_with( model:@user, local: true ) do |f|
+    = form_with( model: (@user ||= User.new), local: true ) do |f|
+      .row.input
+        = f.text_field :public_id, :placeholder => t('.public_id')
       .row.input
         = f.text_field :name, :placeholder => t('.name')
 

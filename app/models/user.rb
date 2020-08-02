@@ -48,9 +48,9 @@ class User < ApplicationRecord
     if password =~ /\A[0-9]+\z/
       errors.add(:password, "は、数字のみではなりません")
     end
-    # public_idと部分一致
-    if password.include?(public_id)
-      errors.add(:password, "は、public idが含まれてはなりません")
+    # public_id, name と部分一致
+    if password.include?(public_id) || password.include?(name)
+      errors.add(:password, "は、public id 又は name が含まれてはなりません")
     end
   end
 

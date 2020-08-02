@@ -210,7 +210,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  # public_idの書式があやまっているなら無効
+  # パスワードが強力なら有効
   context "strong password" do
     it "is valid" do
       ["password",
@@ -274,8 +274,20 @@ RSpec.describe User, type: :model do
     end
   end
 
+  # public_id の文字列が含まれているなら無効
   context "weak password" do
     let(:public_id){ "ducplicateid" } 
+    pw = "sand_ducplicateid_sand"
+    let(:password){ pw }
+    let(:password_confirmation){ pw }
+    it "'#{pw}' is invalid" do
+      is_expected.to eq(false)
+    end
+  end
+
+  # name の文字列が含まれているなら無効
+  context "weak password" do
+    let(:name){ "ducplicateid" } 
     pw = "sand_ducplicateid_sand"
     let(:password){ pw }
     let(:password_confirmation){ pw }
