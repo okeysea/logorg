@@ -5,6 +5,7 @@ ja:
     attributes:
       user:
         id: 'secret_id'
+        name: '表示名'
         public_id: '公開ID'
         email: 'メールアドレス'
         password: 'パスワード'
@@ -12,4 +13,12 @@ ja:
   attributes:
     created_at: '作成日'
     updated_at: '更新日'
+
+  errors:
+    reject_char: 'に使用できない文字が含まれています'
+    only_number: 'が数字のみで構成されています'
+    continuous: 'に、同一文字が4文字以上連続して含まれています'
+    include_other: 'に公開ID又は表示名が含まれています'
+
+
 

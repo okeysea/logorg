@@ -9,22 +9,7 @@ html
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'hello_react'
   body
-    header#g_header
-      div#g_header_inner
-        h2#g_header_logo =link_to '#' do
-          span
-            | LogOrg
-
-        #g_header_rightarea
-          nav#g_header_navigate
-            ul
-              li #{link_to "ホットトピック", "#"}
-              li #{link_to "カテゴリ", "#"}
-              li#g_header_navi_division
-              li #{link_to "Visit GitHub", "#"}
-              li#g_header_navi_division
-              li #{link_to "ユーザ登録", "#", class:"navi_attension"}
-              li #{link_to "ログイン", "#"}
+    = render 'layouts/header'
 
     #content
       = yield

@@ -1,0 +1,8 @@
+ja:
+  user_mailer:
+    account_activation:
+      subject: 'メールアドレスの有効化 - LogOrg'
+    password_reset:
+      subject: 'パスワードのリセット - LogOrg'
+
+
