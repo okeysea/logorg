@@ -3,10 +3,10 @@
 # mailer
 module MAILSERVER_SETTINGS
   PORT                  = 587,                  # [accept line]
-  ADDRESS               = 'smtp.example.com',   # [replace your.smtp.server]
-  DOMAIN                = 'test.test.example.com',        # [replace example.com]
-  USER_NAME             = 'DAMMY@example.com',  # [replace yourmail@example.com]
-  PASSWORD              = 'DAMMYPASSWORD',      # [replace yourpassword]
-  AUTHENTICATION        = 'login',              # [replace yourloginmethod]
+  ADDRESS               = 'your.smtp.server',   # [replace your.smtp.server]
+  DOMAIN                = 'example.com',        # [replace example.com]
+  USER_NAME             = 'yourmail@example.com',  # [replace yourmail@example.com]
+  PASSWORD              = 'yourpassword',      # [replace yourpassword]
+  AUTHENTICATION        = 'yourloginmethod',              # [replace yourloginmethod]
   ENABLE_STARTTLS_AUTO  = true                  # [accept line]
 MAILSERVER_SETTINGS.freeze;
