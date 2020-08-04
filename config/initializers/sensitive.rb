@@ -4,7 +4,7 @@
 module MAILSERVER_SETTINGS
   PORT                  = 587,                  # [accept line]
   ADDRESS               = 'smtp.example.com',   # [replace your.smtp.server]
-  DOMAIN                = 'example.com',        # [replace example.com]
+  DOMAIN                = 'test.example.com',        # [replace example.com]
   USER_NAME             = 'DAMMY@example.com',  # [replace yourmail@example.com]
   PASSWORD              = 'DAMMYPASSWORD',      # [replace yourpassword]
   AUTHENTICATION        = 'login',              # [replace yourloginmethod]
