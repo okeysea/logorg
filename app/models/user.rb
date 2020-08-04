@@ -59,10 +59,12 @@ class User < ApplicationRecord
 
   ## logics ##
 
+=begin
   Contract C::Num, C::Num => C::Num
   def testcontract(a, b)
     a + b
   end
+=end
 
   
   # idではなく、public_idを返すオーバーライド
@@ -73,7 +75,7 @@ class User < ApplicationRecord
   end
 
   # 文字列からダイジェストを生成
-  Contract C::String => C::String
+  Contract String => String
   def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                                                   BCrypt::Engine.cost
@@ -81,7 +83,7 @@ class User < ApplicationRecord
   end
 
   # ランダムなトークンを生成(base64)
-  Contract C::Nil => C::String
+  Contract C::None => String
   def User.new_token
     SecureRandom.urlsafe_base64
   end
@@ -91,8 +93,13 @@ class User < ApplicationRecord
     update_columns(activated: true, activated_at: Time.zone.now)
   end
 
+  # アクティベーションメールを送信する
+  def send_activation_mail
+    UserMailer.account_activation(self).deliver_now
+  end
+
   # トークンがダイジェストと一致したらTrueを返す
-  Contract C::String, C::String => C::Bool
+  Contract String, String => C::Bool
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     return false if digest.nil?
@@ -102,7 +109,7 @@ class User < ApplicationRecord
   private
 
     # 有効化トークン、ダイジェストを作成
-    Contract C::Nil => C::String
+    Contract C::None => String
     def create_activation_digest
       self.activation_token  = User.new_token
       self.activation_digest = User.digest(activation_token)
