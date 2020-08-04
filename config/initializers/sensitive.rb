@@ -9,4 +9,5 @@ module MAILSERVER_SETTINGS
   PASSWORD              = 'yourpassword',      # [replace yourpassword]
   AUTHENTICATION        = 'yourloginmethod',              # [replace yourloginmethod]
   ENABLE_STARTTLS_AUTO  = true                  # [accept line]
+end
 MAILSERVER_SETTINGS.freeze;
