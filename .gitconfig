@@ -1,3 +1,4 @@
 [filter "sensitive"]
+  smudge = cat
   clean = ruby gitfilter_scripts/sensitive_filter.rb
 
