@@ -1,0 +1,3 @@
+[filter "sensitive"]
+  clean = ruby gitfilter_scripts/sensitive_filter.rb
+
