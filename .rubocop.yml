@@ -1,0 +1,45 @@
+AllCops:
+  Exclude:
+    - 'vendor/**/*'
+    - 'Gemfile'
+    - 'node_modules/**/*'
+    - 'bin/*'
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'test/**/*'
+    - 'spec/**/*'
+    - 'gitfilter_scripts/**/*'
+  DisplayCopNames: true
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/IndentationConsistency:
+  EnforcedStyle: indented_internal_methods
+
+Style/EmptyMethod:
+  Enabled: false
+
+Layout/EmptyLinesAroundClassBody:
+  Enabled: false
+
+Layout/EmptyLinesAroundModuleBody:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/CyclomaticComplexity:
+  Max: 10
+
+Metrics/AbcSize:
+  Max: 15
