@@ -1,12 +1,11 @@
 class User < ApplicationRecord
   include Contracts::Core
-  C=Contracts
+  C = Contracts
 
   before_save { email.downcase! }
 
   attr_accessor :activation_token
   before_create :create_activation_digest
-
 
   ## validates ##
 
@@ -18,8 +17,8 @@ class User < ApplicationRecord
 
   # メールアドレスバリデーション
   validates :email, format: {
-    with: /\A[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*\z/, 
-    message:"が誤った形式です"
+    with: %r{\A[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*\z},
+    message: "が誤った形式です"
   }
 
   validates :public_id, format: { with: /\A[a-zA-Z0-9_-]+\z/ }
@@ -30,65 +29,77 @@ class User < ApplicationRecord
   validates :email,     length: { maximum: 255 }
 
   has_secure_password
-  validates :password,  presence: true, length: { minimum: 6 }
+  validates :password, presence: true, length: { minimum: 6 }
   validate  :strong_password
-  
+
   # custom validate
   def strong_password
-    return if public_id.nil?
-    return if password.nil?
-    return if name.nil?
+    return if public_id.nil? || password.nil? || name.nil?
 
-    # 半角英数字記号(半角スペース含む)以外の文字が使用されている
-    if password !~ /\A[ -~]+\z/
-      errors.add(:password, I18n.t('.errors.reject_char'))
-    end
-    # 同一文字が連続している
-    if password =~ /(.)\1{3,}/
-      errors.add(:password, I18n.t('.errors.continuous'))
-    end
-    # 数字のみである
-    if password =~ /\A[0-9]+\z/
-      errors.add(:password, I18n.t('.errors.only_number'))
-    end
-    # public_id, name と部分一致
-    if password.include?(public_id) || password.include?(name)
-      errors.add(:password, I18n.t('.errors.include_other'))
-    end
+    strong_password_reject_char
+    strong_password_continuous
+    strong_password_only_number
+    strong_password_include_other
+  end
+
+  # 半角英数字記号(半角スペース含む)以外の文字が使用されている
+  def strong_password_reject_char
+    return if password.nil?
+
+    errors.add(:password, I18n.t('.errors.reject_char')) if password !~ /\A[ -~]+\z/
+  end
+
+  # 同一文字が連続している
+  def strong_password_continuous
+    return if password.nil?
+
+    errors.add(:password, I18n.t('.errors.continuous')) if password =~ /(.)\1{3,}/
+  end
+
+  # 数字のみである
+  def strong_password_only_number
+    return if password.nil?
+
+    errors.add(:password, I18n.t('.errors.only_number')) if password =~ /\A[0-9]+\z/
+  end
+
+  # public_id, name と部分一致
+  def strong_password_include_other
+    return if public_id.nil? || name.nil?
+
+    errors.add(:password, I18n.t('.errors.include_other')) if password.include?(public_id) || password.include?(name)
   end
 
   ## logics ##
 
-=begin
-  Contract C::Num, C::Num => C::Num
-  def testcontract(a, b)
-    a + b
-  end
-=end
-
-  
   # idではなく、public_idを返すオーバーライド
   # example:
   #   redirect_to @user
+  Contract C::None => String
   def to_param
     public_id
   end
 
   # 文字列からダイジェストを生成
   Contract String => String
-  def User.digest(string)
-    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
-                                                  BCrypt::Engine.cost
+  def self.digest(string)
+    cost =  if ActiveModel::SecurePassword.min_cost
+              BCrypt::Engine::MIN_COST
+            else
+              BCrypt::Engine.cost
+            end
+
     BCrypt::Password.create(string, cost: cost)
   end
 
   # ランダムなトークンを生成(base64)
   Contract C::None => String
-  def User.new_token
+  def self.new_token
     SecureRandom.urlsafe_base64
   end
 
   # メールアドレスを有効化する
+  Contract C::None => C::Bool
   def activate
     update_columns(activated: true, activated_at: Time.zone.now)
   end
@@ -103,6 +114,7 @@ class User < ApplicationRecord
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     return false if digest.nil?
+
     BCrypt::Password.new(digest).is_password?(token)
   end
 

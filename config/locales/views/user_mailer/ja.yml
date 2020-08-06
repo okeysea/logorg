@@ -1,0 +1,6 @@
+ja:
+  user_mailer:
+    account_activation:
+      welcome: 'さん、LogOrgへの登録ありがとうございます'
+      link_below: '下記リンクからお使いのメールアドレスを有効化してください'
+      activate: '有効化する'

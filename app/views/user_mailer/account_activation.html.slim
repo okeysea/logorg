@@ -1,2 +1,10 @@
-h1 User#account_activation
-p = @greeting + ", find me in app/views/user_mailer/account_activation.html.slim"
+h1 LogOrg
+p
+  = @user.name
+  = t('.welcome')
+
+p
+  = t('.link_below')
+
+= link_to t('.activate'), edit_account_activation_url(@user.activation_token, email: @user.email)
+

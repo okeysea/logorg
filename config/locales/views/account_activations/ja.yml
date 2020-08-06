@@ -1,0 +1,8 @@
+ja:
+  account_activations:
+    edit:
+      title: 'メールアドレス有効化'
+      complete_activated: 'メールアドレスの有効化が完了しました'
+      login: 'ログイン'
+      abort_activate: 'メールアドレスの有効化に失敗しました'
+      because_abort: '既に有効化されているか、期限切れ又は不正なトークンにより失敗しました'

@@ -26,7 +26,7 @@ module Logorg
         helper_specs:     false,
         routing_specs:    false,
         controller_specs: false,
-        request_specs:    false
+        request_specs:    true
       # fixtureを生成する場所
       g.fixture_replacement :factory_bot, dir: 'spec/factories'
 

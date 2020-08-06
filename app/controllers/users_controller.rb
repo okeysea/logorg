@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   end
 
   def new
-    render :layout => "non-header-footer-layout"
+    render layout: "non-header-footer-layout"
   end
 
   def create
@@ -13,14 +13,14 @@ class UsersController < ApplicationController
     if @user.save
       redirect_to @user
     else
-      render 'new', :layout => "non-header-footer-layout"
+      render 'new', layout: "non-header-footer-layout"
     end
   end
 
   private
-    
+
     def user_params
-      params.require(:user).permit( :public_id, :name, :email, :password,
-                                    :password_confirmation )
+      params.require(:user).permit(:public_id, :name, :email, :password,
+                                   :password_confirmation)
     end
 end
