@@ -6,6 +6,7 @@ class UsersController < ApplicationController
 
   def new
     render layout: "non-header-footer-layout"
+    @user = User.new
   end
 
   def create

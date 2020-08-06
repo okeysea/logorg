@@ -139,14 +139,13 @@ RSpec.describe User, type: :model do
     end
   end
 
-
   # public_idの書式が正しいなら有効
   context "right format public_id" do
     it "is valid" do
       ["isvalid",
        "isValid",
        "isvalid_VALID",
-       "is-_-Valid-_-si"].each do | pub_id |
+       "is-_-Valid-_-si"].each do |pub_id|
         u = User.new(
           public_id: pub_id,
           name: name,
@@ -206,6 +205,22 @@ RSpec.describe User, type: :model do
           password_confirmation: password_confirmation
         )
         expect(u.valid?).to eq(false)
+      end
+    end
+  end
+
+  # public_idのダウンケースの検証
+  # display_idの検証
+  context "public_id has mixed-case" do
+    let(:public_id){ "MiXeDPuBlIcId" }
+    it "is should be saved as lower-case" do
+      user.save
+      expect(user.reload.public_id).to eq(public_id.downcase)
+    end
+    describe "display_id" do
+      it "should be stored unchanged" do
+        user.save
+        expect(user.reload.display_id).to eq(public_id)
       end
     end
   end

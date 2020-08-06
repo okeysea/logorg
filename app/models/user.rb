@@ -2,7 +2,8 @@ class User < ApplicationRecord
   include Contracts::Core
   C = Contracts
 
-  before_save { email.downcase! }
+  before_validation :save_id_on_display
+  before_save :downcase_email, :downcase_public_id
 
   attr_accessor :activation_token
   before_create :create_activation_digest
@@ -68,6 +69,19 @@ class User < ApplicationRecord
     return if public_id.nil? || name.nil?
 
     errors.add(:password, I18n.t('.errors.include_other')) if password.include?(public_id) || password.include?(name)
+  end
+
+  def save_id_on_display
+    # 表示上では、大文字小文字を区別するために保存しておく
+    self.display_id = public_id.dup
+  end
+
+  def downcase_email
+    email.downcase!
+  end
+
+  def downcase_public_id
+    public_id.downcase!
   end
 
   ## logics ##
