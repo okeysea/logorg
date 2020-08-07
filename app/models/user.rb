@@ -71,19 +71,6 @@ class User < ApplicationRecord
     errors.add(:password, I18n.t('.errors.include_other')) if password.include?(public_id) || password.include?(name)
   end
 
-  def save_id_on_display
-    # 表示上では、大文字小文字を区別するために保存しておく
-    self.display_id = public_id.dup
-  end
-
-  def downcase_email
-    email.downcase!
-  end
-
-  def downcase_public_id
-    public_id.downcase!
-  end
-
   ## logics ##
 
   # idではなく、public_idを返すオーバーライド
@@ -91,7 +78,12 @@ class User < ApplicationRecord
   #   redirect_to @user
   Contract C::None => String
   def to_param
-    public_id
+    display_id
+  end
+
+  # ユーザのログイン情報を破棄する
+  def forget
+    update_attribute(:remember_digest, nil)
   end
 
   # 文字列からダイジェストを生成
@@ -133,6 +125,19 @@ class User < ApplicationRecord
   end
 
   private
+
+    # 表示上では、大文字小文字を区別するために保存しておく
+    def save_id_on_display
+      self.display_id = public_id.dup
+    end
+
+    def downcase_email
+      email.downcase!
+    end
+
+    def downcase_public_id
+      public_id.downcase!
+    end
 
     # 有効化トークン、ダイジェストを作成
     Contract C::None => String

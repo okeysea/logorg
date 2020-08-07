@@ -1,9 +1,11 @@
 class UsersController < ApplicationController
 
+  # ユーザー個別ページ
   def show
-    @user = User.find_by(public_id: params[:public_id])
+    @user = User.find_by(public_id: params[:public_id].downcase)
   end
 
+  # ユーザー登録
   def new
     render layout: "non-header-footer-layout"
     @user = User.new

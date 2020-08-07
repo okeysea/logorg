@@ -1,0 +1,18 @@
+= provide(:title, t('.title'))
+
+#content_container data-scope-path="sessions/new"
+  .logo
+
+  .welcome
+    h2
+      = t('.login_to_logorg')
+
+  .form_modal
+    = form_with( url: login_path, scope: :session, local: true ) do |f|
+      .row.input
+        = f.text_field :public_id, :placeholder => t('.public_id')
+
+      .row.input
+        = f.password_field :password, :placeholder => t('.password')
+
+      = f.submit t('.login')

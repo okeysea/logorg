@@ -1,0 +1,8 @@
+ja:
+  sessions:
+    new:
+      title: 'ログイン'
+      login_to_logorg: 'LogOrgへログイン'
+      login: 'ログイン'
+      public_id: 'ID'
+      password: 'パスワード'

@@ -1,0 +1,102 @@
+@import 'general/import'
+
+/* login form */
+[data-scope-path="sessions/new"]
+  .logo
+    margin: 40px auto 0 auto;
+
+    &::before
+      content: '';
+      display: block;
+      margin: auto;
+      width: 100px;
+      height: 100px;
+      background-size: 100px;
+      background-image: image-url('/logo_black_ico2.svg');
+      background-repeat: no-repeat;
+      background-positions: top right;
+  
+  .welcome
+    margin: 40px auto 0 auto;
+
+    h2
+      display: block;
+      text-align: center;
+      font-size: 2em;
+    span
+      margin-top: 16px;
+      display: block;
+      text-align: center;
+  
+  .form_modal
+    background-color: white;
+    max-width: 380px;
+    margin: 40px auto 0 auto;
+    border: 1px solid $cAccent3;
+    border-radius: 8px;
+    z-index: 999;
+
+    form
+      input[type="submit"]
+        border: 0 none;
+        background-color: $cAccent2;
+        width: 100%;
+        height: 50px;
+        cursor: pointer;
+        z-index: 1;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+
+        &:hover
+          background-color: $cAccent3;
+
+        &:active
+          background-color: darken($cAccent3, 20%);
+
+      .row
+        height: 50px;
+        border-bottom: 1px solid $cAccent2;
+
+
+      .error_message
+        display: block;
+        width: calc( 100% - 16px );
+        min-height: 1em;
+        background-color: $cAccent2;
+        padding: 15px 8px;
+
+      .input
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+
+        input
+          padding: 15px 8px;
+          font-size: 1.3em;
+          border: 0 none;
+          background-color: transparent;
+          width: 100%;
+          
+        
+        .field_with_errors
+          position: relative;
+          width: 100%;
+          display: flex;
+
+          &:before
+            content: '';
+            background-image: image-url('/error_circle_right.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center center;
+            width: 50px;
+            height: 25px;
+            position: absolute;
+            display: block;
+            top: ((50px - 25px) / 2);
+            left: 0;
+            margin-left: -50px;
+
+
+        
