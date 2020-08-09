@@ -86,6 +86,14 @@ class User < ApplicationRecord
     update_attribute(:remember_digest, nil)
   end
 
+  # ユーザ入力のidと比較して違っていたら表示IDを更新
+  def update_display_id(id)
+    return unless public_id.eql?(id.downcase)
+    return if display_id.eql?(id)
+
+    update_attribute(:display_id, id)
+  end
+
   # 文字列からダイジェストを生成
   Contract String => String
   def self.digest(string)

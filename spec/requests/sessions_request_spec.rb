@@ -13,13 +13,32 @@ RSpec.describe "Sessions", type: :request do
   end
 
   describe "POST /login" do
-    context "invalid login information" do
-      it "is failed login and redirect to root_path" do
+    context "valid login information" do
+      it "is successfully login and redirect to users page" do
+        post login_path, params: { session: {
+          # リダイレクト先はDisplay_idになるため
+          public_id: @okeysea.display_id,
+          password: @okeysea.password
+        } }
+        expect(response).to redirect_to(@okeysea)
+      end
+    end
+    context "empty login information" do
+      it "is failed login and response error message" do
         post login_path, params: { session: {
           public_id: '',
           password: ''
         } }
-        expect(response).to redirect_to(root_path)
+        expect(response.body).to include('danger')
+      end
+    end
+    context "invalid login information" do
+      it "is failed login and response error message" do
+        post login_path, params: { session: {
+          public_id: 'notexistuser',
+          password: 'hogehoge'
+        } }
+        expect(response.body).to include('danger')
       end
     end
   end

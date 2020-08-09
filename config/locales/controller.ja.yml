@@ -1,0 +1,6 @@
+ja:
+  sessions:
+    create:
+      please_input_user_id: 'IDを入力してください'
+      please_input_password: 'パスワードを入力してください'
+      wrong_combinate: 'IDもしくはパスワードが間違っています'

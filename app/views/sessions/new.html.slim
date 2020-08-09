@@ -7,6 +7,8 @@
     h2
       = t('.login_to_logorg')
 
+  = render 'partial/flash_message'
+
   .form_modal
     = form_with( url: login_path, scope: :session, local: true ) do |f|
       .row.input

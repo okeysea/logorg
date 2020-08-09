@@ -11,7 +11,7 @@ end
 def gen_user_mixedcase_id_params(num)
   {
     public_id: "MiXeD_#{num}",
-    name: "user name #{num}",
+    name: "MixEd User #{num}",
     email: "email_mixed_#{num}@example.com",
     password: "password",
     password_confirmation: "password"

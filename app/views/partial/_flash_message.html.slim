@@ -1,0 +1,4 @@
+.notification
+  - flash.each do |type, arr|
+    - arr.each do |message|
+      = content_tag :div, message, class: type

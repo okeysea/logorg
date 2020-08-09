@@ -218,9 +218,30 @@ RSpec.describe User, type: :model do
       expect(user.reload.public_id).to eq(public_id.downcase)
     end
     describe "display_id" do
-      it "should be stored unchanged" do
+      it "is should be stored unchanged" do
         user.save
         expect(user.reload.display_id).to eq(public_id)
+      end
+    end
+  end
+
+  # update_display_id の検証
+  describe "update_display_id" do
+    let(:public_id){ "updatemyid" }
+    context "input and id are the same" do
+      it "is should be update" do
+        user.save
+        user.update_display_id("UpdateMyId")
+        expect(user.display_id).to eq("UpdateMyId")
+        expect(user.public_id).to eq("UpdateMyId".downcase)
+      end
+    end
+    context "input and id are the different" do
+      it "is should be unchanged" do
+        user.save
+        user.update_display_id("invalidMyId")
+        expect(user.display_id).to_not eq("invalidMyId")
+        expect(user.public_id).to_not eq("invalidMyId".downcase)
       end
     end
   end
