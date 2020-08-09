@@ -17,8 +17,11 @@ class SessionsController < ApplicationController
       # 認証失敗メッセージの表示
       flash_message_now(:danger, t('.please_input_user_id')) if user_id.empty?
       flash_message_now(:danger, t('.please_input_password')) if passwd.empty?
-      flash_message_now(:danger, t('.wrong_combinate')) unless user_id.empty? && passwd.empty?
+      flash_message_now(:danger, t('.wrong_combinate')) unless user_id.empty? || passwd.empty?
       render 'new', layout: 'non-header-footer-layout'
     end
+  end
+
+  def destroy
   end
 end
