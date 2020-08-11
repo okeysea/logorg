@@ -21,6 +21,7 @@ RSpec.describe "Sessions", type: :request do
           password: @okeysea.password
         } }
         expect(response).to redirect_to(@okeysea)
+        expect(logged_in?).to be(true)
       end
     end
     context "empty login information" do
@@ -39,6 +40,27 @@ RSpec.describe "Sessions", type: :request do
           password: 'hogehoge'
         } }
         expect(response.body).to include('danger')
+      end
+    end
+  end
+
+  describe "delete /logout" do
+    context "logged in" do
+      before do
+        post login_path, params: { session: {
+          public_id: @okeysea.display_id,
+          password: @okeysea.password
+        } }
+      end
+      it "is redirect to root path" do
+        delete logout_path
+        expect(response).to redirect_to(root_path)
+      end
+    end
+    context "not logged in" do
+      it "is redirect to root_path" do
+        delete logout_path
+        expect(response).to redirect_to(root_path)
       end
     end
   end
