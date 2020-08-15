@@ -30,7 +30,7 @@ class User < ApplicationRecord
   validates :email,     length: { maximum: 255 }
 
   has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   validate  :strong_password
 
   # custom validate

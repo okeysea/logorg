@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Sessions", type: :request do
+  include SessionsHelper
   before do
     @okeysea = create(:okeysea)
     @takashi = create(:takashi)

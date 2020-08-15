@@ -14,3 +14,11 @@ ja:
       password: 'パスワード'
       password_confirmation: 'パスワードの再確認'
       regist: '登録する'
+    edit:
+      title: 'ユーザ情報の編集'
+      public_id: '公開ID(公開)'
+      name: '表示名(公開)'
+      email: 'メールアドレス(非公開)'
+      password: 'パスワード'
+      password_confirmation: 'パスワードの再確認'
+      regist: '更新する'

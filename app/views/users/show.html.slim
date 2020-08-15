@@ -1,6 +1,11 @@
 = provide(:title, t('.title', username: @user.name) )
 
-h1
-  = @user.name
-h2
-  = @user.email
+#content_container data-scope-path="users/show"
+  .profile_wrapper
+    .user_basic
+      .user_icon
+        h1
+          | @
+          = @user.name
+    h2
+      = @user.email

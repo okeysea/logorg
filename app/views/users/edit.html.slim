@@ -1,0 +1,40 @@
+= provide(:title, t('.title'))
+
+#content_container data-scope-path="users/edit"
+  .logo
+
+  = render 'partial/flash_message'
+
+  .signup
+    = form_with( model: (@user ||= User.new), local: true ) do |f|
+      .row.input
+        = f.text_field :public_id, :placeholder => t('.public_id')
+      - if @user.errors.include?(:public_id)
+        .error_message
+          = @user.errors.full_messages_for(:public_id).first
+
+      .row.input
+        = f.text_field :name, :placeholder => t('.name')
+      - if @user.errors.include?(:name)
+        .error_message
+          = @user.errors.full_messages_for(:name).first
+
+      .row.input
+        = f.text_field :email, :placeholder => t('.email')
+      - if @user.errors.include?(:email)
+        .error_message
+          = @user.errors.full_messages_for(:email).first
+      / Password field
+        .row.input
+          = f.password_field :password, :placeholder => t('.password')
+        - if @user.errors.include?(:password)
+          .error_message
+            = @user.errors.full_messages_for(:password).first
+      /
+        .row.input
+          = f.password_field :password_confirmation, :placeholder => t('.password_confirmation')
+        - if @user.errors.include?(:password_confirmation)
+          .error_message
+            = @user.errors.full_messages_for(:password_confirmation).first
+
+      = f.submit t('.regist')
