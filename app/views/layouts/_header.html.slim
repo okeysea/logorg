@@ -6,11 +6,20 @@ header#g_header
 
     #g_header_rightarea
       nav#g_header_navigate
-        ul
-          li #{link_to "ホットトピック", "#"}
-          li #{link_to "カテゴリ", "#"}
-          li#g_header_navi_division
-          li #{link_to "Visit GitHub", "#"}
-          li#g_header_navi_division
-          li #{link_to "ユーザ登録", "#", class:"navi_attension"}
-          li #{link_to "ログイン", "#"}
+        - if logged_in?
+          ul
+            li #{link_to t('.hot_topic'), "#"}
+            li #{link_to t('category'), "#"}
+            li#g_header_navi_division
+            li #{link_to t('.visit_github'), "#"}
+            li#g_header_navi_division
+            li #{link_to t('.logout'), logout_path, method: :delete}
+        - else
+          ul
+            li #{link_to t('.hot_topic'), "#"}
+            li #{link_to t('category'), "#"}
+            li#g_header_navi_division
+            li #{link_to t('.visit_github'), "#"}
+            li#g_header_navi_division
+            li #{link_to t('.signup'), signup_path, class:"navi_attension"}
+            li #{link_to t('.login'), login_path}

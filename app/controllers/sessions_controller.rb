@@ -23,7 +23,10 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    log_out if logged_in?
+    if logged_in?
+      log_out
+      flash_message :success, t('.success_logout')
+    end
     redirect_to root_url
   end
 end

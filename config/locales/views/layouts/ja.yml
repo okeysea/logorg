@@ -1,0 +1,9 @@
+ja:
+  layouts:
+    header:
+      hot_topic: 'ホットトピック'
+      category: 'カテゴリ'
+      visit_github: 'Visit GitHub'
+      signup: 'ユーザ登録'
+      login: 'ログイン'
+      logout: 'ログアウト'
