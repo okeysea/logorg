@@ -2,14 +2,38 @@
 
 [data-scope-path="users/show"]
   .profile_wrapper
+    display: flex;
     background-color: $cSub;
     margin-top: 8px;
     border-radius: 4px;
     color: $cBase;
+    height: 200px;
     
     .user_basic
+      display: flex
+      align-items: flex-end;
+      margin-left: 16px;
+      margin-bottom: 16px;
 
-      .user_icon
+      .user_pic_container
+        width: 100px;
+        height: 100px;
+
+        .user_profile_pic
+          background-color: $cSub;
+          border-radius: 50%;
+          width: calc( 100% - 10px );
+          height: calc( 100% - 10px );
+          border: 5px solid white;
+
+      .user_identity
+        margin-left: 8px;
+        margin-bottom: 8px;
+
+        .user_name
+          font-size: 2em;
+        .user_id
+          font-size: 1.5em;
 
 /* login form */
 [data-scope-path="users/new"]

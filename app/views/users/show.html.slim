@@ -3,9 +3,11 @@
 #content_container data-scope-path="users/show"
   .profile_wrapper
     .user_basic
-      .user_icon
-        h1
-          | @
+      .user_pic_container
+        .user_profile_pic
+      .user_identity
+        h1.user_name
           = @user.name
-    h2
-      = @user.email
+        h2.user_id
+          | @
+          = @user.display_id
