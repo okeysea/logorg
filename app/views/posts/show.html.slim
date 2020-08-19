@@ -1,0 +1,21 @@
+p#notice = notice
+
+p
+  strong User:
+  = @post.user_id
+p
+  strong Post:
+  = @post.post_id
+p
+  strong Title:
+  = @post.title
+p
+  strong Content:
+  = @post.content
+p
+  strong Content source:
+  = @post.content_source
+
+=> link_to 'Edit', edit_post_path(@post)
+'|
+=< link_to 'Back', posts_path

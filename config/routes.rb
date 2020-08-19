@@ -12,4 +12,5 @@ Rails.application.routes.draw do
 
   resources :users, param: :public_id
   resources :account_activations, only: [:edit]
+  resources :posts
 end
