@@ -11,3 +11,14 @@
         h2.user_id
           | @
           = @user.display_id
+
+  .posts
+    ul
+      - @posts.each do |p|
+        li
+          = p.title
+        li
+          = p.content
+        li
+          = p.created_at
+      

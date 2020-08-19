@@ -20,10 +20,10 @@ table
         td = post.title
         td = post.content
         td = post.content_source
-        td = link_to 'Show', post
-        td = link_to 'Edit', edit_post_path(post)
-        td = link_to 'Destroy', post, data: { confirm: 'Are you sure?' }, method: :delete
+        td = link_to 'Show', user_post_path(id: post.id)
+        td = link_to 'Edit', edit_user_post_path(id: post.id)
+        td = link_to 'Destroy', user_post_path(id: post.id), data: { confirm: 'Are you sure?' }, method: :delete
 
 br
 
-= link_to 'New Post', new_post_path
+= link_to 'New Post', new_user_post_path

@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   post    '/login',  to: 'sessions#create'
   delete  '/logout', to: 'sessions#destroy'
 
-  resources :users, param: :public_id
+  resources :users, param: :public_id do
+    resources :posts
+  end
+
   resources :account_activations, only: [:edit]
-  resources :posts
 end
