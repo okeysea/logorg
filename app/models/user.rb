@@ -2,6 +2,8 @@ class User < ApplicationRecord
   include Contracts::Core
   C = Contracts
 
+  has_many :posts, dependent: :destroy
+
   before_validation :save_id_on_display
   before_save :downcase_email, :downcase_public_id
 
