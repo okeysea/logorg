@@ -13,12 +13,15 @@
           = @user.display_id
 
   .posts
-    ul
+    ul.list
       - @posts.each do |p|
-        li
-          = p.title
-        li
-          = p.content
-        li
-          = p.created_at
-      
+        li.tr-list
+          article.article
+            = link_to user_post_path(@user, id: p) do
+              .title
+                = p.title
+              .content
+                = p.content
+
+            span.date
+              = l(p.updated_at, format: :short)

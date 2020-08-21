@@ -5,6 +5,7 @@ class UsersController < ApplicationController
   # ユーザー個別ページ
   def show
     @user = User.find_by(public_id: params[:public_id].downcase)
+    @posts = @user.posts
   end
 
   # ユーザー登録
