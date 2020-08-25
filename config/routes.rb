@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   get     'static_pages/home'
   get     'static_pages/help'
 
+  # for editor development
+  get     'static_pages/loeditor'
+
   get     '/signup', to: 'users#new'
   post    '/signup', to: 'users#create'
 

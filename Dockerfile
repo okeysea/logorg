@@ -31,8 +31,8 @@ RUN bundle install
 
 ADD package.json /project/package.json
 ADD yarn.lock /project/yarn.lock
-RUN yarn upgrade
 RUN yarn install --check-files
+RUN yarn upgrade
 
 ADD . /project
 
