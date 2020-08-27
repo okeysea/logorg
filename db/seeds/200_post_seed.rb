@@ -1,7 +1,6 @@
 def gen_post_params(touser)
   {
     user_id: touser,
-    post_id: SecureRandom.urlsafe_base64,
     title: Faker::Music.album,
     content: Faker::Lorem.paragraph(sentence_count: 100),
     content_source: Faker::Lorem.paragraph(sentence_count: 100)

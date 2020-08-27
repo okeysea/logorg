@@ -13,10 +13,13 @@
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/posts", type: :request do
-  # Post. As you add validations to Post, be sure to
-  # adjust the attributes here as well.
+
+  before do
+    @user = build(:user)
+  end
+
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+
   }
 
   let(:invalid_attributes) {

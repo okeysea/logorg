@@ -3,26 +3,31 @@ class PostsController < ApplicationController
 
   # GET /posts
   # GET /posts.json
+  # 誰でもみれる
   def index
     @posts = Post.all
   end
 
   # GET /posts/1
   # GET /posts/1.json
+  # 誰でもみれる
   def show
   end
 
   # GET /posts/new
+  # ログインしているユーザーかつそのユーザー
   def new
     @post = Post.new
   end
 
   # GET /posts/1/edit
+  # ログインしているユーザーかつ記事のオーナー
   def edit
   end
 
   # POST /posts
   # POST /posts.json
+  # ログインしてるユーザーかつそのユーザー
   def create
     @post = Post.new(post_params)
 
@@ -39,6 +44,7 @@ class PostsController < ApplicationController
 
   # PATCH/PUT /posts/1
   # PATCH/PUT /posts/1.json
+  # ログインしているユーザーかつ記事のオーナー
   def update
     respond_to do |format|
       if @post.update(post_params)
@@ -53,6 +59,7 @@ class PostsController < ApplicationController
 
   # DELETE /posts/1
   # DELETE /posts/1.json
+  # ログインしているユーザーかつ記事のオーナー
   def destroy
     @post.destroy
     respond_to do |format|
