@@ -14,6 +14,8 @@ class Post < ApplicationRecord
 
     # post_idを付与する
     def grant_id
+      return unless post_id.nil?
+
       self.post_id = SecureRandom.urlsafe_base64
     end
 
