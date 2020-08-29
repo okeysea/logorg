@@ -7,7 +7,8 @@ class PostsController < ApplicationController
   # GET /posts.json
   # 誰でもみれる
   def index
-    @posts = Post.all
+    @user = User.find_by(public_id: params[:user_public_id].downcase)
+    @posts = @user.posts
   end
 
   # GET /posts/1
