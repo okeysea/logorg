@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :correct_user, only: %i[edit update]
-  before_action :already_logged_in, only: %i[new create]
+  before_action :already_logged_in, only: %i[new create] # 既にログインしている場合はユーザーページへ
 
   # ユーザー個別ページ
   def show

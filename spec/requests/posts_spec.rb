@@ -15,11 +15,16 @@
 RSpec.describe "/posts", type: :request do
 
   before do
-    @user = build(:user)
+    @user = create(:user)
   end
 
   let(:valid_attributes) {
-
+    {
+      user_id: @user.id,
+      title: "タイトル",
+      content: "本文",
+      content_source: "本文"
+    }
   }
 
   let(:invalid_attributes) {
@@ -29,7 +34,7 @@ RSpec.describe "/posts", type: :request do
   describe "GET /index" do
     it "renders a successful response" do
       Post.create! valid_attributes
-      get posts_url
+      get user_posts_url(@user)
       expect(response).to be_successful
     end
   end

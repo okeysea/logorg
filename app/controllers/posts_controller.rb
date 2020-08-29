@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[show edit update destroy]
+  before_action :set_post,          only: %i[show edit update destroy]
+  before_action :logged_in_user,    only: %i[edit update destroy new create]
+  before_action :require_ownership, only: %i[edit update destroy]
 
   # GET /posts
   # GET /posts.json
@@ -73,6 +75,10 @@ class PostsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find_by(post_id: params[:id])
+    end
+
+    def require_ownership
+      redirect_to root_path unless current_user?(@post.user)
     end
 
     # Only allow a list of trusted parameters through.
