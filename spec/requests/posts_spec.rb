@@ -29,9 +29,25 @@ RSpec.describe "/posts", type: :request do
     }
   }
 
+  let(:valid_attributes_post) {
+    {
+      title: "タイトル",
+      content: "本文",
+      content_source: "本文"
+    }
+  }
+
   let(:invalid_attributes) {
     {
       user_id: @user.id,
+      title: "タイトル",
+      content: nil,
+      content_source: nil
+    }
+  }
+
+  let(:invalid_attributes_post) {
+    {
       title: "タイトル",
       content: nil,
       content_source: nil
@@ -121,12 +137,12 @@ RSpec.describe "/posts", type: :request do
       context "with valid parameters" do
         it "creates a new Post" do
           expect {
-            post user_posts_url(@user), params: { post: valid_attributes }
+            post user_posts_url(@user), params: { post: valid_attributes_post }
           }.to change(Post, :count).by(1)
         end
 
         it "redirects to the created post" do
-          post user_posts_url(@user), params: { post: valid_attributes }
+          post user_posts_url(@user), params: { post: valid_attributes_post }
           expect(response).to redirect_to(user_post_url(Post.last.user, Post.last))
         end
       end
@@ -134,12 +150,12 @@ RSpec.describe "/posts", type: :request do
       context "with invalid parameters" do
         it "does not create a new Post" do
           expect {
-            post user_posts_url(@user), params: { post: invalid_attributes }
+            post user_posts_url(@user), params: { post: invalid_attributes_post }
           }.to change(Post, :count).by(0)
         end
 
         it "renders a successful response" do
-          post user_posts_url(@user), params: { post: invalid_attributes }
+          post user_posts_url(@user), params: { post: invalid_attributes_post }
           p response
           expect(response).to be_successful
         end
@@ -150,12 +166,12 @@ RSpec.describe "/posts", type: :request do
       context "with valid parameters" do
         it "does not create a new Post" do
           expect {
-            post user_posts_url(@user), params: { post: valid_attributes }
+            post user_posts_url(@user), params: { post: valid_attributes_post }
           }.to change(Post, :count).by(0)
         end
 
         it "redirects to login_path" do
-          post user_posts_url(@user), params: { post: valid_attributes }
+          post user_posts_url(@user), params: { post: valid_attributes_post }
           expect(response).to redirect_to(login_path)
         end
       end
@@ -170,7 +186,6 @@ RSpec.describe "/posts", type: :request do
       context "with valid parameters" do
         let(:new_attributes) {
           {
-            user_id: @user.id,
             title: "更新タイトル",
             content: "更新本文",
             content_source: "更新本文"
@@ -194,7 +209,7 @@ RSpec.describe "/posts", type: :request do
       context "with invalid parameters" do
         it "renders a successful response (i.e. to display the 'edit' template)" do
           post = Post.create! valid_attributes
-          patch user_post_url(post.user, post), params: { post: invalid_attributes }
+          patch user_post_url(post.user, post), params: { post: invalid_attributes_post }
           expect(response).to be_successful
         end
       end

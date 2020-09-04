@@ -36,6 +36,7 @@ class PostsController < ApplicationController
   # ログインしてるユーザーかつそのユーザー
   def create
     @post = Post.new(post_params)
+    @post.user_id = current_user.id
 
     respond_to do |format|
       if @post.save
@@ -87,6 +88,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:user_id, :title, :content, :content_source)
+      params.require(:post).permit(:title, :content, :content_source)
     end
 end
