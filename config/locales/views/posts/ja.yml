@@ -1,0 +1,11 @@
+ja:
+  posts:
+    index:
+      title: '%{username} - 記事一覧'
+    show:
+      title: '%{username}'
+    new:
+      title: '記事作成'
+    edit:
+      title: '[編集] %{post_title}'
+      
