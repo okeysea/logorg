@@ -15,11 +15,14 @@ class PostsController < ApplicationController
   # GET /posts/1.json
   # 誰でもみれる
   def show
+    redirect_to user_post_path(@post.user, @post) unless @post.user.display_id.eql?(params[:user_public_id])
   end
 
   # GET /posts/new
   # ログインしているユーザーかつそのユーザー
   def new
+    @user = User.find_by(public_id: params[:user_public_id].downcase)
+    redirect_to new_user_post_url(current_user) unless current_user?(@user)
     @post = Post.new
   end
 
@@ -36,7 +39,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post }
+        format.html { redirect_to user_post_url(@post.user, @post) }
         format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new }
@@ -51,7 +54,7 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to @post }
+        format.html { redirect_to user_post_path(@post.user, @post) }
         format.json { render :show, status: :ok, location: @post }
       else
         format.html { render :edit }
@@ -66,7 +69,7 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy
     respond_to do |format|
-      format.html { redirect_to posts_url }
+      format.html { redirect_to user_posts_url }
       format.json { head :no_content }
     end
   end

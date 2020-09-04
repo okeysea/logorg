@@ -15,9 +15,9 @@ ActiveRecord::Schema.define(version: 2020_08_29_044554) do
   create_table "posts", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "post_id", null: false
-    t.string "title"
-    t.text "content"
-    t.text "content_source"
+    t.string "title", null: false
+    t.text "content", null: false
+    t.text "content_source", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["post_id"], name: "index_posts_on_post_id", unique: true

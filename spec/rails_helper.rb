@@ -64,4 +64,6 @@ RSpec.configure do |config|
   
   # FactoryBotのクラス名を省略するための設定
   config.include FactoryBot::Syntax::Methods
+
+  config.include SessionsMacros
 end

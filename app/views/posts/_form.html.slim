@@ -1,4 +1,5 @@
-= form_for @post do |f|
+- @form_path = @post.new_record? ? user_posts_path : user_post_path(@post.user, @post)
+= form_with( model: @post, url: @form_path, local: true ) do |f|
   - if @post.errors.any?
     #error_explanation
       h2 = "#{pluralize(@post.errors.count, "error")} prohibited this post from being saved:"

@@ -3,7 +3,7 @@ class Post < ApplicationRecord
 
   before_validation :grant_id
 
-  validates :post_id, :user_id, presence: true
+  validates :post_id, :user_id, :title, :content, :content_source, presence: true
   validates :post_id, uniqueness: true
 
   def to_param
