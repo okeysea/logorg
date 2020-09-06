@@ -195,6 +195,9 @@ RSpec.describe "/posts", type: :request do
           post = Post.create! valid_attributes
           patch user_post_url(post.user, post), params: { post: new_attributes }
           post.reload
+          expect(post.title).to           eq(new_attributes[:title]) 
+          expect(post.content).to         eq(new_attributes[:content]) 
+          expect(post.content_source).to  eq(new_attributes[:content_source]) 
         end
 
         it "redirects to the post" do
