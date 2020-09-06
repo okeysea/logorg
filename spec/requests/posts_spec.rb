@@ -156,7 +156,6 @@ RSpec.describe "/posts", type: :request do
 
         it "renders a successful response" do
           post user_posts_url(@user), params: { post: invalid_attributes_post }
-          p response
           expect(response).to be_successful
         end
       end
