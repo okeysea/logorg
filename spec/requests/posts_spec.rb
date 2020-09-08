@@ -209,7 +209,7 @@ RSpec.describe "/posts", type: :request do
       end
 
       context "with invalid parameters" do
-        it "renders a successful response (i.e. to display the 'edit' template)" do
+        it "renders a successful response" do
           post = Post.create! valid_attributes
           patch user_post_url(post.user, post), params: { post: invalid_attributes_post }
           expect(response).to be_successful
