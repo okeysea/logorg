@@ -14,3 +14,9 @@ user_count.times do |n|
     Post.create(gen_post_params(n))
   end
 end
+
+many_post_user = User.find_by(public_id: "many_posts_user")
+puts "Gen post for many_posts_user"
+100.times do
+  Post.create(gen_post_params(many_post_user.id))
+end
