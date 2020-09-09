@@ -2,6 +2,7 @@ ja:
   posts:
     index:
       title: '%{username} - 記事一覧'
+      posts_all_list: '記事一覧'
     show:
       title: '%{username}'
     new:

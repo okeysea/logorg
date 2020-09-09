@@ -1,0 +1,19 @@
+div data-scope-path="partial/posts_list"
+  .posts
+    ul.list
+      - @posts.each do |p|
+        li.tr-list
+          article.article
+            = link_to user_post_path(@user, p), class: 'posts_link' do
+              .title
+                = truncate(p.title, length: 100)
+              .content
+                = truncate(p.content, length: 100)
+
+            .inform
+              - if current_user?( p.user )
+                = link_to t('.edit'), edit_user_post_path(@user, p), class: ['action', 'edit']
+                = link_to t('.delete'), user_post_path(@user, p), method: :delete, class: ['action', 'delete']
+
+              span.date
+                = l(p.updated_at, format: :short)

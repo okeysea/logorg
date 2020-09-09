@@ -1,0 +1,77 @@
+[data-scope-path="partial/posts_list"]
+  .posts
+    .list
+      .tr-list:first-of-type
+        border-top: none;
+        
+      .tr-list
+        display: flex;
+        border-top: 1px solid $cAccent2;
+
+        .article
+          padding: 14px 8px;
+          width: 100%;
+
+          .inform
+            display: flex;
+            margin-top: 8px;
+
+            span.date
+              display: block;
+              margin-left: auto;
+
+            a.action
+              font-size: 1em;
+              border-radius: 3px;
+              padding: 4px 8px;
+              margin-right: 8px;
+
+            a.edit
+              border: 1px solid $cEdit;
+
+              &:link
+                color: $cFontEdit;
+                text-decoration: none;
+              &:visited
+                color: $cFontEdit;
+              &:hover
+                color: $cFontEdit;
+                text-decoration: underline;
+              &:active
+                color: $cFontEdit;
+
+            a.delete
+              border: 1px solid $cDelete;
+
+              &:link
+                color: $cFontDelete;
+                text-decoration: none;
+              &:visited
+                color: $cFontDelete;
+              &:hover
+                color: $cFontDelete;
+                text-decoration: underline;
+              &:active
+                color: $cFontDelete;
+
+          a.posts_link
+            &:link
+              color: $cFontDark;
+              text-decoration: none;
+            &:visited
+              color: $cFontVisited;
+            &:hover
+              color: $cFontDark;
+              text-decoration: underline;
+            &:active
+              color: $cFontDark;
+          
+            
+          .title
+            font-size: 1.5em;
+            font-weight: bold;
+
+          .content
+            font-size: 1.1em;
+            margin-top: 8px;
+            line-height: 140%;

@@ -12,16 +12,4 @@
           | @
           = @user.display_id
 
-  .posts
-    ul.list
-      - @posts.each do |p|
-        li.tr-list
-          article.article
-            = link_to user_post_path(@user, p) do
-              .title
-                = p.title
-              .content
-                = p.content
-
-            span.date
-              = l(p.updated_at, format: :short)
+  = render 'partial/posts_list'

@@ -1,31 +1,9 @@
 = provide(:title, t('.title', username:@user.name))
 
-h1 Listing posts
+#content_container data-scope-path="posts/index"
 
-table
-  thead
-    tr
-      th User
-      th Post
-      th Title
-      th Content
-      th Content source
-      th
-      th
-      th
+  h1 = t('.posts_all_list')
+  
+  = render 'partial/posts_list'
 
-  tbody
-    - @posts.each do |post|
-      tr
-        td = post.user_id
-        td = post.post_id
-        td = post.title
-        td = post.content
-        td = post.content_source
-        td = link_to 'Show', user_post_path(id: post.post_id)
-        td = link_to 'Edit', edit_user_post_path(id: post.post_id)
-        td = link_to 'Destroy', user_post_path(id: post.post_id), data: { confirm: 'Are you sure?' }, method: :delete
-
-br
-
-= link_to 'New Post', new_user_post_path
+  = link_to 'New Post', new_user_post_path
