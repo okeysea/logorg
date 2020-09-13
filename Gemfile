@@ -39,6 +39,9 @@ gem 'bootsnap', '>= 1.4.2', require: false
 # for paginate
 gem 'kaminari'
 
+# for icon
+gem 'font-awesome-sass'
+
 group :development, :test do
   gem 'faker'
   gem 'rspec-rails'
