@@ -207,4 +207,36 @@ RSpec.describe "Users", type: :request do
       end
     end
   end
+
+  describe "GET /show" do
+    before do
+      @okeysea = create(:okeysea)
+      @takashi = create(:takashi)
+    end
+
+    it "is renders a successful response" do
+      get user_url(@okeysea)
+      expect(response).to be_successful
+    end
+
+    context "user logged in" do
+      before do
+        log_in @okeysea
+      end
+      it "is renders a successful response" do
+        get user_url(@okeysea)
+        expect(response).to be_successful
+      end
+    end
+
+    context "user logged in other user" do
+      before do
+        log_in @takashi
+      end
+      it "is renders a successful response" do
+        get user_url(@okeysea)
+        expect(response).to be_successful
+      end
+    end
+  end
 end

@@ -1,0 +1,56 @@
+[data-scope-path="components/paginator"]
+  nav.pagination
+    width: 100%;
+    display: flex;
+    justyify-content: space-between;
+
+    i.fas
+      margin: 0px 0.1em;
+
+    div.prev_control
+      display: flex;
+      min-width: 100px;
+      margin-right: auto;
+    div.page_control
+      display: flex;
+    div.next_control
+      display: flex;
+      min-width: 100px;
+      margin-left: auto;
+      text-align: right;
+
+    span
+      text-align: center;
+      min-width: 2em;
+      height: 2em;
+      line-height: 2em;
+      margin: auto;
+      padding: 4px;
+
+      a
+        color: $cFontDark;
+        text-decoration: none;
+
+        &:link
+          color: $cFontDark;
+          text-decoration: none;
+        &:visited
+          color: $cFontDark;
+          text-decoration: none;
+        &:hover
+          color: $cFontDark;
+          font-weight: bold;
+          text-decoration: underline;
+        &:active
+          color: $cFontDark;
+          text-decoration: underline;
+          
+
+      &.dummy
+        width: 3em;
+
+      &.current
+        color: $cSub;
+        font-weight: bold;
+        background-color: $cAccent2;
+        border-radius: 50%;

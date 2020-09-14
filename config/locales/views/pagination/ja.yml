@@ -1,0 +1,8 @@
+ja:
+  views:
+    pagination:
+      first: '<i class="fas fa-angle-double-left" aria-hidden="true"></i>最初'
+      previous: '<i class="fas fa-angle-left" aria-hidden="true"></i>前'
+      next: '次<i class="fas fa-angle-right" aria-hidden="true"></i>'
+      last: '最後<i class="fas fa-angle-double-right" aria-hidden="true"></i>'
+      truncate: '...'

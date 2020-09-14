@@ -1,4 +1,6 @@
 div data-scope-path="partial/posts_list"
+
+  = paginate @posts
   .posts
     ul.list
       - @posts.each do |p|
@@ -17,3 +19,4 @@ div data-scope-path="partial/posts_list"
 
               span.date
                 = l(p.updated_at, format: :short)
+  = paginate @posts

@@ -8,7 +8,7 @@ class PostsController < ApplicationController
   # 誰でもみれる
   def index
     @user = User.find_by(public_id: params[:user_public_id].downcase)
-    @posts = @user.posts
+    @posts = Post.where(user_id: @user.id).page(params[:page]).per(10)
   end
 
   # GET /posts/1
