@@ -14,8 +14,8 @@ div data-scope-path="partial/posts_list"
 
             .inform
               - if current_user?( p.user )
-                = link_to t('.edit'), edit_user_post_path(@user, p), class: ['action', 'edit']
-                = link_to t('.delete'), user_post_path(@user, p), method: :delete, class: ['action', 'delete']
+                = link_to t('.edit').html_safe, edit_user_post_path(@user, p), class: ['action', 'edit']
+                = link_to t('.delete').html_safe, user_post_path(@user, p), method: :delete, class: ['action', 'delete']
 
               span.date
                 = l(p.updated_at, format: :short)

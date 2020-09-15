@@ -1,5 +1,5 @@
 ja:
   partial:
     posts_list:
-      edit: '編集'
-      delete: '削除'
+      edit: '<i class="far fa-edit"></i>編集'
+      delete: '<i class="far fa-trash-alt"></i>'
