@@ -1,0 +1,50 @@
+[data-scope-path="components/profile_card"]
+  border: 1px solid $cAccent2;
+
+  .user_basic_inform
+    text-align: center;
+    margin: 16px 0;
+
+    .user_avatar
+      display: inline-block;
+
+    .user_name
+      font-size: 1.6em;
+      margin-top: 8px;
+
+    .user_id
+      margin-top: 4px;
+  
+  .user_activity_inform
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+
+    .user_activity_element
+      width: calc( 100% / 3 );
+      text-align: center;
+
+      &:link
+        color: $cFontDark;
+        text-decoration: none;
+      &:visited
+        color: $cFontDark;
+      &:hover
+        color: $cFontDark;
+        text-decoration: underline;
+      &:active
+        color: $cFontDark;
+
+      &:not(:last-child)
+        border-right: 1px solid $cAccent2;
+
+      .user_activity_count
+        margin-top: 4px;
+        font-size: 1.3em;
+
+      .user_activity_description
+        margin: 4px 0;
+        
+        
+      
+

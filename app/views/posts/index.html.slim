@@ -2,8 +2,14 @@
 
 #content_container data-scope-path="posts/index"
 
-  h1 = t('.posts_all_list')
-  
-  = render 'partial/posts_list'
+  .sidebar_layout
 
-  = link_to 'New Post', new_user_post_path
+    aside.sidebar
+      = react_component('ProfileCard', { user: user_as_json(@user) })
+
+    main.main
+      h1 = t('.posts_all_list')
+      
+      = render 'partial/posts_list'
+
+      = link_to 'New Post', new_user_post_path

@@ -1,3 +1,4 @@
+// card-layout
 @mixin card-layout($column, $cardmerginside, $cardmerginbottom)
   display: flex;
   flex-wrap: wrap;
@@ -8,3 +9,13 @@
     flex-basis: calc( (100% / #{$column} ) - (#{$cardmerginside} * 2) );
     padding: 0 $cardmerginside;
     margin-bottom: $cardmerginbottom;
+
+@mixin sidebar-layout($sidebar_width)
+  display: flex;
+
+  .sidebar
+    width: $sidebar_width;
+
+  .main
+    flex: 1;
+

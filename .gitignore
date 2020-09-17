@@ -47,3 +47,6 @@ yarn-debug.log*
 # Ignore vendor/bundle, but keep the directory.
 /vendor/bundle/*
 !/vendor/bundle/.keep
+
+# Ignore public/dev_assets/
+/public/dev_assets/*
