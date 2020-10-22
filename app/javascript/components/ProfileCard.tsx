@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react"
-import PropTypes from "prop-types"
+import * as PropTypes from "prop-types"
 import ProfileAvatar from "./ProfileAvatar"
 import Dropdown from "./Dropdown"
 
@@ -13,36 +13,6 @@ class ProfileCard extends React.Component {
   }
 }
 */
-type Item = {
-  id: number
-  title: string
-}
-
-const items: Item[] = [
-  {
-    id: 1,
-    title: 'たかいしょうひん'
-  },
-  {
-    id: 1,
-    title: 'ださいしょうひん'
-  }
-]
-
-type Props = {
-  message: string
-  children: React.ReactNode
-}
-
-const Child: React.FC<Props> = ({ message, children }) => {
-  return (
-    <div>
-      <p>{ message }</p>
-      <p>{ children }</p>
-    </div>
-  )
-}
-
 type cardProps = {
   user: {
     public_id:    string
@@ -55,22 +25,12 @@ type cardProps = {
 const ProfileCard: React.FC<cardProps> = props => {
   const propTypes = {
     user: PropTypes.shape({
-      public_id:    PropTypes.string
-      display_id:   PropTypes.string
-      name:         PropTypes.string
+      public_id:    PropTypes.string,
+      display_id:   PropTypes.string,
+      name:         PropTypes.string,
       posts_count:  PropTypes.number
     })
   }
-  const [ count, setCount ] = useState<number>(0)
-  const message: string = 'こんにちは React!!'
-
-  const handleIncrement = useCallback(() => {
-    setCount(prev => prev + 1)
-  }, {})
-
-  const handleDecrement = useCallback(() => {
-    setCount(prev => prev - 1)
-  }, {})
 
   return (
     <div className="ProfileCard" data-scope-path="components/profile_card">
@@ -95,6 +55,14 @@ const ProfileCard: React.FC<cardProps> = props => {
           <div className="user_activity_description">Posts</div>
         </a>
       </div>
+      <Dropdown>
+        <Dropdown.Trigger><i className="fas fa-angle-down"></i></Dropdown.Trigger>
+        <Dropdown.Menu>
+          <Dropdown.Item>hogehoge</Dropdown.Item>
+          <Dropdown.Divider />
+          <Dropdown.Item>hogehoge</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
     </div>
   )
 }

@@ -8,18 +8,19 @@ header#g_header
       nav#g_header_navigate
         - if logged_in?
           ul
-            li #{link_to t('.hot_topic'), "#"}
-            li #{link_to t('.category'), "#"}
+            li #{link_to t('.hot_topic'), "#", class: "navi_link"}
+            li #{link_to t('.category'), "#", class: "navi_link"}
             li#g_header_navi_division
-            li #{link_to t('.visit_github'), "#"}
+            li #{link_to t('.visit_github'), "#", class: "navi_link"}
             li#g_header_navi_division
-            li #{link_to t('.logout'), logout_path, method: :delete}
+            li #{link_to t('.logout'), logout_path, method: :delete, class: "navi_link"}
+            li#g_header_navi_usermenu = react_component('ProfileDropdownMenu', { user: user_as_json(current_user) })
         - else
           ul
-            li #{link_to t('.hot_topic'), "#"}
-            li #{link_to t('.category'), "#"}
+            li #{link_to t('.hot_topic'), "#", class: "navi_link"}
+            li #{link_to t('.category'), "#", class: "navi_link"}
             li#g_header_navi_division
-            li #{link_to t('.visit_github'), "#"}
+            li #{link_to t('.visit_github'), "#", class: "navi_link"}
             li#g_header_navi_division
-            li #{link_to t('.signup'), signup_path, class:"navi_attension"}
-            li #{link_to t('.login'), login_path}
+            li #{link_to t('.signup'), signup_path, class:"navi_attension navi_link"}
+            li #{link_to t('.login'), login_path, class:"navi_link"}
