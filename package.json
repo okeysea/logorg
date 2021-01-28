@@ -30,6 +30,7 @@
     "jest": "^26.6.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
+    "enzyme-to-json": "^3.6.1",
     "react-test-renderer": "^16.13.1",
     "ts-jest": "^26.4.3",
     "webpack-dev-server": "^3.11.0"
@@ -51,6 +52,7 @@
     },
     "setupFiles": [
       "./enzyme.setup.js"
-    ]
+    ],
+    "snapshotSerializers": ["enzyme-to-json/serializer"]
   }
 }

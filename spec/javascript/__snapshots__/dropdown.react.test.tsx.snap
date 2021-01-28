@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Dropdown /> Dropdown component snapshot test 1`] = `
+<div
+  className="dropdown"
+  data-scope-path="components/dropdown"
+>
+  <button
+    className="dropdown-trigger"
+    onClick={[Function]}
+  >
+    <b>
+      trigger button
+    </b>
+  </button>
+  <div
+    className="dropdown-menu hide"
+    style={
+      Object {
+        "transform": "translate(calc(-100% + 0px),0px)",
+      }
+    }
+  />
+</div>
+`;
