@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from "react"
+import * as React from "react"
+import { useState, useRef, useEffect } from "react"
 import PropTypes from "prop-types"
 import classNames from 'classnames'
 import deepEqual from 'deep-equal'
@@ -15,9 +16,9 @@ function usePrevious(value: any) {
 /* --------------- */
 
 
-type Props = {
+type Props = Partial<{
   children: React.ReactNode
-}
+}>
 
 // メニュー位置調整のためのコンテクスト
 const ResourceContext = React.createContext({
@@ -144,8 +145,9 @@ const Dropdown: React.FC<Props> & {
 
 /* --------------- */
 type ButtonProps = {
-  onClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
-  children: React.ReactNode
+  onClick?:   (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
+  children?:  React.ReactNode
+  hover?: boolean
 }
 
 const Trigger: React.FC<ButtonProps> = props => {
@@ -185,23 +187,27 @@ const Trigger: React.FC<ButtonProps> = props => {
 /* --------------- */
 
 type ItemProps = {
+  href?: string
   children: React.ReactNode
 }
 
 const Item: React.FC<ItemProps> = props => {
   return (
-    <a className="dropdown-item">
+    <a
+    className="dropdown-item"
+    href={props.href}
+    >
       { props.children }
     </a>
   )
 }
 
-/* --------------- */
+/* --------------- */ 
 
-type MenuProps = {
-  active: boolean
+type MenuProps = Partial<{
+  active:   boolean
   children: React.ReactNode
-}
+}>
 
 const Menu: React.FC<MenuProps> = props => {
   const context = React.useContext(ResourceContext);

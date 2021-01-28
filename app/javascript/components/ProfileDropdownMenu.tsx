@@ -32,11 +32,12 @@ const ProfileDropdownMenu: React.FC<Props> = props => {
           </div>
         </Dropdown.Trigger>
         <Dropdown.Menu>
-          <Dropdown.Item>プロファイル編集</Dropdown.Item>
+          <Dropdown.Item href="http://www.google.com/">プロファイル編集</Dropdown.Item>
           <Dropdown.Item>記事新規作成</Dropdown.Item>
           <Dropdown.Item>ほげほげ</Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item>ログアウト</Dropdown.Item>
+          <Dropdown.Item>ログアウトするにはログインが必要です</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
     </div>

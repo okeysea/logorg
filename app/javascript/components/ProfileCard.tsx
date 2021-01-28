@@ -55,14 +55,6 @@ const ProfileCard: React.FC<cardProps> = props => {
           <div className="user_activity_description">Posts</div>
         </a>
       </div>
-      <Dropdown>
-        <Dropdown.Trigger><i className="fas fa-angle-down"></i></Dropdown.Trigger>
-        <Dropdown.Menu>
-          <Dropdown.Item>hogehoge</Dropdown.Item>
-          <Dropdown.Divider />
-          <Dropdown.Item>hogehoge</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
     </div>
   )
 }
