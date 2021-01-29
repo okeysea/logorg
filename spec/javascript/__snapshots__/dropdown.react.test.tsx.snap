@@ -23,3 +23,223 @@ exports[`<Dropdown /> Dropdown component snapshot test 1`] = `
   />
 </div>
 `;
+
+exports[`<Dropdown /> Dropdown component with href attribute snapshot test 1`] = `
+<Dropdown>
+  <div
+    className="dropdown"
+    data-scope-path="components/dropdown"
+  >
+    <Trigger
+      key=".0"
+      onClick={[Function]}
+    >
+      <button
+        className="dropdown-trigger"
+        onClick={[Function]}
+      >
+        <b>
+          trigger button
+        </b>
+      </button>
+    </Trigger>
+    <Menu
+      active={false}
+      key=".1"
+    >
+      <div
+        className="dropdown-menu hide"
+        style={
+          Object {
+            "transform": "translate(calc(-100% + 0px),0px)",
+          }
+        }
+      />
+    </Menu>
+  </div>
+</Dropdown>
+`;
+
+exports[`<Dropdown /> active/inactive toggle test 1`] = `
+<Dropdown>
+  <div
+    className="dropdown"
+    data-scope-path="components/dropdown"
+  >
+    <Trigger
+      key=".0"
+      onClick={[Function]}
+    >
+      <button
+        className="dropdown-trigger"
+        onClick={[Function]}
+      >
+        <b>
+          trigger button
+        </b>
+      </button>
+    </Trigger>
+    <Menu
+      active={false}
+      key=".1"
+    >
+      <div
+        className="dropdown-menu hide"
+        style={
+          Object {
+            "transform": "translate(calc(-100% + 0px),0px)",
+          }
+        }
+      />
+    </Menu>
+  </div>
+</Dropdown>
+`;
+
+exports[`<Dropdown /> active/inactive toggle test 2`] = `
+<Dropdown>
+  <div
+    className="dropdown"
+    data-scope-path="components/dropdown"
+  >
+    <Trigger
+      key=".0"
+      onClick={[Function]}
+    >
+      <button
+        className="dropdown-trigger"
+        onClick={[Function]}
+      >
+        <b>
+          trigger button
+        </b>
+      </button>
+    </Trigger>
+    <Menu
+      active={false}
+      key=".1"
+    >
+      <div
+        className="dropdown-menu hide"
+        style={
+          Object {
+            "transform": "translate(calc(-100% + 0px),0px)",
+          }
+        }
+      />
+    </Menu>
+  </div>
+</Dropdown>
+`;
+
+exports[`<Dropdown /> active/inactive toggle test 3`] = `
+<Dropdown>
+  <div
+    className="dropdown active"
+    data-scope-path="components/dropdown"
+  >
+    <Trigger
+      key=".0"
+      onClick={[Function]}
+    >
+      <button
+        className="dropdown-trigger"
+        onClick={[Function]}
+      >
+        <b>
+          trigger button
+        </b>
+      </button>
+    </Trigger>
+    <Menu
+      active={true}
+      key=".1"
+    >
+      <div
+        className="dropdown-menu show"
+        style={
+          Object {
+            "transform": "translate(calc(-100% + 0px),0px)",
+          }
+        }
+      >
+        <Item
+          href="http://www.example.com/"
+        >
+          <a
+            className="dropdown-item"
+            href="http://www.example.com/"
+          >
+            item 1
+          </a>
+        </Item>
+        <Item
+          href="/root/folder/"
+        >
+          <a
+            className="dropdown-item"
+            href="/root/folder/"
+          >
+            item 2
+          </a>
+        </Item>
+        <Item>
+          <a
+            className="dropdown-item"
+          >
+            item 3
+          </a>
+        </Item>
+        <Divider>
+          <div
+            className="dropdown-divider"
+          />
+        </Divider>
+        <Item>
+          <a
+            className="dropdown-item"
+          >
+            item 4
+          </a>
+        </Item>
+      </div>
+    </Menu>
+  </div>
+</Dropdown>
+`;
+
+exports[`<Dropdown /> active/inactive toggle test 4`] = `
+<Dropdown>
+  <div
+    className="dropdown"
+    data-scope-path="components/dropdown"
+  >
+    <Trigger
+      key=".0"
+      onClick={[Function]}
+    >
+      <button
+        className="dropdown-trigger"
+        onClick={[Function]}
+      >
+        <b>
+          trigger button
+        </b>
+      </button>
+    </Trigger>
+    <Menu
+      active={false}
+      key=".1"
+    >
+      <div
+        className="dropdown-menu hide"
+        style={
+          Object {
+            "transform": "translate(calc(-100% + 0px),0px)",
+          }
+        }
+      />
+    </Menu>
+  </div>
+</Dropdown>
+`;

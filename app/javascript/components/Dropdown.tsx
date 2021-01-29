@@ -2,7 +2,16 @@ import * as React from "react"
 import { useState, useRef, useEffect } from "react"
 import PropTypes from "prop-types"
 import classNames from 'classnames'
-import deepEqual from 'deep-equal'
+
+/* note:
+ *    import deepEqual from 'deep-equal'
+ *    だと、jestでテスト時 deep_equal_1.default にトランスパイルされ、
+ *    deep_equal_1.default is not a function でテストが落ちるため
+ *    requireを用いる。モジュールの実装でDefaultが定義されていないのが原因か、
+ *    Typescriptのトランスパイルの問題なのか特定できず。
+ *    ブラウザでの実行時はwebpackがよしなにしてくれているのか問題はおこらない。
+ */
+const deepEqual = require('deep-equal')
 
 // useStateの前回値を保持する関数
 function usePrevious(value: any) {
