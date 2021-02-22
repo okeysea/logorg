@@ -50,3 +50,6 @@ yarn-debug.log*
 
 # Ignore public/dev_assets/
 /public/dev_assets/*
+
+# Ignore github package authtoken
+/.authtoken
