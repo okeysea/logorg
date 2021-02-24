@@ -10,4 +10,13 @@ export HOME=/home/user
 
 id
 
+# GitHub packages authtoken
+if [ ! -e /project/.authtoken ]; then
+  echo "NOTE: If you want to install a package, you need an .authtoken file."
+  echo "Alternatively, you can add the credentials to ~/.npmrc ."
+else
+  cp /app/.authtoken /home/user/.npmrc
+  echo "[INFO] Copied an .authtoken file to ~/.npmrc ."
+fi
+
 exec /usr/sbin/gosu user "$@"

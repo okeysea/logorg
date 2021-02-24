@@ -1,5 +1,7 @@
 FROM ruby:2.7.1
 MAINTAINER okeysea
+ARG LOCAL_UID
+ARG LOCAL_GID
 
 RUN apt-get update && apt-get install -y nodejs --no-install-recommends \
   && rm -rf /var/lib/apt/lists/*
@@ -30,9 +32,21 @@ RUN gem install bundler
 RUN bundle install
 
 ADD package.json /project/package.json
+ADD .npmrc /project/.npmrc
 ADD yarn.lock /project/yarn.lock
 RUN yarn upgrade
+
+RUN useradd -u $LOCAL_UID -o -m user
+RUN groupmod -g $LOCAL_GID user
+
+RUN chown -R ${LOCAL_UID}:${LOCAL_GID} .
+
+USER user
+
+ADD .authtoken /home/user/.npmrc
 RUN yarn install --check-files
 
 ADD . /project
+
+USER root
 
