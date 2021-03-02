@@ -42,6 +42,9 @@ gem 'kaminari'
 # for icon
 gem 'font-awesome-sass'
 
+# for get Rails variables in js
+gem 'gon'
+
 group :development, :test do
   gem 'faker'
   gem 'rspec-rails'
