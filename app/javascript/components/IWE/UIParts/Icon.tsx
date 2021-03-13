@@ -18,7 +18,7 @@ import "../icons/style.css"
 }
  */
 
-export type IconSet = "Arrow" | "Document-Gear" | "Gear" | "Table-of-contents"
+export type IconSet = "Arrow" | "Document-Gear" | "Gear" | "Table-of-contents" | "LogOrg"
 
 type Props = {
   className?: string,
