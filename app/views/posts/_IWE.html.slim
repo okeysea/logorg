@@ -1,0 +1,4 @@
+- if @post.new_record? 
+  = react_component('OrgMdIWE')
+- else
+  = react_component('OrgMdIWE', { post_id: @post.post_id })

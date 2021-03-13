@@ -29,6 +29,7 @@ class PostsController < ApplicationController
   # GET /posts/1/edit
   # ログインしているユーザーかつ記事のオーナー
   def edit
+    render 'edit', layout: 'non-header-footer-layout'
   end
 
   # POST /posts
@@ -56,7 +57,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       if @post.update(post_params)
         format.html { redirect_to user_post_path(@post.user, @post) }
-        format.json { render :show, status: :ok, location: @post }
+        format.json { render :show, status: :ok, location: user_post_path(@post.user, @post) }
       else
         format.html { render :edit }
         format.json { render json: @post.errors, status: :unprocessable_entity }
