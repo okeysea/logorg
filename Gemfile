@@ -45,6 +45,9 @@ gem 'font-awesome-sass'
 # for get Rails variables in js
 gem 'gon'
 
+# for orgmd_parser wasm
+gem 'wasmer', '~> 0.4'
+
 group :development, :test do
   gem 'faker'
   gem 'rspec-rails'
