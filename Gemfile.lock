@@ -230,6 +230,7 @@ GEM
       rubocop (>= 0.82.0)
     ruby-progressbar (1.10.1)
     rubyzip (2.3.0)
+    rutie (0.0.4)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
@@ -272,6 +273,8 @@ GEM
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
     unicode-display_width (1.7.0)
+    wasmer (0.4.0)
+      rutie (~> 0.0.4)
     web-console (4.0.3)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -324,6 +327,7 @@ DEPENDENCIES
   sqlite3 (~> 1.4)
   turbolinks (~> 5)
   tzinfo-data
+  wasmer (~> 0.4)
   web-console (>= 3.3.0)
   webdrivers
   webpacker (~> 4.0)
