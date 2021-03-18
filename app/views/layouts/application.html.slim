@@ -8,7 +8,6 @@ html
     = Gon::Base.render_data(:camel_case => true, :need_type => true)
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
-    = javascript_pack_tag 'hello_react'
   body
     = render 'layouts/header'
 
@@ -18,8 +17,6 @@ html
       = yield
 
     footer
-      address Copyright(C) 2020 logorg, Allright Reserved.
-
       - if Rails.env.development?
         = debug(params)
 

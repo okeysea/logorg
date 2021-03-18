@@ -1,23 +1,28 @@
 = provide(:title, @post.title)
 
-p#notice = notice
+#content_container data-scope-path="posts/show"
+  h1
+    = @post.title
+  .docment_content
+    = @post.content.html_safe
+  /p#notice = notice
 
-p
-  strong User:
-  = @post.user_id
-p
-  strong Post:
-  = @post.post_id
-p
-  strong Title:
-  = @post.title
-p
-  strong Content:
-  = @post.content
-p
-  strong Content source:
-  = @post.content_source
+  /p
+    strong User:
+    = @post.user_id
+  /p
+    strong Post:
+    = @post.post_id
+  /p
+    strong Title:
+    = @post.title
+  /p
+    strong Content:
+    = @post.content
+  /p
+    strong Content source:
+    = @post.content_source
 
-=> link_to 'Edit', edit_user_post_path(@post.user, @post)
-'|
-=< link_to 'Back', user_posts_path
+  => link_to 'Edit', edit_user_post_path(@post.user, @post)
+  '|
+  =< link_to 'Back', user_posts_path

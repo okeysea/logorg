@@ -3,6 +3,7 @@ import { AST } from "./OrgMdParser"
 
 type Props = {
   ast: AST
+  className?: string
 }
 
 const OrgMdRenderer: React.FC<Props> = props => {

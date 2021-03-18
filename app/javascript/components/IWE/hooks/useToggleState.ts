@@ -40,13 +40,15 @@ export type ToggleStateOptions = {
 export type ToggleStateCurrent  = string | undefined;
 export type ToggleStateToggler  = {[key:string]: ()=>void};
 export type ToggleStateStates   = {[key:string]: boolean};
+export type ToggleStateSetter  =  {[key:string]: (value: boolean)=>void};
 
 const useToggleState = <T extends string | number>(
   items: Array<ToggleStateForm<T>>
 ): {
   current: ToggleStateCurrent,
   toggler: ToggleStateToggler,
-  state:   ToggleStateStates
+  state:   ToggleStateStates,
+  setter:  ToggleStateSetter,
 } => {
 
   const [ current, setCurrent ] = useState(undefined);
@@ -86,7 +88,21 @@ const useToggleState = <T extends string | number>(
     return obj;
   }, {});
 
-  return {current, toggler, state};
+  const setter = items.reduce<{[key:string]:(value: boolean)=>void}>((func, current, idx)=>{
+    func[current.key] = (value: boolean):void=>{
+      setFlags(flags.map((flagsValue, flagsIdx) => {
+        if(flagsIdx == idx){
+          if( value ){ setCurrent(current.key); } else { setCurrent(undefined); }
+          return value;
+        }else{
+          return false;
+        }
+      }));
+    };
+    return func;
+  }, {});
+
+  return {current, toggler, state, setter};
 }
 
 export default useToggleState;

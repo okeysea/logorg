@@ -100,6 +100,7 @@ const cssResizer = css({
 const cssPaneHidden = css({
   "& > .Pane1": {
     width: "0px !important",
+    display: "none",
   },
   "& > .Pane2": {
     width: "100% !important",
@@ -118,6 +119,7 @@ const OrgMdIWE: React.FC<Props> = props => {
 
   const post: Post = useLazyInitializableRef( ()=>{return API.factoryPost(props.post_id)} );
   const [ loading, setLoading ] = useState(true);
+  const [ docTitle, setDocTitle ] = useState("");
   const [ docRaw, setDocRaw ] = useState("");
   const [ docAST, setDocAST ] = useState({
     elm_type: "Document",
@@ -136,31 +138,28 @@ const OrgMdIWE: React.FC<Props> = props => {
   ]);
 
   const editorChange = async (value: string): Promise<void> => {
-    console.log(value);
     setDocRaw(value);
     let ast = await Parser.parseRawStringToAST(value);
     setDocAST(ast);
   }
 
-  const testSave = () => {
-    console.log(post.content);
-    post.setTitle("LogOrgAPI Test");
+  const serverSave = () => {
+    post.setTitle(docTitle);
     post.setContent(docRaw);
     post.update();
-    console.log(post.content);
   }
 
   useEffect(()=>{
     post.sync().then( (post)=>{
       setLoading(false);
-      editorChange(post.content);
+      editorChange(post.content_source);
     } );
   }, [props.post_id]);
 
   return (
     <React.Fragment>
       <div data-scope-path="component/orgmdiwe" css={cssIWE}>
-        <OrgMdNaviHeader />
+        <OrgMdNaviHeader onSave={serverSave}/>
         <div css={cssContainer}>
           <OrgMdNaviSide menuState={sideMenusState}/>
           <div css={cssEditorContainer}>
@@ -172,14 +171,13 @@ const OrgMdIWE: React.FC<Props> = props => {
             >
               <Settings css={css([cssPaneContainer, cssHeightFull])}/>
               <SplitPane split="vertical" minSize={ windowSize.width * (30/100)} defaultSize="50%" maxSize={ windowSize.width * (70/100) }>
-                { loading ? <span>Loading...</span> : <OrgMdEditor value={post.content} onChange={editorChange} ast={docAST} css={cssHeightFull}/> }
+                { loading ? <span>Loading...</span> : <OrgMdEditor value={post.content_source} titleValue={post.title} onChange={editorChange} onTitleChange={setDocTitle} ast={docAST} /> }
                 <OrgMdView ast={docAST} css={[cssPaneContainer, cssHeightFull]} />
               </SplitPane>
             </SplitPane>
           </div>
         </div>
       </div>
-      <button onClick={testSave}>保存する！</button>
     </React.Fragment>
   );
 }
