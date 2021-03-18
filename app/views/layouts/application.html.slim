@@ -5,9 +5,9 @@ html
       = full_title(yield(:title))
     = csrf_meta_tags
     = csp_meta_tag
+    = Gon::Base.render_data(:camel_case => true, :need_type => true)
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
-    = javascript_pack_tag 'hello_react'
   body
     = render 'layouts/header'
 
@@ -17,22 +17,22 @@ html
       = yield
 
     footer
-      address Copyright(C) 2020 logorg, Allright Reserved.
-      = debug(params) if Rails.env.development?
+      - if Rails.env.development?
+        = debug(params)
 
-      .color_palette
-        .card
-          #c_base.c_sample
-            span.c_font_dark base color
-        .card
-          #c_sub.c_sample
-            span.c_font_dark sub color
-        .card
-          #c_accent.c_sample
-            span.c_font_dark accent color
-        .card
-          #c_accent2.c_sample
-            span.c_font_light accent 2 color
-        .card
-          #c_accent3.c_sample
-            span.c_font_light accent 3 color
+        .color_palette
+          .card
+            #c_base.c_sample
+              span.c_font_dark base color
+          .card
+            #c_sub.c_sample
+              span.c_font_dark sub color
+          .card
+            #c_accent.c_sample
+              span.c_font_dark accent color
+          .card
+            #c_accent2.c_sample
+              span.c_font_light accent 2 color
+          .card
+            #c_accent3.c_sample
+              span.c_font_light accent 3 color
