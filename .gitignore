@@ -53,3 +53,6 @@ yarn-debug.log*
 
 # Ignore github package authtoken
 /.authtoken
+
+# Ignore uploads
+/public/uploads

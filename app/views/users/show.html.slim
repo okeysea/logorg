@@ -4,7 +4,7 @@
   .profile_wrapper
     .user_basic
       .user_pic_container
-        .user_profile_pic
+        = react_component('ProfileWallAvatar', { userId: @user.public_id })
       .user_identity
         h1.user_name
           = @user.name

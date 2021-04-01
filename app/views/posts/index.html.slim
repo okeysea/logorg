@@ -5,7 +5,7 @@
   .sidebar_layout
 
     aside.sidebar
-      = react_component('ProfileCard', { user: user_as_json(@user) })
+      = react_component('ProfileCard', { userId: @user.public_id })
 
     main.main
       h1 = t('.posts_all_list')

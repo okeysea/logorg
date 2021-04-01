@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_29_044554) do
+ActiveRecord::Schema.define(version: 2021_03_19_050012) do
 
   create_table "posts", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2020_08_29_044554) do
     t.datetime "activated_at"
     t.string "display_id", null: false
     t.string "remember_digest"
+    t.string "avatar"
     t.index ["public_id", "email"], name: "index_users_on_public_id_and_email", unique: true
   end
 

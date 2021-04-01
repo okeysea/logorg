@@ -11,8 +11,15 @@ class Post < ApplicationRecord
   validates :post_id, :user_id, :title, :content, :content_source, presence: true
   validates :post_id, uniqueness: true
 
+  # urlのid表示を変更
   def to_param
     post_id
+  end
+
+  # API用
+  def api_show
+    self.slice(%i[post_id title content content_source created_at updated_at])
+      .merge({owner: user.api_general})
   end
 
   private

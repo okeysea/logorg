@@ -14,7 +14,7 @@ header#g_header
             li #{link_to t('.visit_github'), "#", class: "navi_link"}
             li#g_header_navi_division
             li #{link_to t('.logout'), logout_path, method: :delete, class: "navi_link"}
-            li#g_header_navi_usermenu = react_component('ProfileDropdownMenu', { user: user_as_json(current_user) })
+            li#g_header_navi_usermenu = react_component('ProfileDropdownMenu', { userId: current_user.public_id })
         - else
           ul
             li #{link_to t('.hot_topic'), "#", class: "navi_link"}

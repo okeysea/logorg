@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
     def share_var_js
       if logged_in? then
         gon.logged_in = true
-        gon.user = current_user.slice(%i[public_id display_id name])
+        gon.user = current_user.api_details
       else
         gon.logged_in = false
       end

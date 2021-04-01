@@ -48,6 +48,11 @@ gem 'gon'
 # for orgmd_parser wasm
 gem 'wasmer', '~> 0.4'
 
+# for file upload
+gem 'carrierwave', '~> 2.0'
+
+gem 'mini_magick'
+
 group :development, :test do
   gem 'faker'
   gem 'rspec-rails'
