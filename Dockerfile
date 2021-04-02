@@ -64,6 +64,7 @@ ADD Gemfile.lock /project/Gemfile.lock
 
 RUN gem install bundler
 RUN gem install wasmer
+RUN bundle update
 RUN bundle install
 
 ADD package.json /project/package.json

@@ -1184,10 +1184,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@okeysea/orgmd_parser@0.1.4":
-  version "0.1.4"
-  resolved "https://npm.pkg.github.com/download/@okeysea/orgmd_parser/0.1.4/ba2e4ef0c4fa91906fa33ca0ea6f7fb4ed64e5db165d18d34a516e9c40d574c2#8f8a87783cd32ed13a7d7ac40a209be9b67648f3"
-  integrity sha512-kzACtDbvxvtrf6e9Iw6otum/W5pFP0tVgpXAz5D+U3KU/aQXaqiNBtEvlYGJIKcugWDcgfGFFJMkiOGCTtymQw==
+"@okeysea/orgmd_parser@0.1.6":
+  version "0.1.6"
+  resolved "https://npm.pkg.github.com/download/@okeysea/orgmd_parser/0.1.6/4402471fc698f375c83d9dfe4c7904afbd8b4b88c00acf58ca9396a7b2c2c9bb#9b0f2e5599f662d7bd2c16b8fa9879cfa175579a"
+  integrity sha512-40ME6ebjdWII6oecTVRykM4Uu3maHIemA4oNNtBGafsSIvHlwcI/LrfscqUtnOw/RxHm4haHgrbveznQf9ieNg==
 
 "@rails/actioncable@^6.0.0":
   version "6.1.3"
