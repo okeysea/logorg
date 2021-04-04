@@ -2,3 +2,5 @@
 .bundle
 vendor/bundle
 node_modules
+public/packs/js
+public/packs-test/js
