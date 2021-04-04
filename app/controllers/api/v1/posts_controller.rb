@@ -32,6 +32,7 @@ class Api::V1::PostsController < ApplicationController
     @post.user_id = current_user.id
 
     if @post.save
+      flash_message(:success, "記事を作成しました")
       # redirect_to api_v1_post_path(@post), status: :created and return
       render :show, status: :created, location: api_v1_post_path(@post) and return
     else
@@ -44,6 +45,7 @@ class Api::V1::PostsController < ApplicationController
   # ログインしているユーザーかつ記事のオーナー
   def update
     if @post.update(post_params)
+      flash_message(:success, "記事を更新しました")
       # redirect_to api_v1_post_path(@post), status: :ok and return
       render :show, status: :ok, location: api_v1_post_path(@post) and return
     else

@@ -1,15 +1,6 @@
 = provide(:title, t('.title', username: @user.name) )
 
 #content_container data-scope-path="users/show"
-  .profile_wrapper
-    .user_basic
-      .user_pic_container
-        = react_component('ProfileWallAvatar', { userId: @user.public_id })
-      .user_identity
-        h1.user_name
-          = @user.name
-        h2.user_id
-          | @
-          = @user.display_id
+  = render 'partial/user_wall'
 
   = render 'partial/posts_list'

@@ -32,13 +32,12 @@ const cssFormError = css({
 });
 
 type Props = {
-  userId: string
 }
 
-const FormUpdateUser: React.FC<Props> = props =>{
+const FormCreateUser: React.FC<Props> = props =>{
 
-  const [ loaded, user ] = useAPIUser( props.userId );
-  const [ errors, setErrors ] = useState({ name: [], password:[], passwordConfirmation: [] });
+  const [ loaded, user ] = useAPIUser();
+  const [ errors, setErrors ] = useState({ publicId: [], name: [], email:[], password:[], passwordConfirmation: [] });
 
   const handleChanges = (name: string, value: string) => {
     if( user ){
@@ -49,7 +48,7 @@ const FormUpdateUser: React.FC<Props> = props =>{
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if( user ){
-      user.update().then( result => {
+      user.create().then( result => {
         if( result.isSuccess() ){
 
           window.Turbolinks.visit( result.value.getUrl() );
@@ -59,11 +58,13 @@ const FormUpdateUser: React.FC<Props> = props =>{
           const valueOrArray = (value)=>{ return value === undefined ? [] : value};
           console.log( result );
           setErrors({
+            publicId: valueOrArray(errfield["public_id"]),
             name: valueOrArray(errfield["name"]),
+            email: valueOrArray(errfield["email"]),
             password: valueOrArray(errfield["password"]),
             passwordConfirmation: valueOrArray(errfield["password_confirmation"]),
           });
-          dispatchFlash("ユーザー情報の更新に失敗しました！");
+          dispatchFlash("ユーザー登録に失敗しました");
         }
       });
     }
@@ -80,14 +81,35 @@ const FormUpdateUser: React.FC<Props> = props =>{
         <form onSubmit={handleSubmit} css={cssContainer}>
           <div>
             <FloatingLabelInput
+            placeholder="公開ID(公開)"
+            onChange={handleChanges}
+            name="publicId"
+            css={css(errors.publicId.length ? cssHasError : {})}
+            />
+            <ul css={cssFormError}>
+            { errors.publicId.map((value)=>{return <li>{value}</li>}) }
+            </ul>
+          </div>
+          <div>
+            <FloatingLabelInput
             placeholder="名前(公開)"
             onChange={handleChanges}
-            value={ user && user.name }
             name="name"
             css={css(errors.name.length ? cssHasError : {})}
             />
             <ul css={cssFormError}>
             { errors.name.map((value)=>{return <li>{value}</li>}) }
+            </ul>
+          </div>
+          <div>
+            <FloatingLabelInput
+            placeholder="メールアドレス(非公開)"
+            onChange={handleChanges}
+            name="email"
+            css={css(errors.email.length ? cssHasError : {})}
+            />
+            <ul css={cssFormError}>
+            { errors.email.map((value)=>{return <li>{value}</li>}) }
             </ul>
           </div>
           <div>
@@ -118,7 +140,7 @@ const FormUpdateUser: React.FC<Props> = props =>{
             <label>アバター</label>
             <AvatarPicker onChange={handleAvatar}/>
           </div>
-          <button>ユーザー情報を更新</button>
+          <button>登録する</button>
         </form>
     </div>
   }
@@ -126,4 +148,4 @@ const FormUpdateUser: React.FC<Props> = props =>{
   );
 }
 
-export default FormUpdateUser;
+export default FormCreateUser;

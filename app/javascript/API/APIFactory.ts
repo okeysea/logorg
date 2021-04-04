@@ -2,8 +2,10 @@ import Result, { Success, Failure } from "./Result"
 import APIError from "./APIError"
 import APIUsers from "./request/APIUsers"
 import APIPosts from "./request/APIPosts"
+import APISessions from "./request/APISessions"
 import User from "./models/User"
 import Post from "./models/Post"
+import Session from "./models/Session"
 
 export default class APIFactory {
   constructor() {
@@ -15,6 +17,10 @@ export default class APIFactory {
 
   get Post(){
     return PostAPIWrapper;
+  }
+
+  get Session(){
+    return SessionAPIWrapper;
   }
 }
 
@@ -41,5 +47,12 @@ const PostAPIWrapper = {
 
   getByPostId: async (post_id: string) => {
     return await PostAPI.show( post_id );
+  },
+}
+
+const SessionAPI = new APISessions();
+const SessionAPIWrapper = {
+  get: () => {
+    return new Session();
   },
 }

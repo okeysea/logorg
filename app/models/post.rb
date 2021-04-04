@@ -32,7 +32,9 @@ class Post < ApplicationRecord
     end
 
     def convert_markdown
-      self.content = @@convertMark.to_html self.content_source 
+      ast = @@convertMark.text_to_ast self.content_source 
+      self.content =  @@convertMark.ast_to_html ast
+      self.lead =     @@convertMark.ast_to_preview_html ast
     end
 
 end

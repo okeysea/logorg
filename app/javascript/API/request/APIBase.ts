@@ -34,7 +34,6 @@ export default class APIBase {
       }).catch(error =>{ throw new Error(error); } );
 
     return response;
-    
   }
 
 }

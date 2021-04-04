@@ -25,6 +25,7 @@ export default class Post {
         created_at: "",
         updated_at: "",
         owner: null,
+        urls: {},
       }
     }else if( obj instanceof Post ){
       this.postData = {
@@ -35,6 +36,7 @@ export default class Post {
         created_at: obj.createdAt,
         updated_at: obj.updatedAt,
         owner: obj.owner,
+        urls: obj.urls,
       }
     }else{
       this.postData = obj;
@@ -51,9 +53,17 @@ export default class Post {
   get updatedAtDate(): Date       { return new Date( this.updatedAt ); }
   get owner()                     { return this.postData.owner; }
   get ownerUser()                 { return new User( this.owner ) }
+  get urls()                      { return this.postData.urls; }
 
   set title(value: string)          { this.postData.title = value; }
   set contentSource(value: string)  { this.postData.content_source = value; }
+  
+  getUrl(page = "post"){
+    if( this.urls[page] ){
+      return this.urls[page];
+    }
+    return null;
+  }
 
   async update(){
     return await this.request.update(this.postId, {

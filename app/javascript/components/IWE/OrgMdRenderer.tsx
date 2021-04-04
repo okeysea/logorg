@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect } from "react"
 import { AST } from "./OrgMdParser"
+import {ConteredContainerUnchecked} from "./ConteredContainer"
 
 type Props = {
   ast: AST
@@ -31,7 +32,7 @@ const DocumentComponent: React.FC<DocumentComponentProps> = props => {
         list.push(<p><DocumentComponent astObjects={obj.children} /></p>);
         break;
       case "Headers":
-        list.push(<h1><DocumentComponent astObjects={obj.children} /></h1>);
+        list.push(<ConteredContainerUnchecked tagName={obj.elm_meta.toLowerCase()}><DocumentComponent astObjects={obj.children} /></ConteredContainerUnchecked>);
         break;
       case "Text":
         list.push(<React.Fragment>{obj.value}</React.Fragment>);

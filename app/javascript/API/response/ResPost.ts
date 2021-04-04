@@ -7,7 +7,10 @@ type ResPost = {
   readonly content: string
   readonly created_at: string
   readonly updated_at: string
-  readonly owner: ResUser
+  readonly owner: ResUser | null
+  urls: {
+    [key:string]: string
+  }
 };
 
 export function isResPost(arg: any): arg is ResPost {

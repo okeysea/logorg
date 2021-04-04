@@ -22,7 +22,17 @@ const wrap = <T>(
             } )
           })
           .catch( error => {
-            reject(error)
+            if( response.status == 204 ){
+              // NO CONTENT
+              resolve( {
+                status: response.status,
+                ok: response.ok,
+                data: <T>{},
+                response: response
+              } )
+            }else{
+              reject(error)
+            }
           })
       }).catch(error => {
         reject(error);

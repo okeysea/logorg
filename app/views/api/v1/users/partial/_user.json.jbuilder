@@ -1,1 +1,1 @@
-json.array! @users, :public_id, :display_id, :name
+json.extract! user, :public_id, :display_id, :name

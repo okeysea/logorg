@@ -5,6 +5,7 @@ type Props = {
   user: User
   size: string
   className?: string
+  nsize?: number
 }
 
 const ProfileAvatar: React.FC<Props> = props => {

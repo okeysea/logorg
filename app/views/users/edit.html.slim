@@ -1,17 +1,7 @@
 = provide(:title, t('.title'))
 
 #content_container data-scope-path="users/edit"
-  .profile_wrapper
-    .user_basic
-      .user_pic_container
-        .user_profile_pic
-      .user_identity
-        h1.user_name
-          = @user.name
-        h2.user_id
-          | @
-          = @user.display_id
-
+  = render 'partial/user_wall'
   = render 'partial/flash_message'
 
   = image_tag @user.avatar.url(:thumb)

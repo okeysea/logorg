@@ -58,5 +58,5 @@ yarn-debug.log*
 /public/uploads
 
 # Ignore secret environment
-/environments/secret/
+/environments/secret/*
 !/environments/secret/.keep

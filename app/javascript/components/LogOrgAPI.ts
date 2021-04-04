@@ -16,6 +16,7 @@ declare global {
     gon: {
       loggedIn: boolean,
       user?: APIUser,
+      flash?: Array<any>,
     }
   }
 }

@@ -21,5 +21,6 @@ class ApplicationController < ActionController::Base
       else
         gon.logged_in = false
       end
+      gon.flash = flash
     end
 end

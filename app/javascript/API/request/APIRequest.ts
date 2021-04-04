@@ -105,7 +105,8 @@ export default class APIRequest {
   }
 
   // javascript オブジェクトをFormDataに変換
-  // その際キー名をいいかんじに変換する。
+  // その際キー名をいいかんじに変換する。(PHP方式)
+  // ネストにも対応している
   //
   //   INPUT                || OUTPUT
   //   key: string          => key = string

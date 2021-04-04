@@ -4,7 +4,7 @@ import "../API/API"
 
 let user: User = new User();
 
-export function useAPIUser(userId: string):
+export function useAPIUser(userId: string = null):
 [
   boolean, User
 ]{
@@ -12,14 +12,18 @@ export function useAPIUser(userId: string):
   const [loaded, setLoaded] = useState( false );
 
   useEffect(()=>{
-    window.API.User.getByPublicId(userId).then(result=>{
-      if( result.isSuccess() ){
-        user = result.value;
-        setLoaded( true );
-      }else{
-        //TODO: error process
-      }
-    })
+    if( userId ){
+      window.API.User.getByPublicId(userId).then(result=>{
+        if( result.isSuccess() ){
+          user = result.value;
+          setLoaded( true );
+        }else{
+          //TODO: error process
+        }
+      })
+    }else{
+      setLoaded( true );
+    }
   },[])
 
   return [loaded, user]

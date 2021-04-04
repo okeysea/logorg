@@ -144,7 +144,13 @@ const OrgMdIWE: React.FC<Props> = props => {
   const serverSave = () => {
     post.title = docTitle;
     post.contentSource = docRaw;
-    post.createOrUpdate();
+    post.createOrUpdate().then( result => {
+      if( result.isSuccess() ){
+        window.Turbolinks.visit( result.value.getUrl() );
+      }else{
+        // do error message
+      }
+    });
   }
 
   return (

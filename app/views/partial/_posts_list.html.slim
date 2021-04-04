@@ -10,7 +10,7 @@ div data-scope-path="partial/posts_list"
               .title
                 = truncate(p.title, length: 100)
               .content
-                = truncate(p.content, length: 100)
+                = truncate(strip_tags(p.lead), length: 100)
 
             .inform
               - if current_user?( p.user )

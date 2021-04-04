@@ -23,8 +23,13 @@ class Api::V1::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.avatar = "avatar_default_500.png"
+
     if @user.save
       @user = @user.reload
+      log_in @user
+      UserMailer.account_activation(@user).deliver_now
+      flash_message(:success, "ユーザー登録が完了しました")
       render :show_details, status: :created and return
     else
       render_error_model @user and return 
@@ -34,6 +39,7 @@ class Api::V1::UsersController < ApplicationController
   def update
     if @user.update(patch_user_params)
       @user = @user.reload
+      flash_message(:success, "ユーザー情報を更新しました")
       render :show_details and return
     else
       render_error_model @user and return 

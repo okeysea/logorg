@@ -15,22 +15,36 @@ const cssFlashContainer = css({
   width: "100%",
   display: "flex",
   flexDirection: "column",
+  transition: "all 1s ease",
 });
 
 const cssFlashMessage = css({
   display: "flex",
+  height: "38px",
   justifyContent: "center",
+  alignContent: "center",
   paddingTop: "8px",
   paddingBottom: "8px",
 
   "&.notice": {
-    backgroundColor: "#ff00ff",
-  }
+    backgroundColor: "#f1ccb1",
+  },
+  "&.success": {
+    backgroundColor: "#aee364",
+  },
+  "&.warning": {
+    backgroundColor: "#f5c8cb",
+  },
+  "&.danger": {
+    backgroundColor: "#e25d68",
+    color: "#fff",
+  },
 });
 
 const cssFlashMessageBody = css({
   display: "flex",
   justifyContent: "space-between",
+  alignItems: "center",
   width: "980px",
 });
 
@@ -41,9 +55,9 @@ const genFlash = (notifications: Notificates)=>{
     elements.push(
       <div css={cssFlashMessage} className={msg.type}>
         <div css={cssFlashMessageBody}>
-          <div>[Inform]</div>
+          <div>[Replace:Icon]</div>
           {msg.message}
-          <div>[close]</div>
+          <div>[Replace:close]</div>
         </div>
       </div>
     );
@@ -64,25 +78,31 @@ const FlashMessage: React.FC<Props> = props => {
   const [ messages, setMessages ] = useState([]);
   const [ showelm, setShowelm ] = useState(<React.Fragment></React.Fragment>);
 
+  const [ addPageEvent, removePageEvent ] = useDocumentEventHandler("turbolinks:visit", (e)=>{
+    window.gon.flash = [];
+  }, [messages]);
+
   const appendMessage = (type: any, message: string)=>{
     setMessages([
       ...messages,
       {
-        type: "notice",
+        type: type,
         message: message,
       }
     ]);
   };
 
   const [ addObsvEvent, removeObsvEvent ] = useDocumentEventHandler("logorg:dispatchFlash", (e)=>{
-    appendMessage("notice", e.detail.message);
+    appendMessage(e.detail.type, e.detail.message);
   }, [messages]);
 
   useEffect(()=>{
     addObsvEvent();
+    addPageEvent();
 
     return ()=>{
       removeObsvEvent();
+      removePageEvent();
     };
 
   },[]);
@@ -91,12 +111,30 @@ const FlashMessage: React.FC<Props> = props => {
     setShowelm(genFlash(messages));
   }, [messages]);
 
+  useEffect(()=>{
+    window.gon.flash.forEach((value)=>{ value[1].forEach((msg=>appendMessage(value[0], msg))) });
+  },[]);
+
   return (
     <React.Fragment>
       <div css={cssFlashContainer}>
         {showelm}
       </div>
-      <button onClick={()=>{dispatchFlash("Dispatched!");}}>Dispatch</button>
+      {/*
+      <button onClick={()=>{
+        dispatchFlash("Dispatched!");
+      }}>Dispatch</button>
+      <button onClick={()=>{
+        dispatchFlash("Success!", "success");
+      }}>Dispatch</button>
+      <button onClick={()=>{
+        dispatchFlash("warning!", "warning");
+      }}>Dispatch</button>
+      <button onClick={()=>{
+        dispatchFlash("danger!", "danger");
+      }}>Dispatch</button>
+        */
+      }
     </React.Fragment>
   )
 }

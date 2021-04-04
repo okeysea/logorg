@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2021_04_02_012353) do
     t.text "content_source", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "lead"
+    t.text "lead"
     t.index ["post_id"], name: "index_posts_on_post_id", unique: true
     t.index ["user_id"], name: "index_posts_on_user_id"
   end

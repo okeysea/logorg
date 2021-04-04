@@ -1,9 +1,9 @@
 import React, { useState, useCallback, useEffect } from "react"
-import PropTypes from "prop-types"
 import ProfileAvatar from "./ProfileAvatar"
 import Dropdown from "./Dropdown"
 import { useAPIUser } from "./APIUserHooks"
-import User from "../API/models/User"
+import { useAPISession } from "./APISessionHooks"
+import {dispatchFlash} from "../Events/FlashMessageEvent"
 
 type Props = {
   user: {
@@ -17,6 +17,17 @@ type Props = {
 
 const ProfileDropdownMenu: React.FC<Props> = props => {
   const [loaded, user] = useAPIUser( props.userId );
+  const [session] = useAPISession();
+
+  const handleLogout = ()=>{
+    session.logout().then( result => {
+      if( result.isSuccess() ){
+        window.location.reload();
+      }else{
+        dispatchFlash("不明な操作です","danger");
+      }
+    });
+  }
 
   return (
     <React.Fragment>
@@ -30,12 +41,10 @@ const ProfileDropdownMenu: React.FC<Props> = props => {
             </div>
           </Dropdown.Trigger>
           <Dropdown.Menu>
-            <Dropdown.Item href="http://www.google.com/">プロファイル編集</Dropdown.Item>
-            <Dropdown.Item>記事新規作成</Dropdown.Item>
-            <Dropdown.Item>ほげほげ</Dropdown.Item>
+            <Dropdown.Item href={user.getUrl("edit")}>プロファイル編集</Dropdown.Item>
+            <Dropdown.Item href={user.getUrl("newPost")}>記事新規作成</Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item>ログアウト</Dropdown.Item>
-            <Dropdown.Item>ログアウトするにはログインが必要です</Dropdown.Item>
+            <Dropdown.Item onClick={handleLogout}>ログアウト</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </div>

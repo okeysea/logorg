@@ -1,48 +1,34 @@
-#branding
-  h1 LogOrg
+.branding-container
+  .branding-inner-container
+    #branding
+      h1 LogOrg
+      p
+        | いまいち使いものにならないマークダウンエディタを備えたメディアサービスです
+    .branding-navigate-container
+      = link_to "ユーザ登録", signup_path, class: "branding-new-user"
 
 #articles 
-  .card_container_title トレンド
+  .card_container_title 新着(20)
   .card_layout
-    .card
-      article.article 
-        span.date 2020.07.27
-        h2 コロナウイルスが突然変異！大丈夫なのか日本！？
-        p コロナウイルスの遺伝子配列が変化し、感染力は大幅に強化され、致死率もアップしたという研究結果が先日公表されました。この事実に...
-        a.btn href="#" もっとみる
-    .card
-      article.article 
-        span.date 2020.07.27
-        h2 コロナウイルスが突然変異！大丈夫なのか日本！？
-        p コロナウイルスの遺伝子配列が変化し、感染力は大幅に強化され、致死率もアップしたという研究結果が先日公表されました。この事実に...
-        a.btn href="#" もっとみる
-    .card
-      article.article 
-        span.date 2020.07.27
-        h2 コロナウイルスが突然変異！大丈夫なのか日本！？
-        p コロナウイルスの遺伝子配列が変化し、感染力は大幅に強化され、致死率もアップしたという研究結果が先日公表されました。この事実に...
-        a.btn href="#" もっとみる
-    .card
-      article.article 
-        span.date 2020.07.27
-        h2 コロナウイルスが突然変異！大丈夫なのか日本！？
-        p コロナウイルスの遺伝子配列が変化し、感染力は大幅に強化され、致死率もアップしたという研究結果が先日公表されました。この事実に...
-        a.btn href="#" もっとみる
-    .card
-      article.article 
-        span.date 2020.07.27
-        h2 コロナウイルスが突然変異！大丈夫なのか日本！？
-        p コロナウイルスの遺伝子配列が変化し、感染力は大幅に強化され、致死率もアップしたという研究結果が先日公表されました。この事実に...
-        a.btn href="#" もっとみる
-    .card
-      article.article 
-        span.date 2020.07.27
-        h2 コロナウイルスが突然変異！大丈夫なのか日本！？
-        p コロナウイルスの遺伝子配列が変化し、感染力は大幅に強化され、致死率もアップしたという研究結果が先日公表されました。この事実に...
-        a.btn href="#" もっとみる
-    .card
-      article.article 
-        span.date 2020.07.27
-        h2 コロナウイルスが突然変異！大丈夫なのか日本！？
-        p コロナウイルスの遺伝子配列が変化し、感染力は大幅に強化され、致死率もアップしたという研究結果が先日公表されました。この事実に...
-        a.btn href="#" もっとみる
+    - @posts.each do |p|
+      .card
+        article.article 
+
+          = link_to user_post_path(p.user, p), class: "link_more" do
+            h2 
+              = truncate(strip_tags(p.title), length: 20)
+            .date
+
+              - if p.created_at == p.updated_at 
+                span.created 
+                  = l(p.created_at, format: :short)
+
+              - else
+                span.updated 
+                  i.far.fa-edit
+                  = l(p.updated_at, format: :short)
+
+            p 
+              = truncate(strip_tags(p.lead), length: 100)
+          /a.btn href="#" もっとみる
+          = react_component("ProfileRowCard", { userId: p.user.public_id })

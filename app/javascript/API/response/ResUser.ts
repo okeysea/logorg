@@ -6,7 +6,10 @@ type ResUser = {
   readonly activated?: boolean;
   avatar: {
     [key:string]: string
-  }
+  },
+  urls: {
+    [key:string]: string
+  },
 };
 
 export function isResUser(arg: any): arg is ResUser {

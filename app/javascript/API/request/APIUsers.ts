@@ -72,9 +72,9 @@ export default class APIUsers extends APIBase {
       {
         path: "users/",
         method: "POST",
-        param: param,
+        param: { user: param },
         proc: {
-          [APIStatus.OK]: (response)=>{
+          [APIStatus.Created]: (response)=>{
             return new Success( new User(response.data) );
           },
           [APIStatus.UnprocessableEntity]: (response)=>{

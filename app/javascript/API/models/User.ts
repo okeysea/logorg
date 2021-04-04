@@ -22,8 +22,8 @@ export default class User {
         public_id: "",
         display_id: "",
         name: "",
-        avatar:{
-        }
+        avatar:{},
+        urls:{},
       }
     }else if( obj instanceof User ){
       this.userData = {
@@ -31,6 +31,7 @@ export default class User {
         display_id: obj.displayId,
         name: obj.name,
         avatar: obj.avatars,
+        urls: obj.urls,
       }
     }else{
       this.userData = obj;
@@ -47,6 +48,7 @@ export default class User {
   get activated(): boolean  { return this.userData.activated; }
   get avatarDataUri(): string { return this.userAvatarDataUri; }
   get avatars(): any        { return this.userData.avatar; }
+  get urls(): any           { return this.userData.urls; }
 
   set publicId(value: string)   { this.userData.public_id = value; }
   set displayId(value: string)  { this.userData.display_id = value; }
@@ -63,6 +65,13 @@ export default class User {
     return null;
   }
 
+  getUrl(page = "user") {
+    if( this.urls[page] ){
+      return this.urls[page];
+    }
+    return null;
+  }
+
   async update(){
     return await this.request.update(this.publicId, {
       name:                   this.name,
@@ -70,6 +79,16 @@ export default class User {
       password_confirmation:  this.userPasswordConfirmation,
       avatar_data_uri:        this.avatarDataUri,
     });
+  }
 
+  async create(){
+    return await this.request.create({
+      public_id:              this.publicId,
+      name:                   this.name,
+      email:                  this.email,
+      password:               this.userPassword,
+      password_confirmation:  this.userPasswordConfirmation,
+      avatar_data_uri:        this.avatarDataUri,
+    });
   }
 }
