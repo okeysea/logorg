@@ -31,12 +31,12 @@ class UsersController < ApplicationController
   def update
     @user = User.find_by(public_id: params[:public_id].downcase)
     if @user.update(patch_user_params)
-      flash_message_now(:success, t('.profile_updated'))
-      # redirect_to @user
+      flash_message(:success, t('.profile_updated'))
+      redirect_to @user
     else
-      flash_message_now(:danger, t('.profile_update_failed'))
+      flash_message(:danger, t('.profile_update_failed'))
+      render 'edit'
     end
-    render 'edit'
   end
 
   private
@@ -48,7 +48,7 @@ class UsersController < ApplicationController
 
     def patch_user_params
       params.require(:user).permit(:name, :password,
-                                   :password_confirmation)
+                                   :password_confirmation, :avatar)
     end
 
     # before actions --

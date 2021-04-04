@@ -1,0 +1,10 @@
+div.profile_wrapper data-scope-path="partial/user_wall"
+  .user_basic
+    .user_pic_container
+      = react_component('ProfileWallAvatar', { userId: @user.public_id })
+    .user_identity
+      h1.user_name
+        = @user.name
+      h2.user_id
+        | @
+        = @user.display_id

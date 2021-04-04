@@ -12,13 +12,12 @@ import Settings from "./IWE/UIComponent/Settings"
 import OrgMdNaviHeader from "./IWE/OrgMdNaviHeader"
 import OrgMdNaviSide, { useNaviSideMenu } from "./IWE/OrgMdNaviSide"
 
-import LogOrgAPI, {Post} from "./LogOrgAPI"
-import { useLazyInitializableRef, useWindowSize } from "./UtilHooks"
+import { useWindowSize } from "./UtilHooks"
+import { useAPIPost } from "./APIPostHooks"
 
 import {cssHeightFull} from "./IWE/style/common"
 
 const Parser = new OrgMdParser();
-const API = new LogOrgAPI();
 
 /*
  * 最上位のコンテナスタイル
@@ -117,8 +116,7 @@ type Props = {
 
 const OrgMdIWE: React.FC<Props> = props => {
 
-  const post: Post = useLazyInitializableRef( ()=>{return API.factoryPost(props.post_id)} );
-  const [ loading, setLoading ] = useState(true);
+  const [ loaded, post ] = useAPIPost(props.post_id);
   const [ docTitle, setDocTitle ] = useState("");
   const [ docRaw, setDocRaw ] = useState("");
   const [ docAST, setDocAST ] = useState({
@@ -144,17 +142,16 @@ const OrgMdIWE: React.FC<Props> = props => {
   }
 
   const serverSave = () => {
-    post.setTitle(docTitle);
-    post.setContent(docRaw);
-    post.update();
+    post.title = docTitle;
+    post.contentSource = docRaw;
+    post.createOrUpdate().then( result => {
+      if( result.isSuccess() ){
+        window.Turbolinks.visit( result.value.getUrl() );
+      }else{
+        // do error message
+      }
+    });
   }
-
-  useEffect(()=>{
-    post.sync().then( (post)=>{
-      setLoading(false);
-      editorChange(post.content_source);
-    } );
-  }, [props.post_id]);
 
   return (
     <React.Fragment>
@@ -171,7 +168,7 @@ const OrgMdIWE: React.FC<Props> = props => {
             >
               <Settings css={css([cssPaneContainer, cssHeightFull])}/>
               <SplitPane split="vertical" minSize={ windowSize.width * (30/100)} defaultSize="50%" maxSize={ windowSize.width * (70/100) }>
-                { loading ? <span>Loading...</span> : <OrgMdEditor value={post.content_source} titleValue={post.title} onChange={editorChange} onTitleChange={setDocTitle} ast={docAST} /> }
+                { !loaded ? <span>Loading...</span> : <OrgMdEditor value={post.contentSource} titleValue={post.title} onChange={editorChange} onTitleChange={setDocTitle} ast={docAST} /> }
                 <OrgMdView ast={docAST} css={[cssPaneContainer, cssHeightFull]} />
               </SplitPane>
             </SplitPane>

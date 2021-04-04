@@ -1,9 +1,12 @@
 = provide(:title, t('.title'))
 
 #content_container data-scope-path="users/edit"
-  .logo
-
+  = render 'partial/user_wall'
   = render 'partial/flash_message'
+
+  = image_tag @user.avatar.url(:thumb)
+
+  = react_component('UIForm/FormUpdateUser', { userId: @user.public_id })
 
   .signup
     = form_with( model: (@user ||= User.new), local: true ) do |f|
@@ -19,11 +22,17 @@
         .error_message
           = @user.errors.full_messages_for(:name).first
 
-      .row.input
+      /.row.input
         = f.text_field :email, :placeholder => t('.email')
-      - if @user.errors.include?(:email)
+      /- if @user.errors.include?(:email)
         .error_message
           = @user.errors.full_messages_for(:email).first
+
+      .row.input
+        = f.file_field :avatar, :placeholder => t('.avatar')
+      - if @user.errors.include?(:avatar)
+        .error_message
+          = @user.errors.full_messages_for(:avatar).first
       / Password field
         .row.input
           = f.password_field :password, :placeholder => t('.password')

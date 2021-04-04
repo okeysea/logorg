@@ -197,6 +197,7 @@ const Trigger: React.FC<ButtonProps> = props => {
 
 type ItemProps = {
   href?: string
+  onClick?: ()=>void
   children: React.ReactNode
 }
 
@@ -205,6 +206,7 @@ const Item: React.FC<ItemProps> = props => {
     <a
     className="dropdown-item"
     href={props.href}
+    onClick={props.onClick}
     >
       { props.children }
     </a>

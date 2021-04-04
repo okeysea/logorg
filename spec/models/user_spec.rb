@@ -8,13 +8,17 @@ RSpec.describe User, type: :model do
       name:                  name,
       email:                 email,
       password:              password,
-      password_confirmation: password_confirmation
+      password_confirmation: password_confirmation,
+      avatar_data_uri:       avatar_data_uri
   } }
   let(:public_id){            "hogefuga"}
   let(:name){                 "adam_tesra"} 
   let(:email){                "example@example.com"}
   let(:password){             "password"}
   let(:password_confirmation){"password"}
+  let(:avatar_data_uri){
+    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAFCAYAAABxeg0vAAAAP0lEQVQYV3WOSQ4AIAgD2/8/egxEDEHlwlKYYkloBCDbOe119AYIsYTIKexZsc7OPHhRO+zrcJHri5fDdOkOCzEkRvXdnbVDAAAAAElFTkSuQmCC"
+  }
 
   let(:user){ User.new( params ) }
   subject { user.valid? }

@@ -75,3 +75,38 @@
             font-size: 1.1em;
             margin-top: 8px;
             line-height: 140%;
+
+[data-scope-path="partial/user_wall"]
+  &.profile_wrapper
+    display: flex;
+    background-color: $cSub;
+    margin-top: 8px;
+    border-radius: 4px;
+    color: $cBase;
+    height: 200px;
+    
+    .user_basic
+      display: flex
+      align-items: flex-end;
+      margin-left: 16px;
+      margin-bottom: 16px;
+
+      .user_pic_container
+        width: 100px;
+        height: 100px;
+
+        .user_profile_pic
+          background-color: $cSub;
+          border-radius: 50%;
+          width: calc( 100% - 10px );
+          height: calc( 100% - 10px );
+          border: 5px solid white;
+
+      .user_identity
+        margin-left: 8px;
+        margin-bottom: 8px;
+
+        .user_name
+          font-size: 2em;
+        .user_id
+          font-size: 1.5em;

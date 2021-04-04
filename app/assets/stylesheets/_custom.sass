@@ -3,8 +3,46 @@
 
 /* main page */
 
-div#branding
-  @extend .vSiteColumn;
+div.branding-container
+  background-color: $cSub
+  background-image: radial-gradient(#2171a9 3px, transparent 2px), radial-gradient(#2171a9 2px, transparent 2px)
+  color: $cBase
+  background-size: 60px 60px
+  background-position: 0 0, 30px 30px
+  margin-bottom: 10px
+
+  .branding-inner-container
+    @extend .vSiteColumn;
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+
+    div#branding
+      flex: 1
+      padding-top: 20px
+      padding-bottom: 20px
+
+      h1
+        font-size: 4rem
+      p
+        margin-top: 20px
+
+  div.branding-navigate-container
+    width: 200px
+    display: flex
+    align-items: center
+    
+    a.branding-new-user
+      display: inline-block
+      width: 100%
+      background: $cAccent
+      color: $cBase
+      text-decoration: none
+      border-radius: 4px
+      text-align: center
+      padding: 12px
+
+      
 
 div#articles
   @extend .vSiteColumn;
@@ -16,7 +54,7 @@ div#content_container
 
 .card_container_title
   padding: 8px;
-  font-size: 1.5em;
+  font-size: 1.8em;
 
 .card_layout
   @include card-layout(4,0px,12px);
@@ -26,6 +64,46 @@ div#content_container
       border-right: none;
 
   .article
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    height: 100%
     padding: 8px;
     border-right: 1px solid $cAccent2;
+
+    a.link_more
+      flex: 1
+      display: flex
+      flex-direction: column
+      justify-content: space-between
+      text-decoration: none
+      color: $cAccent
+      
+      &:hover
+        h2
+          text-decoration: underline
+
+      .date
+        width: 100%
+        text-align: right
+
+        span.created
+          display: inline-block
+          text-decoration: none
+
+        span.updated
+          display: inline-block
+          text-decoration: none
+      
+      h2
+        font-size: 2rem
+        margin-top: 8px
+        margin-bottom: 8px
+
+      p
+        flex: 1
+        font-size: 1.5rem
+        line-height: 1.4
+        text-decoration: none
+
 

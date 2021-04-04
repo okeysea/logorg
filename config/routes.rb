@@ -15,4 +15,14 @@ Rails.application.routes.draw do
   end
 
   resources :account_activations, only: [:edit]
+
+  # API
+  namespace :api, { format: 'json' } do
+    namespace :v1 do
+      resources :users, except: [:new, :edit], param: :public_id # APIにnew, editは不要なためexcept
+      resources :posts, except: [:new, :edit]
+      # resources :sessions, only: [:destroy]
+      delete 'sessions', to: 'sessions#destroy'
+    end
+  end
 end

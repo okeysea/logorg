@@ -1,5 +1,9 @@
 class User < ApplicationRecord
   include Contracts::Core
+  include DataUriParseable
+
+  mount_uploader :avatar, AvatarUploader
+
   C = Contracts
 
   has_many :posts, dependent: :destroy
@@ -9,6 +13,10 @@ class User < ApplicationRecord
 
   attr_accessor :activation_token
   before_create :create_activation_digest
+
+  # data uriを変換
+  attr_accessor :avatar_data_uri
+  before_validation :set_avatar_from_data_uri, if: -> { self.avatar_data_uri.present? }
 
   ## validates ##
 
@@ -134,7 +142,28 @@ class User < ApplicationRecord
     BCrypt::Password.new(digest).is_password?(token)
   end
 
+  # API用
+  def api_avatars
+    {
+      thumb: avatar.url(:thumb),
+      raw: avatar.url
+    }
+  end
+ 
+  def api_details
+    self.slice(%i[public_id display_id name email activated])
+      .merge({avatar:api_avatars})
+  end
+
+  def api_general
+    api_details.slice("public_id", "display_id", "name", "avatar")
+  end
+
   private
+
+    def set_avatar_from_data_uri
+      self.avatar = self.class.data_uri_to_file(avatar_data_uri)
+    end
 
     # 表示上では、大文字小文字を区別するために保存しておく
     def save_id_on_display

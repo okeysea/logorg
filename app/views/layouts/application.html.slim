@@ -11,7 +11,7 @@ html
   body
     = render 'layouts/header'
 
-    = render 'partial/flash_message'
+    = render 'partial/react_flash_message'
 
     #content
       = yield
@@ -36,3 +36,4 @@ html
           .card
             #c_accent3.c_sample
               span.c_font_light accent 3 color
+        = react_component('ColorPalette')

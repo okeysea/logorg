@@ -3,6 +3,7 @@ MAINTAINER okeysea
 ARG LOCAL_UID
 ARG LOCAL_GID
 
+
 RUN apt-get update && apt-get install -y nodejs --no-install-recommends \
   && rm -rf /var/lib/apt/lists/*
 RUN apt-get update && apt-get install -y postgresql-client --no-install-recommends \
@@ -57,23 +58,33 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 RUN apt-get update -qq && apt-get -y install gosu
 
+# TEMP
+RUN useradd -u $LOCAL_UID -o -m user
+RUN groupmod -g $LOCAL_GID user
+
 WORKDIR /project
 
 ADD Gemfile /project/Gemfile
 ADD Gemfile.lock /project/Gemfile.lock
 
-RUN gem install bundler
-RUN gem install wasmer
-RUN bundle install
-
+ADD yarn.lock /project/yarn.lock
 ADD package.json /project/package.json
 ADD .npmrc /project/.npmrc
-ADD yarn.lock /project/yarn.lock
 
-RUN useradd -u $LOCAL_UID -o -m user
-RUN groupmod -g $LOCAL_GID user
+RUN chown -R ${LOCAL_UID}:${LOCAL_GID} /project
 
-RUN chown -R ${LOCAL_UID}:${LOCAL_GID} .
+USER user
+
+RUN gem install bundler
+RUN gem install wasmer
+RUN bundle update
+RUN bundle install
+
+# RUN useradd -u $LOCAL_UID -o -m user
+# RUN groupmod -g $LOCAL_GID user
+
+# RUN chown -R ${LOCAL_UID}:${LOCAL_GID} .
+# RUN chown -R ${LOCAL_UID}:${LOCAL_GID} /usr/local/bundle/bin/
 
 USER user
 
@@ -84,4 +95,5 @@ RUN yarn upgrade
 ADD . /project
 
 USER root
+RUN chown -R ${LOCAL_UID}:${LOCAL_GID} /project/tmp/cache
 

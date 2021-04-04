@@ -9,6 +9,8 @@
     span
       = t('.lets_join_logorg')
 
+  = react_component('UIForm/FormCreateUser')
+
   .signup
     = form_with( model: (@user ||= User.new), local: true ) do |f|
       .row.input

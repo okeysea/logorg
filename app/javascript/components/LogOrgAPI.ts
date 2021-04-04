@@ -16,6 +16,7 @@ declare global {
     gon: {
       loggedIn: boolean,
       user?: APIUser,
+      flash?: Array<any>,
     }
   }
 }
@@ -216,7 +217,6 @@ export default class LogOrgAPI {
   }
 
   factoryPost(post_id: string): Post{
-    console.log("called factory");
     return new Post(this.api_request, post_id);
   }
 }

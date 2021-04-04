@@ -1,12 +1,11 @@
 import React, { useState, useCallback } from "react"
+import User from "../API/models/User"
 
 type Props = {
-  user: {
-    public_id: string
-    display_id: string
-    name: string
-  },
+  user: User
   size: string
+  className?: string
+  nsize?: number
 }
 
 const ProfileAvatar: React.FC<Props> = props => {
@@ -15,9 +14,11 @@ const ProfileAvatar: React.FC<Props> = props => {
     props.size ? props.size : 'middle'
   ]
 
+  console.log( props.user );
+
   return (
     <div className="ProfileAvatar" data-scope-path="components/profile_avatar">
-      <img className={classnames.join(' ')} src={`http://localhost:3000/dev_assets/avatar_sample.jpg`} />
+      <img className={classnames.join(' ') + " " + ("" || props.className)} src={props.user.getAvatar("thumb")} />
     </div>
   )
 }

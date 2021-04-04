@@ -10,21 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_29_044554) do
+ActiveRecord::Schema.define(version: 2021_04_02_012353) do
 
-  create_table "posts", force: :cascade do |t|
-    t.integer "user_id", null: false
+  create_table "posts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
     t.string "post_id", null: false
     t.string "title", null: false
     t.text "content", null: false
     t.text "content_source", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "lead"
     t.index ["post_id"], name: "index_posts_on_post_id", unique: true
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "public_id", null: false
     t.string "name", null: false
     t.string "email", null: false
@@ -36,6 +37,7 @@ ActiveRecord::Schema.define(version: 2020_08_29_044554) do
     t.datetime "activated_at"
     t.string "display_id", null: false
     t.string "remember_digest"
+    t.string "avatar"
     t.index ["public_id", "email"], name: "index_users_on_public_id_and_email", unique: true
   end
 

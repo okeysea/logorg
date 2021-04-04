@@ -3,10 +3,14 @@
 USER_ID=${LOCAL_UID:-9001}
 GROUP_ID=${LOCAL_GID:-9001}
 
+chown -R $USER_ID:$GROUP_ID /project/tmp
+chown -R $USER_ID:$GROUP_ID /project/public
+chown -R $USER_ID:$GROUP_ID /project/log
+
 echo "Starting with UID: $USER_ID, GID: $GROUP_ID"
-useradd -u $USER_ID -o -m user
-groupmod -g $GROUP_ID user
 export HOME=/home/user
+usermod -u $USER_ID -o -m user
+groupmod -g $GROUP_ID user
 
 id
 
@@ -19,4 +23,5 @@ else
   echo "[INFO] Copied an .authtoken file to ~/.npmrc ."
 fi
 
-exec /usr/sbin/gosu user "$@"
+# exec /usr/sbin/gosu user "$@"
+exec "$@"
