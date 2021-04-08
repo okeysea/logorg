@@ -9,6 +9,13 @@ const cssContainer = css({
   display: "flex",
   flexDirection: "row",
   justifyContent: "space-around",
+  alignItems: "center",
+  textDecoration: "none",
+  color: "#282c37",
+
+  "&:hover": {
+    textDecoration: "underline",
+  },
 });
 
 const cssVariableItem = css({
@@ -27,6 +34,7 @@ const cssSpan = css({
 
 type Props = {
   userId: string
+  size?: "small" | "middle" | "big" | "adjust"
 }
 
 const ProfileRowCard: React.FC<Props> = props => {
@@ -38,15 +46,20 @@ const ProfileRowCard: React.FC<Props> = props => {
       { loaded &&
         <React.Fragment>
           <a href={user.getUrl()} css={cssContainer}>
-            <ProfileAvatar user={user} size="small" className="user_profile_pic" />
+            <ProfileAvatar user={user} size={props.size} className="user_profile_pic" />
             <div css={css([cssVariableItem, cssRowCenter])}>
               <span css={cssSpan}>{user.name}</span>
             </div>
+            <div>{user.postsCount} 記事</div>
           </a>
         </React.Fragment>
       }
     </div>
   )
 }
+
+ProfileRowCard.defaultProps = {
+  size: "small"
+};
 
 export default ProfileRowCard;

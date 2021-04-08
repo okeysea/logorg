@@ -52,14 +52,15 @@ class ConvertMarkdown
         when "Document"
           output << format("%<value>s", value: recursive_render_preview_html(ast["children"])) 
         when "Paragraph"
-          output << format("%<value>s", value: recursive_render_preview_html(ast["children"])) 
+          output << format("%<value>s ", value: recursive_render_preview_html(ast["children"])) 
         when "Headers"
-          output << format("<b>%<value>s</b>", value: recursive_render_preview_html(ast["children"])) 
+          output << format("%<value>s ", value: recursive_render_preview_html(ast["children"])) 
         when "Text"
           output << format("%<value>s", value: CGI.escapeHTML(ast["value"])) 
         when "Emphasis"
-          output << format("<em>%<value>s</em>", value: recursive_render_preview_html(ast["children"])) 
+          output << format("%<value>s", value: recursive_render_preview_html(ast["children"])) 
         when "SoftBreak"
+          output << " "
         else
           output << format("<span>Undefined elm_type: %<elm_type>s</span>", elm_type: ast["elm_type"]) 
         end

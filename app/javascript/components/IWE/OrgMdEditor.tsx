@@ -27,8 +27,17 @@ const cssEditorContainer = css({
 });
 
 const cssTitleEdit = css({
+  background: "transparent",
   boxSizing: "border-box",
-  padding: "10px",
+  width: "100%",
+  height: "100%",
+  border: "none",
+  paddingLeft: "8px",
+  paddingRight: "8px",
+  "&:focus": {
+    border: "none",
+    outline: "0",
+  }
 });
 
 type Props = {
@@ -52,7 +61,7 @@ const highlight_styles = {
 const OrgMdEditor: React.FC<Props> = props => {
 
   const [ stateValue, setStateValue ] = useState(props.value);
-  const [ options, setOptions ] = useState({});
+  const [ options, setOptions ] = useState({lineNumbers: true});
   const [ editor, setEditor ] = useState(null);
   const [ titleValue, setTitleValue ] = useState(props.titleValue);
 
@@ -108,7 +117,13 @@ const OrgMdEditor: React.FC<Props> = props => {
   return (
     <div css={cssContainer} className={props.className}>
       <div css={cssMenuContainer}>
-        <ClickToInput value={titleValue} onChange={(v)=>{setTitleValue(v)}} css={cssTitleEdit}/>
+        {/*<ClickToInput value={titleValue} onChange={(v)=>{setTitleValue(v)}} css={cssTitleEdit}/>*/}
+        <input 
+          value={titleValue}
+          onChange={(v)=>{setTitleValue(v.target.value)}}
+          css={cssTitleEdit}
+          placeholder="ここにタイトルを入力"
+        />
       </div>
       <div css={css([highlight, cssEditorContainer])}>
         <ReactCodeMirror

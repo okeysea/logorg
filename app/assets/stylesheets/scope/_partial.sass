@@ -1,4 +1,12 @@
 [data-scope-path="partial/posts_list"]
+  .not-found
+    width: 100%
+    display: inline-block
+    text-align: center
+    font-size: 2rem
+    color: $cAccent3
+    margin: 20px 0
+
   .posts
     .list
       .tr-list:first-of-type
@@ -11,6 +19,9 @@
         .article
           padding: 14px 8px;
           width: 100%;
+
+          .profile
+            margin-top: 10px
 
           .inform
             display: flex;
@@ -66,6 +77,10 @@
             &:active
               color: $cFontDark;
           
+          .search-highlight
+            background: yellow
+            padding: 0.1em
+            font-style: italic
             
           .title
             font-size: 1.5em;

@@ -5,7 +5,7 @@ class Api::V1::SessionsController < ApplicationController
   def destroy
     if logged_in?
       log_out
-      flash_message :success, t('.success_logout')
+      flash_message :success, "ログアウトしました"
       render :destroy, status: :no_content and return
     end
     render :destroy, status: :bad_request and return

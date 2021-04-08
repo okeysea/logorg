@@ -6,6 +6,29 @@ import { useState, useRef, useEffect } from "react"
 import useToggleState from "../hooks/useToggleState"
 import useDocumentEventHandler from "../hooks/useDocumentEventHandler"
 
+const cssContainer = css({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  fontSize: "100%",
+  letterSpacing: "normal",
+});
+
+const cssSpan = css({
+  width: "100%"
+});
+
+const cssInput = css({
+  width: "100%",
+  background: "transparent",
+  border: "none",
+
+  "&:focus": {
+    border: "none",
+    outline: "0",
+  },
+});
+
 type Props = {
   value?: string
   onChange?: (value: string)=>void
@@ -44,17 +67,17 @@ const ClickToInput: React.FC<Props> = props => {
   }
 
   return (
-    <React.Fragment>
+    <div css={cssContainer}>
     {
       (()=>{
         if( toggle.state.enabled ) {
-          return <input value={value} onChange={inputChangeHandler} ref={inputRef} className={props.className}/> 
+          return <input css={cssInput} value={value} onChange={inputChangeHandler} ref={inputRef} className={props.className}/> 
         }else{
-          return <span onClick={()=>{toggle.setter.enabled(true)}} className={props.className}>{value}</span>
+          return <span css={cssSpan}onClick={()=>{toggle.setter.enabled(true)}} className={props.className}>{value}</span>
         }
       })()
     }
-    </React.Fragment>
+    </div>
   );
 }
 

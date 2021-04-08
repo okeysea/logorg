@@ -54,6 +54,9 @@ gem 'carrierwave', '~> 2.0'
 
 gem 'mini_magick'
 
+# for search
+gem 'ransack'
+
 group :development, :test do
   gem 'faker'
   gem 'rspec-rails'

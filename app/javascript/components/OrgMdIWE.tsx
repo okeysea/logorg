@@ -148,10 +148,22 @@ const OrgMdIWE: React.FC<Props> = props => {
       if( result.isSuccess() ){
         window.Turbolinks.visit( result.value.getUrl() );
       }else{
-        // do error message
+        alert("サーバーへの要求がリジェクトされました。本文を入力してください");
       }
     });
   }
+
+  useEffect(()=>{
+    if( !docTitle || !docTitle.match(/\S/g)){
+      setDocTitle( "No Titled" );
+    }
+  }, [docTitle]);
+
+  useEffect(()=>{
+    if( loaded ){
+      editorChange( post.contentSource );
+    }
+  }, [loaded]);
 
   return (
     <React.Fragment>
@@ -169,7 +181,7 @@ const OrgMdIWE: React.FC<Props> = props => {
               <Settings css={css([cssPaneContainer, cssHeightFull])}/>
               <SplitPane split="vertical" minSize={ windowSize.width * (30/100)} defaultSize="50%" maxSize={ windowSize.width * (70/100) }>
                 { !loaded ? <span>Loading...</span> : <OrgMdEditor value={post.contentSource} titleValue={post.title} onChange={editorChange} onTitleChange={setDocTitle} ast={docAST} /> }
-                <OrgMdView ast={docAST} css={[cssPaneContainer, cssHeightFull]} />
+                <OrgMdView title={docTitle} ast={docAST} css={[cssPaneContainer, cssHeightFull]} />
               </SplitPane>
             </SplitPane>
           </div>

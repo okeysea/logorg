@@ -3,6 +3,7 @@ type ResUser = {
   display_id: string;
   name: string;
   email?: string;
+  posts_count: number;
   readonly activated?: boolean;
   avatar: {
     [key:string]: string

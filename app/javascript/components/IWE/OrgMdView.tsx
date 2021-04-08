@@ -2,6 +2,7 @@
 import { jsx, css } from "@emotion/react"
 import React, { useState, useCallback, useRef, useEffect } from "react"
 import OrgMdRenderer from "./OrgMdRenderer"
+import ProfileRowCard from "../ProfileRowCard"
 import {AST} from "./OrgMdParser"
 
 const cssPadding = css({
@@ -96,14 +97,25 @@ const cssMarkdownContainer = css([
 ]);
 
 type Props = {
+  title?: string
   ast: AST
   className?: string
 }
 
 const OrgMdView: React.FC<Props> = props => {
   return (
-    <div className={`ast-document ${props.className}`} data-scope-path="components/markdown" css={cssMarkdownContainer}>
-      <OrgMdRenderer ast={props.ast} />
+    <div css={css([cssPadding, cssOverflow])} className={props.className}>
+      <div data-scope-path="posts/show">
+        <div className="document-container">
+          <h1 className="document-title">{props.title}</h1>
+          <div className="document-author">
+            <ProfileRowCard userId={window.gon.user.public_id} size="middle" />
+          </div>
+          <div className="document-content" data-scope-path="marked-document">
+            <OrgMdRenderer ast={props.ast} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

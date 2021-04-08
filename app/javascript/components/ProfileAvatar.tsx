@@ -3,7 +3,7 @@ import User from "../API/models/User"
 
 type Props = {
   user: User
-  size: string
+  size: "big" | "middle" | "small" | "adjust"
   className?: string
   nsize?: number
 }
@@ -18,7 +18,7 @@ const ProfileAvatar: React.FC<Props> = props => {
 
   return (
     <div className="ProfileAvatar" data-scope-path="components/profile_avatar">
-      <img className={classnames.join(' ') + " " + ("" || props.className)} src={props.user.getAvatar("thumb")} />
+      <img className={classnames.join(' ') + " " + ("" || props.className)} src={props.user.getAvatar(props.size)} />
     </div>
   )
 }

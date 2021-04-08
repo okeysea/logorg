@@ -3,4 +3,10 @@
 #content_container data-scope-path="users/show"
   = render 'partial/user_wall'
 
-  = render 'partial/posts_list'
+  .sidebar-layout-container data-scope-path="layout/user-sidebar"
+
+    aside.sidebar
+      = render 'partial/user_side_nav', {user: @user, select:"users/show"}
+
+    main.main
+      = render 'partial/posts_list'

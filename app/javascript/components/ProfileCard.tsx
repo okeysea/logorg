@@ -40,17 +40,17 @@ const ProfileCard: React.FC<cardProps> = props => {
           <div className="user_id">{`ID: ${user.displayId}`}</div>
         </div>
         <div className="user_activity_inform">
-          <a className="user_activity_element" href="#">
-            <div className="user_activity_count">{15}</div>
+          <a className="user_activity_element" href={user.getUrl("posts")}>
+            <div className="user_activity_count">{user.postsCount}</div>
             <div className="user_activity_description">投稿</div>
           </a>
           <a className="user_activity_element" href="#">
-            <div className="user_activity_count">16</div>
-            <div className="user_activity_description">Posts</div>
+            <div className="user_activity_count">0</div>
+            <div className="user_activity_description">Now in Dev</div>
           </a>
           <a className="user_activity_element" href="#">
-            <div className="user_activity_count">16</div>
-            <div className="user_activity_description">Posts</div>
+            <div className="user_activity_count">0</div>
+            <div className="user_activity_description">Now in Dev</div>
           </a>
         </div>
       </div>

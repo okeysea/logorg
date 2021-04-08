@@ -3,24 +3,20 @@ header#g_header
     h2#g_header_logo = link_to root_url do
       span
         | LogOrg
+    #g_header_search
+    = react_component('UIForm/FormSearchHeader')
 
     #g_header_rightarea
       nav#g_header_navigate
         - if logged_in?
           ul
-            li #{link_to t('.hot_topic'), "#", class: "navi_link"}
-            li #{link_to t('.category'), "#", class: "navi_link"}
+            li #{link_to t('.visit_github'), "https://github.com/okeysea/logorg", class: "navi_link"}
             li#g_header_navi_division
-            li #{link_to t('.visit_github'), "#", class: "navi_link"}
-            li#g_header_navi_division
-            li #{link_to t('.logout'), logout_path, method: :delete, class: "navi_link"}
+            li #{link_to t('.mypage'), user_path(current_user), class: "navi_link"}
             li#g_header_navi_usermenu = react_component('ProfileDropdownMenu', { userId: current_user.public_id })
         - else
           ul
-            li #{link_to t('.hot_topic'), "#", class: "navi_link"}
-            li #{link_to t('.category'), "#", class: "navi_link"}
-            li#g_header_navi_division
-            li #{link_to t('.visit_github'), "#", class: "navi_link"}
+            li #{link_to t('.visit_github'), "https://github.com/okeysea/logorg", class: "navi_link"}
             li#g_header_navi_division
             li #{link_to t('.signup'), signup_path, class:"navi_attension navi_link"}
             li #{link_to t('.login'), login_path, class:"navi_link"}
