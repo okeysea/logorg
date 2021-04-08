@@ -1,3 +1,5 @@
+/** @jsx jsx */
+import { jsx, css } from "@emotion/react"
 import * as React from "react"
 import { useState, useRef, useEffect } from "react"
 import PropTypes from "prop-types"
@@ -12,6 +14,10 @@ import classNames from 'classnames'
  *    ブラウザでの実行時はwebpackがよしなにしてくれているのか問題はおこらない。
  */
 const deepEqual = require('deep-equal')
+
+const cssDropdown = css({
+  zIndex: 9999999,
+});
 
 // useStateの前回値を保持する関数
 function usePrevious(value: any) {
@@ -145,6 +151,7 @@ const Dropdown: React.FC<Props> & {
         className={ classNames('dropdown', { active: active }) }
         data-scope-path="components/dropdown"
         ref={dropdownRef}
+        css={cssDropdown}
       >
       { children }
       </div>

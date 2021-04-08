@@ -3,6 +3,7 @@ import APIError from "./APIError"
 import APIUsers from "./request/APIUsers"
 import APIPosts from "./request/APIPosts"
 import APISessions from "./request/APISessions"
+import APICache from "./APICache"
 import User from "./models/User"
 import Post from "./models/Post"
 import Session from "./models/Session"
@@ -24,6 +25,7 @@ export default class APIFactory {
   }
 }
 
+const UserAPICache = new APICache(60000);
 const UserAPI = new APIUsers();
 const UserAPIWrapper = {
   new: () => {
@@ -35,7 +37,12 @@ const UserAPIWrapper = {
   },
 
   getByPublicId: async (pub_id: string) => {
-    return await UserAPI.show( pub_id );
+
+    return UserAPICache
+      .cache(pub_id)
+      .subject(async ()=>{return await UserAPI.show(pub_id); })
+      .get();
+
   },
 };
 

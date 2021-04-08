@@ -4,4 +4,9 @@ module UsersHelper
     json[:posts_count] = user.posts.size
     json
   end
+
+  def user_side_nav_item(title, url, resource, select)
+    classname = "select" if resource == select
+    link_to title, url, class: classname
+  end
 end

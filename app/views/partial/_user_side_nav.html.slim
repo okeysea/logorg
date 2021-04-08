@@ -1,0 +1,16 @@
+nav
+  - if current_user?( user )
+    = link_to "新規作成(エディタを起動)", new_user_post_path(user), class: "new-post"
+
+  section
+    p 記事
+    .nav-item
+      = user_side_nav_item "ユーザトップ", user_path(user), "users/show", select
+    .nav-item
+      = user_side_nav_item "一覧", user_posts_path(user), "posts/index", select
+
+  - if current_user?( user )
+    section
+      p ユーザ
+      .nav-item
+        = user_side_nav_item "アカウント編集", edit_user_path(user), "users/edit", select

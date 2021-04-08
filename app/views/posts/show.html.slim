@@ -1,28 +1,26 @@
 = provide(:title, @post.title)
 
 #content_container data-scope-path="posts/show"
-  h1
-    = @post.title
-  .docment_content
-    = @post.content.html_safe
-  /p#notice = notice
+  .document-container
+    h1.document-title
+      = @post.title
 
-  /p
-    strong User:
-    = @post.user_id
-  /p
-    strong Post:
-    = @post.post_id
-  /p
-    strong Title:
-    = @post.title
-  /p
-    strong Content:
-    = @post.content
-  /p
-    strong Content source:
-    = @post.content_source
+    .document-date
 
-  => link_to 'Edit', edit_user_post_path(@post.user, @post)
-  '|
-  =< link_to 'Back', user_posts_path
+      .spacer
+
+      - if @post.created_at != @post.updated_at
+        span.updated
+          i.fas.fa-edit
+          = l @post.updated_at, format: :short
+
+      span.created
+        | 作成 
+        = l @post.created_at, format: :short
+
+
+    .document-author
+      = react_component('ProfileRowCard', { userId: @post.user.public_id, size: "middle" })
+
+    .document-content data-scope-path="marked-document"
+      = @post.content.html_safe

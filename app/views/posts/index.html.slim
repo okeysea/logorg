@@ -2,14 +2,17 @@
 
 #content_container data-scope-path="posts/index"
 
-  .sidebar_layout
+  .sidebar-layout-container data-scope-path="layout/user-sidebar"
 
     aside.sidebar
       = react_component('ProfileCard', { userId: @user.public_id })
+      = render 'partial/user_side_nav', {user: @user, select:"posts/index"}
 
     main.main
       h1 = t('.posts_all_list')
-      
+      = react_component('UIForm/FormSearch', { \
+        sorts: Post.search_query_order_params, \
+        defaultOrderByKey: Post.search_default_order_by, \
+        defaultOrder: Post.search_default_order \
+      })
       = render 'partial/posts_list'
-
-      = link_to 'New Post', new_user_post_path

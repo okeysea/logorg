@@ -1,0 +1,13 @@
+= provide(:title, t('.title'))
+
+#content_container data-scope-path="posts/global_index"
+
+  h1 = t('.posts_all_list')
+
+  = react_component('UIForm/FormSearch', { \
+    sorts: Post.search_query_order_params, \
+    defaultOrderByKey: Post.search_default_order_by, \
+    defaultOrder: Post.search_default_order \
+  })
+
+  = render 'partial/posts_list', render_profile_card: true

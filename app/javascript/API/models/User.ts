@@ -24,6 +24,7 @@ export default class User {
         name: "",
         avatar:{},
         urls:{},
+        posts_count: 0,
       }
     }else if( obj instanceof User ){
       this.userData = {
@@ -32,6 +33,7 @@ export default class User {
         name: obj.name,
         avatar: obj.avatars,
         urls: obj.urls,
+        posts_count: obj.postsCount,
       }
     }else{
       this.userData = obj;
@@ -49,6 +51,7 @@ export default class User {
   get avatarDataUri(): string { return this.userAvatarDataUri; }
   get avatars(): any        { return this.userData.avatar; }
   get urls(): any           { return this.userData.urls; }
+  get postsCount(): number  { return this.userData.posts_count; }
 
   set publicId(value: string)   { this.userData.public_id = value; }
   set displayId(value: string)  { this.userData.display_id = value; }

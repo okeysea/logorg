@@ -1,0 +1,70 @@
+[data-scope-path="layout/user-sidebar"]
+
+.sidebar-layout-container
+  margin: 16px 0px
+  @include sidebar_layout(30%)
+
+  .sidebar
+    display: flex
+    box-sizing: border-box
+    padding-right: 8px
+    flex-direction: column
+    border-right: 1px solid $cAccent2
+
+
+    nav
+      display: flex
+      flex-direction: column
+      margin: 16px 0
+
+      a.new-post
+        display: inline-block
+        width: 100%
+        background: $cAccent
+        color: $cBase
+        text-decoration: none
+        border-radius: 4px
+        text-align: center
+        padding: 12px
+
+        &:hover
+          background: $cSub
+
+      & section:first-of-type
+        border: none
+
+      section
+        display: flex
+        flex-direction: column
+        width: 100%
+        font-size: 1.6rem
+        padding: 8px
+
+        border-top: 1px solid $cAccent2
+
+        p
+          font-weight: bold
+          margin: 8px 0
+
+        .nav-item
+          width: 100%
+          margin-bottom: 4px
+          padding: 5px
+
+          a
+            display: block
+            width: 100%
+            padding: 0.5em
+            border-radius: 3px
+            text-decoration: none
+            color: $cAccent
+
+          a.select
+
+            background: $cAccent2
+
+
+  .main
+    box-sizing: border-box;
+    padding-left: 8px
+

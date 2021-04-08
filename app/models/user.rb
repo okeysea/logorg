@@ -146,6 +146,10 @@ class User < ApplicationRecord
   def api_avatars
     {
       thumb: avatar.url(:thumb),
+      big: avatar.url(:big),
+      middle: avatar.url(:middle),
+      small: avatar.url(:small),
+      adjust: avatar.url(:adjust),
       raw: avatar.url
     }
   end
@@ -153,10 +157,11 @@ class User < ApplicationRecord
   def api_details
     self.slice(%i[public_id display_id name email activated])
       .merge({avatar:api_avatars})
+      .merge({posts_count: self.posts.count })
   end
 
   def api_general
-    api_details.slice("public_id", "display_id", "name", "avatar")
+    api_details.slice("public_id", "display_id", "name", "avatar", "posts_count")
   end
 
   private

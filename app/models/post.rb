@@ -16,6 +16,40 @@ class Post < ApplicationRecord
     post_id
   end
 
+  # for search
+  def self.search_query(keyword: "", order_by: "created_at", order: "desc")
+    keyword   = "" if keyword.nil?
+    order_by  = self.search_default_order_by if order_by.nil?
+    order     = self.search_default_order if order.nil?
+
+    order_by  = self.search_default_order_by unless ["created_at","updated_at"].include?(order_by)
+    order     = self.search_default_order unless ["desc","asc"].include?(order)
+
+    keywords = keyword.split(/[\p{blank}\s]+/)
+    group = keywords.reduce({}){|h, w| h.merge( w=>{ title_or_lead_cont: w })}
+
+    self.ransack({
+      combinator: "and",
+      groupings: group,
+      sorts: "#{order_by} #{order}"
+    }).result
+  end
+
+  def self.search_query_order_params 
+    [
+      { key: "crated_at", display: "作成日" },
+      { key: "updated_at", display: "更新日" }
+    ]
+  end
+
+  def self.search_default_order_by
+    "created_at"
+  end
+
+  def self.search_default_order
+    "desc"
+  end
+
   # API用
   def api_show
     self.slice(%i[post_id title content content_source created_at updated_at])

@@ -3,6 +3,9 @@ ja:
     index:
       title: '%{username} - 記事一覧'
       posts_all_list: '記事一覧'
+    global_index:
+      title: '全ての記事一覧'
+      posts_all_list: '全ての記事一覧'
     show:
       title: '%{username}'
     new:

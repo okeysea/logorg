@@ -3,12 +3,19 @@
     #branding
       h1 LogOrg
       p
-        | いまいち使いものにならないマークダウンエディタを備えたメディアサービスです
+        | マークダウンエディタを備えたメディアサービスです
     .branding-navigate-container
-      = link_to "ユーザ登録", signup_path, class: "branding-new-user"
+      - if logged_in?
+        = link_to "マイページ", user_path(current_user), class: "branding-button"
+        = link_to "エディタを起動", new_user_post_path(current_user), class: "branding-button"
+
+      - else
+        = link_to "ユーザ登録", signup_path, class: "branding-button"
+        = link_to "ログイン", login_path, class: "branding-button"
 
 #articles 
   .card_container_title 新着(20)
+  = paginate @posts
   .card_layout
     - @posts.each do |p|
       .card
@@ -30,5 +37,7 @@
 
             p 
               = truncate(strip_tags(p.lead), length: 100)
-          /a.btn href="#" もっとみる
-          = react_component("ProfileRowCard", { userId: p.user.public_id })
+
+          .profile
+            = react_component("ProfileRowCard", { userId: p.user.public_id })
+  = paginate @posts

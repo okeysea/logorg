@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   post    '/login',  to: 'sessions#create'
   delete  '/logout', to: 'sessions#destroy'
 
+  # ユーザー毎に限定されないすべての記事
+  get     '/posts', to: 'posts#global_index'
+
   resources :users, param: :public_id do
     resources :posts
   end

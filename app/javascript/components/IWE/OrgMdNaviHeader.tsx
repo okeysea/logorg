@@ -35,11 +35,19 @@ const cssSaveButtonContainer = css({
 });
 
 const cssSaveButton = css({
+  position: "relative",
+  display: "inline-block",
+  padding: "0.5em 1em",
+  textDecoration: "none",
+  background: "transparent",
   transition: "background-color 0.2s",
-  border: "1px solid #f9f9fa",
   color: "#f9f9fa",
   borderRadius: "3px",
-  background: "transparent",
+  cursor: "pointer",
+
+  "&:hover":{
+    background: "#2a8fd6",
+  },
 });
 
 type Props = {
@@ -47,6 +55,11 @@ type Props = {
 }
 
 const OrgMdNaviHeader: React.FC<Props> = props => {
+
+  const handleClickSave = () => {
+    props.onSave();
+  };
+
   return (
     <nav css={cssNaviHeader}>
       <div css={cssLogoContainer}>
@@ -54,7 +67,7 @@ const OrgMdNaviHeader: React.FC<Props> = props => {
       </div>
       <div css={cssControllsContainer}>
         <div css={cssSaveButtonContainer}>
-          <button css={cssSaveButton} onClick={props.onSave}>Save!</button>
+          <a css={cssSaveButton} onClick={handleClickSave}>サーバーへ送信</a>
         </div>
       </div>
     </nav>

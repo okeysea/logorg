@@ -8,7 +8,20 @@ class PostsController < ApplicationController
   # 誰でもみれる
   def index
     @user = User.find_by(public_id: params[:user_public_id].downcase)
-    @posts = Post.where(user_id: @user.id).page(params[:page]).per(10)
+    @posts = Post.eager_load(:user)
+      .where(user_id: @user.id)
+      .search_query(**post_search_query)
+      .page(params[:page])
+      .per(10)
+    @keyword = post_search_query[:keyword]
+  end
+
+  def global_index
+    @posts = Post.eager_load(:user)
+      .search_query(**post_search_query)
+      .page(params[:page])
+      .per(10)
+    @keyword = post_search_query[:keyword]
   end
 
   # GET /posts/1
@@ -24,6 +37,7 @@ class PostsController < ApplicationController
     @user = User.find_by(public_id: params[:user_public_id].downcase)
     redirect_to new_user_post_url(current_user) unless current_user?(@user)
     @post = Post.new
+    render 'new', layout: 'non-header-footer-layout'
   end
 
   # GET /posts/1/edit
@@ -91,4 +105,9 @@ class PostsController < ApplicationController
     def post_params
       params.require(:post).permit(:title, :content, :content_source)
     end
+
+    def post_search_query
+      {keyword: params[:q], order_by: params[:b], order: params[:o]}
+    end
+
 end

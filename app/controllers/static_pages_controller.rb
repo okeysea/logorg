@@ -1,6 +1,6 @@
 class StaticPagesController < ApplicationController
   def home
-    @posts = Post.order(updated_at: :desc).limit(20)
+    @posts = Post.eager_load(:user).order(created_at: :desc).page(params[:page]).per(20)
   end
 
   def help
