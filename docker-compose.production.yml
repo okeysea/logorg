@@ -1,0 +1,97 @@
+version: '3.7'
+
+x-var: &LOCAL_UID 1000
+x-var: &LOCAL_GID 1000
+
+services:
+  mail:
+    build:
+      context: .
+      dockerfile: ./containers/mailrelay/Dockerfile
+    env_file:
+      - ./environments/secret/mailrelay.env
+    image: logorg-mailrelay
+    ports:
+      - '25:25'
+
+  db:
+    build:
+      context: .
+      dockerfile: ./containers/mysql/Dockerfile
+    env_file:
+      - ./environments/secret/db.env
+    ports:
+      - '3306:3306'
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - production-mysql-data:/var/lib/mysql
+
+  dbinit:
+    build:
+      context: .
+      dockerfile: ./containers/db-init/Dockerfile
+    image: logorg-dbinit
+    env_file:
+      - ./environments/secret/db.env
+      - ./environments/secret/dbroot.env
+
+    depends_on:
+      - db
+
+
+  app:
+    environment:
+      - LOCAL_UID=1000
+      - LOCAL_GID=1000
+    env_file:
+      - ./environments/secret/db.env
+      - ./environments/secret/project.env
+    build:
+      context: .
+      dockerfile: ./containers/logorg/Dockerfile
+      args:
+        LOCAL_UID: *LOCAL_UID
+        LOCAL_GID: *LOCAL_GID
+    image: logorg-rails
+    container_name: logorg_production
+    ports:
+      - 3000:3000
+      - 9229:9229
+  # command: bundle exec rails s -p 3000 -b 0.0.0.0
+    command: bundle exec puma -e production -C config/puma.rb
+    depends_on:
+      - db
+      - dbinit
+    volumes:
+      - production-public-data:/project/public
+      - production-dummy:/project/public/packs/js
+      - production-dummy:/project/public/packs-test/js
+      - production-tmp-data:/project/tmp
+      - production-log-data:/project/log
+    stdin_open: true
+    tty: true
+
+  web:
+    build:
+      context: .
+      dockerfile: containers/nginx/Dockerfile
+      args:
+        LOCAL_UID: *LOCAL_UID
+        LOCAL_GID: *LOCAL_GID
+    image: logorg-nginx
+    command: /usr/sbin/nginx -g 'daemon off;' -c /etc/nginx/nginx.conf
+    volumes:
+      - production-public-data:/project/public
+      - production-tmp-data:/project/tmp
+    ports:
+      - 80:80
+    depends_on:
+      - app
+volumes:
+  production-mysql-data:
+    driver: local
+  production-dummy:
+  production-public-data:
+  production-tmp-data:
+  production-log-data:
+
