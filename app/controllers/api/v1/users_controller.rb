@@ -28,8 +28,16 @@ class Api::V1::UsersController < ApplicationController
     if @user.save
       @user = @user.reload
       log_in @user
-      UserMailer.account_activation(@user).deliver_now
       flash_message(:success, "ユーザー登録が完了しました")
+
+      # 評価用
+      if @user.is_reviewer?
+        @user.activate
+        flash_message_now(:success, "アクティベーションをスキップしました")
+      else
+        UserMailer.account_activation(@user).deliver_now
+      end
+
       render :show_details, status: :created and return
     else
       render_error_model @user and return 
@@ -37,6 +45,13 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def update
+
+    # 評価用
+    if @user.is_only_review?
+      flash_message(:danger, "申し訳ありません！ 評価用アカウントのユーザー情報は編集できません")
+      render :show_details and return
+    end
+
     if @user.update(patch_user_params)
       @user = @user.reload
       flash_message(:success, "ユーザー情報を更新しました")

@@ -6,6 +6,16 @@ import AvatarPicker from "../UIParts/AvatarPicker"
 import {useAPIUser} from "../APIUserHooks"
 import {dispatchFlash} from "../../Events/FlashMessageEvent"
 
+// 評価者用
+const cssInfo = css({
+  border: "3px solid #57de4a",
+  background: "#e1f5c5",
+  borderRadius: "5px",
+  padding: "0.8em",
+  marginTop: "0.5em",
+  marginBottom: "2em",
+});
+
 const cssCenter = css({
   width: "380px",
   margin: "auto",
@@ -112,6 +122,7 @@ const FormCreateUser: React.FC<Props> = props =>{
             { errors.email.map((value)=>{return <li>{value}</li>}) }
             </ul>
           </div>
+          <span css={cssInfo}>メールアドレスに'@activated.example.com'ドメインを使用するとアクティベーションをスキップできます</span>
           <div>
             <FloatingLabelInput
             placeholder="パスワード"

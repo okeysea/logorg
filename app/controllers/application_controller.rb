@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   include FlashMessagesHelper
 
   before_action :share_var_js
+  before_action :account_activation_notice
 
   private
 
@@ -22,5 +23,12 @@ class ApplicationController < ActionController::Base
         gon.logged_in = false
       end
       gon.flash = flash
+    end
+
+    def account_activation_notice
+      return unless logged_in?
+      return if current_user.activated
+
+      flash_message(:notice, "メールアドレスを有効化してください")
     end
 end

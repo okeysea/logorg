@@ -18,3 +18,30 @@
         = f.password_field :password, :placeholder => t('.password')
 
       = f.submit t('.login')
+
+  div data-scope-path="sessions/new/info"
+    javascript:
+      function setInform(userid, passwd){
+        document.getElementById('session_public_id').value = userid
+        document.getElementById('session_password').value  = passwd
+      }
+
+    .container
+
+      span.title
+        | 評価用ユーザーを用意致しました！
+        br
+        | クリックでフィルできます
+
+      a onClick='setInform("review1","password")'
+        | review 1 (id: review1, pw: password)
+
+      a onClick='setInform("review2","password")'
+        | review 2 (id: review2, pw: password)
+
+      a onClick='setInform("review3","password")'
+        | review 3 (id: review3, pw: password)
+
+      span.attention
+        | ※ 便宜上一部の機能を無効化しています
+          

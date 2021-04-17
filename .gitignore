@@ -60,3 +60,13 @@ yarn-debug.log*
 # Ignore secret environment
 /environments/secret/*
 !/environments/secret/.keep
+
+# Ignore terraform secrets
+*.tfvars
+.terraform/
+.terraform.lock.hcl
+
+# Ignore temp file
+dev_tmp
+dev_bin
+

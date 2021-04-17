@@ -13,8 +13,9 @@ Rails.application.routes.draw do
   # ユーザー毎に限定されないすべての記事
   get     '/posts', to: 'posts#global_index'
 
-  resources :users, param: :public_id do
-    resources :posts
+  # APIにUpdate, Createは移行したのでルーティングしない
+  resources :users, expect: [:update, :create], param: :public_id do
+    resources :posts, expect: [:update, :create]
   end
 
   resources :account_activations, only: [:edit]
@@ -23,7 +24,7 @@ Rails.application.routes.draw do
   namespace :api, { format: 'json' } do
     namespace :v1 do
       resources :users, except: [:new, :edit], param: :public_id # APIにnew, editは不要なためexcept
-      resources :posts, except: [:new, :edit]
+      resources :posts, except: [:new, :edit, :destroy]
       # resources :sessions, only: [:destroy]
       delete 'sessions', to: 'sessions#destroy'
     end

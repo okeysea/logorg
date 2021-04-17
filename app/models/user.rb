@@ -1,10 +1,7 @@
 class User < ApplicationRecord
-  include Contracts::Core
   include DataUriParseable
 
   mount_uploader :avatar, AvatarUploader
-
-  C = Contracts
 
   has_many :posts, dependent: :destroy
 
@@ -36,7 +33,7 @@ class User < ApplicationRecord
   validates :name,      format: { with: // }
 
   validates :public_id, length: { in: 4..30 }
-  validates :name,      length: { in: 1..12 }
+  validates :name,      length: { in: 1..30 }
   validates :email,     length: { maximum: 255 }
 
   has_secure_password
@@ -86,7 +83,6 @@ class User < ApplicationRecord
   # idではなく、public_idを返すオーバーライド
   # example:
   #   redirect_to @user
-  Contract C::None => String
   def to_param
     display_id
   end
@@ -105,7 +101,6 @@ class User < ApplicationRecord
   end
 
   # 文字列からダイジェストを生成
-  Contract String => String
   def self.digest(string)
     cost =  if ActiveModel::SecurePassword.min_cost
               BCrypt::Engine::MIN_COST
@@ -117,13 +112,11 @@ class User < ApplicationRecord
   end
 
   # ランダムなトークンを生成(base64)
-  Contract C::None => String
   def self.new_token
     SecureRandom.urlsafe_base64
   end
 
   # メールアドレスを有効化する
-  Contract C::None => C::Bool
   def activate
     update_columns(activated: true, activated_at: Time.zone.now)
   end
@@ -134,7 +127,6 @@ class User < ApplicationRecord
   end
 
   # トークンがダイジェストと一致したらTrueを返す
-  Contract String, String => C::Bool
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     return false if digest.nil?
@@ -164,6 +156,20 @@ class User < ApplicationRecord
     api_details.slice("public_id", "display_id", "name", "avatar", "posts_count")
   end
 
+  # 評価用 ############
+  def is_only_review?
+    self.email =~ /@review.example.com$/
+  end
+
+  def is_skip_activation?
+    self.email =~ /@activated.example.com$/
+  end
+
+  def is_reviewer?
+    self.is_only_review? || self.is_skip_activation?
+  end
+  #####################
+
   private
 
     def set_avatar_from_data_uri
@@ -184,7 +190,6 @@ class User < ApplicationRecord
     end
 
     # 有効化トークン、ダイジェストを作成
-    Contract C::None => String
     def create_activation_digest
       self.activation_token  = User.new_token
       self.activation_digest = User.digest(activation_token)
