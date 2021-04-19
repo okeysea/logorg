@@ -42,6 +42,7 @@
 - アプリケーション
   - nginx
   - mysql
+  - postfix (NATGatewayを使わずに外部SMTPサーバへのメールリレー用)
 
 - 開発環境
   - Windows Subsystem Linux 2 (Ubuntu)
