@@ -1,7 +1,11 @@
 ARG = -h
 WORKDIR = /terraform
 
-.PHONY: tfcmd tfinit tfplan tfapply tfdestroy tfcheck terraform_chown sync_bundle sync_packs get_node_bin cm rm_public
+.PHONY: secret_convert build_prod ecr_push deliver
+.PHONY: tfcmd tfinit tfplan tfapply tfdestroy tfcheck terraform_chown 
+.PHONY: sync_bundle sync_packs get_node_bin rm_public up_dev
+.PHONY: cm
+
 tfcmd:
 	@TERRAFORM_WORK_DIR=${WORKDIR} docker-compose run --rm terraform ${ARG}
 
@@ -29,13 +33,21 @@ sync_bundle:
 	$(eval colon := :)
 	$(eval id := $(shell docker create logorg-rails-dev))
 	docker cp $(id)$(colon)/project/vendor ./
+	docker cp $(id)$(colon)/project/Gemfile.lock ./Gemfile.lock
 	docker rm -v $(id)
+
+rm_public:
+	sudo chown -R $(shell whoami) ./containers/logorg/dev_tmp/public
+	rm -r ./containers/logorg/dev_tmp/public/*
 
 sync_packs:
 	$(eval colon := :)
 	$(eval id := $(shell docker create logorg-rails-dev))
 	docker cp $(id)$(colon)/project/public/packs ./public/
 	docker rm -v $(id)
+
+up_dev: rm_public sync_packs sync_bundle
+	docker-compose up
 
 get_node_bin:
 	$(eval colon := :)
@@ -47,10 +59,16 @@ get_node_bin:
 	docker cp $(id)$(colon)/opt/yarn-v1.22.5 $(hpref)/opt/yarn
 	docker rm -v $(id)
 
-rm_public:
-	sudo chown -R $(shell whoami) ./containers/logorg/dev_tmp/public
-	rm -r ./containers/logorg/dev_tmp/public/*
-	
+secret_convert:
+	convert_secrets_for_tf ./environments/secret/
+
+build_prod:
+	docker-compose -f docker-compose.production.yml build
+
+ecr_push:
+	./scripts/secret/aws_ecr_push.sh
+
+deliver: build_prod ecr_push secret_convert tfapply
 
 cm:
 	docker-compose -f docker-compose.cloudmapper.yml run --service-ports cm bash
