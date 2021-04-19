@@ -107,6 +107,8 @@
 
 ### アバターピッカーUIの実装
 
+  ![avatar_picker](https://user-images.githubusercontent.com/67820904/115270748-9a7d1180-a177-11eb-99ec-3e86c6f28ce4.gif)
+
   よくみかけるアバターのクロップUIをつけてみたかったので、Canvasにより実装しました。
   サーバーへはDataURLによりPostしているので、バリデーション前に変換を行い、gem CarrierWaveへ渡しています。
 
