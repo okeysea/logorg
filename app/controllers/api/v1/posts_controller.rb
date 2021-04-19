@@ -56,13 +56,13 @@ class Api::V1::PostsController < ApplicationController
   # DELETE /posts/1
   # DELETE /posts/1.json
   # ログインしているユーザーかつ記事のオーナー
-  def destroy
-    @post.destroy
-    respond_to do |format|
-      format.html { redirect_to user_posts_url }
-      format.json { head :no_content }
-    end
-  end
+  # def destroy
+  #   @post.destroy
+  #   respond_to do |format|
+  #     format.html { redirect_to user_posts_url }
+  #     format.json { head :no_content }
+  #   end
+  # end
 
   private
 

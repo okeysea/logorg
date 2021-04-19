@@ -1,0 +1,78 @@
+version: '3.7'
+
+x-var: &LOCAL_UID 1000
+x-var: &LOCAL_GID 1000
+
+services:
+
+  terraform:
+    image: hashicorp/terraform:0.14.10
+    container_name: terraform
+    volumes:
+      - ./terraform:/terraform
+      - ./environments/secret/terraform.tfvars:/terraform/terraform.tfvars:ro
+    env_file: ./environments/secret/terraform.env
+    working_dir: ${TERRAFORM_WORK_DIR:-/terraform}
+
+  db:
+    image: mysql:8.0
+    env_file:
+      - ./environments/db.env
+    ports:
+      - '3306:3306'
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  app:
+    environment:
+      - LOCAL_UID=1000
+      - LOCAL_GID=1000
+    env_file:
+      - ./environments/db.env
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        LOCAL_UID: *LOCAL_UID
+        LOCAL_GID: *LOCAL_GID
+    ports:
+      - 3000:3000
+      - 9229:9229
+  # command: bundle exec rails s -p 3000 -b 0.0.0.0
+    command: bundle exec puma -C config/puma.rb
+    depends_on:
+      - db
+    volumes:
+      - .:/project
+      - public-data:/project/public
+      - dummy:/project/public/packs/js
+      - dummy:/project/public/packs-test/js
+      - tmp-data:/project/tmp
+      - log-data:/project/log
+    stdin_open: true
+    tty: true
+
+  web:
+    build:
+      context: .
+      dockerfile: containers/nginx/Dockerfile
+      args:
+        LOCAL_UID: *LOCAL_UID
+        LOCAL_GID: *LOCAL_GID
+    command: /usr/sbin/nginx -g 'daemon off;' -c /etc/nginx/nginx.conf
+    volumes:
+      - public-data:/project/public
+      - tmp-data:/project/tmp
+    ports:
+      - 80:80
+    depends_on:
+      - app
+volumes:
+  mysql-data:
+    driver: local
+  dummy:
+  public-data:
+  tmp-data:
+  log-data:
+

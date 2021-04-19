@@ -20,6 +20,36 @@ import {cssHeightFull} from "./IWE/style/common"
 const Parser = new OrgMdParser();
 
 /*
+ * ローディングモーダル
+ */
+const cssModalWrapper = css({
+  position: "fixed",
+  width: "100%",
+  height: "100%",
+  inset: "0px",
+  background: "rgba(0,0,0,0.5)",
+
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+
+  top: "0",
+  left: "0",
+  zIndex: 99999999,
+});
+
+const cssLoadingContainer = css({
+  width: "300px",
+  height: "300px",
+  background: "#f9f9fa",
+  borderRadius: "5px",
+
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+});
+
+/*
  * 最上位のコンテナスタイル
  * 画面いっぱい
  */
@@ -110,6 +140,22 @@ const cssSideColumnHidden = css([
   cssResizer, cssPaneHidden
 ]);
 
+type LoadingProps = {
+  enabled: boolean,
+}
+
+const LoadingModal: React.FC<LoadingProps> = props => {
+  return (
+    <React.Fragment>
+      { props.enabled && <div css={cssModalWrapper}>
+        <div css={cssLoadingContainer}>
+          <div data-scope-path="UIParts/Loading" className="blink_circle" />
+        </div>
+      </div>}
+    </React.Fragment>
+  );
+}
+
 type Props = {
   post_id?: string,
 }
@@ -128,11 +174,12 @@ const OrgMdIWE: React.FC<Props> = props => {
     children: [],
   });
   const windowSize = useWindowSize();
+  const [ nowSaving, setNowSaving ] = useState( false );
 
   const [ sideMenuCurrent, sideMenusState ] = useNaviSideMenu([
-    {name: "settings", ico: "Gear"},
-    {name: "toc", ico: "Table-of-contents"},
-    {name: "doc-settings", ico: "Document-Gear"}
+    {name: "settings",      ico: "Gear"},
+    {name: "toc",           ico: "Table-of-contents"},
+    {name: "doc-settings",  ico: "Document-Gear"}
   ]);
 
   const editorChange = async (value: string): Promise<void> => {
@@ -142,9 +189,14 @@ const OrgMdIWE: React.FC<Props> = props => {
   }
 
   const serverSave = () => {
+    setNowSaving( true );
+
     post.title = docTitle;
     post.contentSource = docRaw;
     post.createOrUpdate().then( result => {
+
+      setNowSaving( false );
+
       if( result.isSuccess() ){
         window.Turbolinks.visit( result.value.getUrl() );
       }else{
@@ -167,6 +219,7 @@ const OrgMdIWE: React.FC<Props> = props => {
 
   return (
     <React.Fragment>
+      <LoadingModal enabled={nowSaving} />
       <div data-scope-path="component/orgmdiwe" css={cssIWE}>
         <OrgMdNaviHeader onSave={serverSave}/>
         <div css={cssContainer}>

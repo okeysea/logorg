@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+require 'pathname'
+require 'pty'
+
+# current_path = Pathname(Dir.pwd)
+current_path = Pathname(Dir.pwd)
+project_path = Pathname(ENV["PROJECT_PATH"])
+terraform_path = project_path.join('terraform')
+
+file = File.open( project_path.to_s + "/terraform_exec.log", "a")
+
+relative_dir = current_path.relative_path_from( terraform_path ).to_s
+relative_dir = "" if relative_dir == ".." || relative_dir == "."
+relative_dir = "/" + relative_dir if relative_dir != ""
+
+volume_dir = "/terraform" + relative_dir
+
+Dir.chdir(project_path)
+cmd = "make tfcmd ARG=\"#{ARGV.join(' ')}\" WORKDIR=\"#{volume_dir}\""
+
+file.puts cmd
+file.close
+
+exec( cmd )

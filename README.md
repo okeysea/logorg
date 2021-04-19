@@ -6,7 +6,9 @@
 
 ## デモ
 
- 現在デプロイの準備中です
+  AWSにて構築しました
+
+  - [www.logorg.work](https://www.logorg.work/)
 
 ## 制作した動機
 
@@ -47,14 +49,28 @@
   - docker-compose
 
 - デモ環境
-  - インフラ(予定)
-    - AWS ECS (Fargate)
-    - AWS RDS (MySQL)
+  - インフラ(主要なもの)
+    - APP
+      - AWS ECS (Fargate)
+      - AWS RDS (MySQL)
+    - CDN
+      - AWS CloudFront
+      - AWS S3
 
 ## 工夫した点
 
+### Terraform によるインフラのコード管理
+
+  マネジメントコンソールでぽちぽち頑張っていましたが、トライ&エラーが重なると辛かったので、
+  Terraformを導入しました。非常に楽チンです。
+
+### CDNを導入
+
+  画像等のリソースを配信するためのサーバーをCloudFront + S3にて構築しました。
+  S3へのアップロードはfog_awsとCarrierWave gemで行っています。
+
 ### ページネーション(gem kaminari)
-  
+
   ページネーションはgem kaminariにて実装しています。
 
 ### Reactの導入(gem react-rails)
@@ -111,8 +127,3 @@
 
   開発環境はWSL2上のUbuntu内でDockerを使用しています。Docker内で生成されたvolume上のファイルをホスト側(Ubuntu)で編集するために
   パーミッションをごちゃごちゃ操作しているのですが、それが原因と思われる数々のよくわからないエラーに悩まされました。
-
-### gem Wasmerのビルド失敗
-
-  gem WasmerをビルドするためにRustを導入した際、ビルド失敗したのでしばらく詰ってましたが、wasmerのGithubをみるとどうやらまだ最新Rustに対応してないらしい
-  というのが判りRustのバージョンを落して対処しました。

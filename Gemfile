@@ -51,11 +51,17 @@ gem 'wasmer', '~> 0.4'
 
 # for file upload
 gem 'carrierwave', '~> 2.0'
+gem 'fog-aws' # s3
 
 gem 'mini_magick'
 
 # for search
 gem 'ransack'
+
+gem 'racc'
+
+# for log json format
+gem 'lograge'
 
 group :development, :test do
   gem 'faker'
@@ -64,9 +70,6 @@ group :development, :test do
   gem 'rubocop',       require: false
   gem 'rubocop-rails', require: false
  
-  # 「Contracts.ruby by egonSchiele」 http://egonschiele.github.io/contracts.ruby/
-  gem 'contracts'
-
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end

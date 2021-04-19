@@ -1,6 +1,6 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-
+  
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
@@ -32,11 +32,22 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  # 
+  config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.perform_caching = false
 
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
+
+  config.action_mailer.smtp_settings = {
+    :enable_starttls_auto => true,
+    :address        => ENV.fetch("LOGORG_MAIL_SMTP_HOST", ""),
+    :port           => ENV.fetch("LOGORG_MAIL_SMTP_PORT", ""),
+    :domain         => ENV.fetch("LOGORG_MAIL_DOMAIN", ""),
+    # :user_name      => ENV.fetch("LOGORG_MAIL_USERNAME", ""),
+    # :password       => ENV.fetch("LOGORG_MAIL_PASSWORD", ""),
+    # :authentication => ENV.fetch("LOGORG_MAIL_AUTH","")
+  }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

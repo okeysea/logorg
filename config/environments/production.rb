@@ -62,6 +62,15 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  config.action_mailer.default_url_options = { host: ENV.fetch("PROJECT_HOST_NAME", "http://localhost") }
+  config.action_mailer.delivery_method = :smtp
+
+  config.action_mailer.smtp_settings = {
+    :enable_starttls_auto => true,
+    :address        => ENV.fetch("LOGORG_MAIL_SMTP_HOST", ""),
+    :port           => ENV.fetch("LOGORG_MAIL_SMTP_PORT", ""),
+    :domain         => ENV.fetch("LOGORG_MAIL_DOMAIN", ""),
+  }
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
@@ -84,6 +93,27 @@ Rails.application.configure do
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
+  end
+
+  config.lograge.enabled = true
+  config.lograge.formatter = Lograge::Formatters::Json.new
+  config.lograge.custom_payload do |controller|
+    {
+      host: controller.request.host,
+      remote_ip: controller.request.remote_ip,
+    }
+  end
+  config.lograge.custom_options = lambda do |e|
+    exceptions = %w(controller action format id)
+    {
+      time: e.time,
+      host: e.payload[:host],
+      remote_ip: e.payload[:remote_ip],
+      params: e.payload[:params].except(*exceptions),
+      exception_object: e.payload[:exception_object],
+      exception: e.payload[:exception],
+      backtrace: e.payload[:exception_object].try(:backtrace),
+    }
   end
 
   # Do not dump schema after migrations.

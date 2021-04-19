@@ -2,5 +2,14 @@
 .bundle
 vendor/bundle
 node_modules
-public/packs/js
-public/packs-test/js
+public/packs
+public/packs-test
+environments
+.git
+spec
+test
+terraform
+Makefile
+dev_bin
+dev_tmp
+scripts

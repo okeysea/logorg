@@ -2,9 +2,20 @@
 import { jsx, css } from "@emotion/react"
 import React, { useState, useCallback, useRef, useEffect } from "react"
 import FloatingLabelInput from "../UIParts/FloatingLabelInput"
+import ButtonOrLoading from "../UIParts/ButtonOrLoading"
 import AvatarPicker from "../UIParts/AvatarPicker"
 import {useAPIUser} from "../APIUserHooks"
 import {dispatchFlash} from "../../Events/FlashMessageEvent"
+
+// 評価者用
+const cssInfo = css({
+  border: "3px solid #57de4a",
+  background: "#e1f5c5",
+  borderRadius: "5px",
+  padding: "0.8em",
+  marginTop: "0.5em",
+  marginBottom: "2em",
+});
 
 const cssCenter = css({
   width: "380px",
@@ -38,6 +49,7 @@ const FormCreateUser: React.FC<Props> = props =>{
 
   const [ loaded, user ] = useAPIUser();
   const [ errors, setErrors ] = useState({ publicId: [], name: [], email:[], password:[], passwordConfirmation: [] });
+  const [ submitting, setSubmitting ] = useState( false );
 
   const handleChanges = (name: string, value: string) => {
     if( user ){
@@ -47,8 +59,14 @@ const FormCreateUser: React.FC<Props> = props =>{
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if( user ){
+    if( user && !submitting ){
+
+      setSubmitting( true );
+
       user.create().then( result => {
+
+        setSubmitting( false );
+
         if( result.isSuccess() ){
 
           window.Turbolinks.visit( result.value.getUrl() );
@@ -112,6 +130,7 @@ const FormCreateUser: React.FC<Props> = props =>{
             { errors.email.map((value)=>{return <li>{value}</li>}) }
             </ul>
           </div>
+          <span css={cssInfo}>メールアドレスに'@activated.example.com'ドメインを使用するとアクティベーションをスキップできます</span>
           <div>
             <FloatingLabelInput
             placeholder="パスワード"
@@ -140,7 +159,7 @@ const FormCreateUser: React.FC<Props> = props =>{
             <label>アバター</label>
             <AvatarPicker onChange={handleAvatar}/>
           </div>
-          <button>登録する</button>
+          <ButtonOrLoading loading={submitting} text="登録する" />
         </form>
     </div>
   }

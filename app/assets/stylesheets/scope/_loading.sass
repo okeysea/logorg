@@ -1,0 +1,17 @@
+[data-scope-path="UIParts/Loading"]
+
+  &.blink_circle
+    width: 10px
+    height: 10px
+    background: #2b90d9
+    border-radius: 50%
+    animation: blink_circle 1.2s infinite
+    
+    @keyframes blink_circle
+      0%
+        transform: scale(0);
+        opacity: 1;
+
+      100%
+        transform: scale(4);
+        opacity: 0;

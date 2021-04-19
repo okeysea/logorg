@@ -7,7 +7,7 @@ class UserMailer < ApplicationMailer
   #
   def account_activation(user)
     @user = user
-    mail to: user.email, subject: I18n.t('.subject')
+    mail to: user.email, subject: "メールアドレスの有効化のお願い - logorg"
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml

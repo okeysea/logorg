@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  cm:
+    build:
+      context: .
+      dockerfile: ./containers/tools/cloudmapper/Dockerfile
+    env_file:
+      - ./environments/secret/tools/cloudmapper.env
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./environments/secret/tools/cloudmapper.json:/cloudmapper/config.json

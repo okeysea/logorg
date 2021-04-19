@@ -18,30 +18,30 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def create
-    @user = User.new(user_params)
-    if @user.save
-      redirect_to @user
-    else
-      render 'new', layout: "non-header-footer-layout"
-    end
-  end
+  # def create
+  #   @user = User.new(user_params)
+  #   if @user.save
+  #     redirect_to @user
+  #   else
+  #     render 'new', layout: "non-header-footer-layout"
+  #   end
+  # end
 
   # ユーザ情報編集
   def edit
     @user = User.find_by(public_id: params[:public_id].downcase)
   end
 
-  def update
-    @user = User.find_by(public_id: params[:public_id].downcase)
-    if @user.update(patch_user_params)
-      flash_message(:success, t('.profile_updated'))
-      redirect_to @user
-    else
-      flash_message(:danger, t('.profile_update_failed'))
-      render 'edit'
-    end
-  end
+  # def update
+  #   @user = User.find_by(public_id: params[:public_id].downcase)
+  #   if @user.update(patch_user_params)
+  #     flash_message(:success, t('.profile_updated'))
+  #     redirect_to @user
+  #   else
+  #     flash_message(:danger, t('.profile_update_failed'))
+  #     render 'edit'
+  #   end
+  # end
 
   private
 
