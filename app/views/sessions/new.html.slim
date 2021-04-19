@@ -33,14 +33,23 @@
         br
         | クリックでフィルできます
 
-      a onClick='setInform("review1","password")'
+      a.fill_inform onClick='setInform("review1","password")'
         | review 1 (id: review1, pw: password)
 
-      a onClick='setInform("review2","password")'
+        .user_info
+          = react_component("ProfileRowCard", { userId: "review1" })
+
+      a.fill_inform onClick='setInform("review2","password")'
         | review 2 (id: review2, pw: password)
 
-      a onClick='setInform("review3","password")'
+        .user_info
+          = react_component("ProfileRowCard", { userId: "review2" })
+
+      a.fill_inform onClick='setInform("review3","password")'
         | review 3 (id: review3, pw: password)
+
+        .user_info
+          = react_component("ProfileRowCard", { userId: "review3" })
 
       span.attention
         | ※ 便宜上一部の機能を無効化しています

@@ -44,6 +44,7 @@ sync_packs:
 	$(eval colon := :)
 	$(eval id := $(shell docker create logorg-rails-dev))
 	docker cp $(id)$(colon)/project/public/packs ./public/
+	docker cp $(id)$(colon)/project/public/packs ./containers/logorg/dev_tmp/public/
 	docker rm -v $(id)
 
 up_dev: rm_public sync_packs sync_bundle

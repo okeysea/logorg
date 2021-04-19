@@ -6,7 +6,9 @@
 
 ## デモ
 
- 現在デプロイの準備中です
+  AWSにて構築しました
+
+  - [www.logorg.work](https://www.logorg.work/)
 
 ## 制作した動機
 
@@ -47,14 +49,19 @@
   - docker-compose
 
 - デモ環境
-  - インフラ(予定)
+  - インフラ(主要なもの)
     - AWS ECS (Fargate)
     - AWS RDS (MySQL)
 
 ## 工夫した点
 
+### Terraform によるインフラのコード管理
+
+  マネジメントコンソールでぽちぽち頑張っていましたが、トライ&エラーが重なると辛かったので、
+  Terraformを導入しました。非常に楽チンです。
+
 ### ページネーション(gem kaminari)
-  
+
   ページネーションはgem kaminariにて実装しています。
 
 ### Reactの導入(gem react-rails)

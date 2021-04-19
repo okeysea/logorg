@@ -74,3 +74,5 @@ yarn-debug.log*
 dev_tmp
 dev_bin
 
+terraform_exec.log
+
