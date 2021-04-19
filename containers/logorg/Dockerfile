@@ -54,7 +54,7 @@ WORKDIR /project
 ADD Gemfile Gemfile.lock ./
 
 RUN gem install bundler && \
-      if [ $TARGET_ENV = "production" ] ; then bundle install --without development test --path vendor/bundle ; else bundle install --path vendor/bundle ; fi &&\
+      if [ $TARGET_ENV = "production" ] ; then bundle install -j4 --without development test --path vendor/bundle ; else bundle install -j4 --path vendor/bundle ; fi &&\
       find vendor/bundle/ruby -path '*/gems/*/ext/*/Makefile' -exec dirname {} \; | xargs -n1 -P$(nproc) -I{} make -C {} clean
 
 ADD .authtoken /root/.npmrc
@@ -122,6 +122,8 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 COPY . /project
+
+COPY --from=builder /project/Gemfile.lock /project/Gemfile.lock
 
 VOLUME /project/public
 VOLUME /project/tmp

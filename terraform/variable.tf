@@ -17,8 +17,13 @@ terraform {
 
 provider "aws" {}
 
+provider "aws" {
+  alias  = "verginia"
+  region = "us-east-1"
+}
+
 variable "env_vars" {
-  type = map
+  type = map(any)
 
   default = {}
 }

@@ -16,8 +16,8 @@ locals {
   }
 
   # 使用するNatが指定されていない場合に使うPrivate Subnet用のNat
-  first_nat_key = length( local.use_nat_subnets ) != 0 ? [for k, v in local.use_nat_subnets : k][0] : ""
-  
+  first_nat_key = length(local.use_nat_subnets) != 0 ? [for k, v in local.use_nat_subnets : k][0] : ""
+
   # Nat を生成するかどうか
   gen_nat = local.first_nat_key == "" ? false : true
 
@@ -73,6 +73,10 @@ locals {
     }
   }
 
+  security_group_id_from_key = {
+    for key, v in local.security_groups : key => aws_security_group.this[key].id
+  }
+
   ##
   ## Security Group Rules
   ##
@@ -97,6 +101,7 @@ locals {
     for v in concat(local.security_group_rules_default, var.security_group_rules)
     : v.name => merge({
       description         = ""
+      security_group_ids  = []
       security_group_keys = []
 
       cidr_blocks       = []
@@ -108,6 +113,7 @@ locals {
         subnet_group_keys = local.security_group_rules_cidrs[v.name].subnet_group_keys
     }))
   }
+
 
 
   Names = {
@@ -215,7 +221,7 @@ resource "aws_route_table_association" "public" {
 }
 
 resource "aws_route" "public" {
-  for_each               = local.public_subnets
+  for_each = local.public_subnets
 
   route_table_id         = aws_route_table.public[each.key].id
   gateway_id             = aws_internet_gateway.this.id
@@ -313,6 +319,7 @@ resource "aws_security_group" "this" {
         : local.subnet_groups_cidrs_from_key[subnet_group_key]])
       )
 
+      security_groups = ingress.value.security_group_ids
     }
 
   }
@@ -331,6 +338,8 @@ resource "aws_security_group" "this" {
         flatten([for subnet_group_key in egress.value.subnet_group_keys
         : local.subnet_groups_cidrs_from_key[subnet_group_key]])
       )
+
+      security_groups = egress.value.security_group_ids
     }
 
   }

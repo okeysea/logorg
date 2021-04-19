@@ -15,12 +15,12 @@ output "public_subnet" {
     id_all = [
       for k, v in var.subnets
       : aws_subnet.this[k].id if v.type == "public"
-    ] 
+    ]
 
     key_all = [
       for k, v in var.subnets
       : k if v.type == "public"
-    ] 
+    ]
 
     key_all_map = {
       for k, v in var.subnets
@@ -34,12 +34,12 @@ output "private_subnet" {
     id_all = [
       for k, v in var.subnets
       : aws_subnet.this[k].id if v.type == "private"
-    ] 
+    ]
 
     key_all = [
       for k, v in var.subnets
       : k if v.type == "private"
-    ] 
+    ]
 
     key_all_map = {
       for k, v in var.subnets

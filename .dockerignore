@@ -12,3 +12,4 @@ terraform
 Makefile
 dev_bin
 dev_tmp
+scripts

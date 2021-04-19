@@ -95,6 +95,27 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
+  config.lograge.enabled = true
+  config.lograge.formatter = Lograge::Formatters::Json.new
+  config.lograge.custom_payload do |controller|
+    {
+      host: controller.request.host,
+      remote_ip: controller.request.remote_ip,
+    }
+  end
+  config.lograge.custom_options = lambda do |e|
+    exceptions = %w(controller action format id)
+    {
+      time: e.time,
+      host: e.payload[:host],
+      remote_ip: e.payload[:remote_ip],
+      params: e.payload[:params].except(*exceptions),
+      exception_object: e.payload[:exception_object],
+      exception: e.payload[:exception],
+      backtrace: e.payload[:exception_object].try(:backtrace),
+    }
+  end
+
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 

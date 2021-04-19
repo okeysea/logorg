@@ -1,5 +1,5 @@
 locals {
-  name = "logorg"
+  name   = "logorg"
   region = "us-east-2"
 }
 ###############################################
@@ -8,7 +8,7 @@ locals {
 module "network" {
   source = "./modules/network"
 
-  vpc_cidr_block = "10.0.0.0/16"
+  vpc_cidr_block           = "10.0.0.0/16"
   vpc_enable_dns_hostnames = true
   vpc_enable_dns_support   = true
 
@@ -66,7 +66,7 @@ module "network" {
 
     sg-mailrelay = {
       name          = "mailrelay-security_group"
-      ingress_rules  = ["mailrelay"]
+      ingress_rules = ["mailrelay"]
       egress_rules  = ["all"]
     }
 
@@ -81,13 +81,14 @@ module "network" {
       ingress_rules = ["endpoint"]
       egress_rules  = ["endpoint"]
     }
+
   }
 
-  security_group_rules = [ 
-    { name = "db", from_to = "3306-3306-tcp",     cidrs = { cidr_blocks = ["0.0.0.0/0"]} },
-    { name = "https", from_to = "443-443-tcp",    cidrs = { cidr_blocks = ["0.0.0.0/0"]} },
-    { name = "mailrelay", from_to="25-25-tcp",    cidrs = { cidr_blocks = [module.network.vpc.cidr_block]} },
-    { name = "endpoint", from_to = "443-443-tcp", cidrs = { cidr_blocks = [module.network.vpc.cidr_block]} },
+  security_group_rules = [
+    { name = "db", from_to = "3306-3306-tcp", cidrs = { cidr_blocks = ["0.0.0.0/0"] } },
+    { name = "https", from_to = "443-443-tcp", cidrs = { cidr_blocks = ["0.0.0.0/0"] } },
+    { name = "mailrelay", from_to = "25-25-tcp", cidrs = { cidr_blocks = [module.network.vpc.cidr_block] } },
+    { name = "endpoint", from_to = "443-443-tcp", cidrs = { cidr_blocks = [module.network.vpc.cidr_block] } },
   ]
 }
 
@@ -98,36 +99,36 @@ module "network" {
 resource "aws_lb" "main" {
   load_balancer_type = "application"
   name               = local.name
-  security_groups    = [module.network.security_group["sg-web"].id ]
+  security_groups    = [module.network.security_group["sg-web"].id]
   subnets            = module.network.public_subnet.id_all
 }
 
 resource "aws_lb_listener" "https" {
   load_balancer_arn = aws_lb.main.arn
-  certificate_arn = aws_acm_certificate.main.arn
+  certificate_arn   = aws_acm_certificate.main.arn
 
-  port = "443"
+  port     = "443"
   protocol = "HTTPS"
 
   default_action {
-    type = "forward"
+    type             = "forward"
     target_group_arn = aws_lb_target_group.this.id
   }
 }
 
 resource "aws_lb_listener" "main" {
-  port               = "80"
-  protocol           = "HTTP"
+  port     = "80"
+  protocol = "HTTP"
 
-  load_balancer_arn  = aws_lb.main.arn
-  
+  load_balancer_arn = aws_lb.main.arn
+
 
   default_action {
     type = "fixed-response"
 
     fixed_response {
       content_type = "text/plain"
-      status_code = "200"
+      status_code  = "200"
       message_body = "OK"
     }
   }
@@ -138,9 +139,9 @@ resource "aws_lb_target_group" "this" {
 
   vpc_id = module.network.vpc_id
 
-  port = 80
+  port        = 80
   target_type = "ip"
-  protocol = "HTTP"
+  protocol    = "HTTP"
 
   health_check {
     port = 80
@@ -157,8 +158,8 @@ resource "aws_lb_listener_rule" "http_to_https" {
     type = "redirect"
 
     redirect {
-      port = "443"
-      protocol = "HTTPS"
+      port        = "443"
+      protocol    = "HTTPS"
       status_code = "HTTP_301"
     }
   }
@@ -217,14 +218,14 @@ resource "aws_db_instance" "test-db" {
 
 resource "aws_ssm_parameter" "this" {
   for_each = var.env_vars
-  name = each.key
-  type = "SecureString"
-  value = each.value
+  name     = each.key
+  type     = "SecureString"
+  value    = each.value
 }
 
 resource "aws_ssm_parameter" "dbendpoint" {
-  name = "MYSQL_HOST"
-  type = "SecureString"
+  name  = "MYSQL_HOST"
+  type  = "SecureString"
   value = split(":", aws_db_instance.test-db.endpoint)[0]
 }
 
@@ -233,7 +234,7 @@ resource "aws_ssm_parameter" "dbendpoint" {
 ###############################################
 # cloud watch #################
 resource "aws_cloudwatch_log_group" "this" {
-  name = "/${local.name}/ecs"
+  name              = "/${local.name}/ecs"
   retention_in_days = "7"
 }
 
@@ -283,7 +284,7 @@ EOL
 }
 
 resource "aws_iam_role_policy_attachment" "task_execution" {
-  role = aws_iam_role.task_execution.id
+  role       = aws_iam_role.task_execution.id
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
@@ -298,12 +299,12 @@ resource "aws_ecs_task_definition" "logorg-mailrelay" {
   family = "${local.name}-mailrelay"
 
   requires_compatibilities = ["FARGATE"]
-  network_mode = "awsvpc"
+  network_mode             = "awsvpc"
 
-  cpu = "256"
+  cpu    = "256"
   memory = "512"
 
-  task_role_arn = aws_iam_role.task_execution.arn
+  task_role_arn      = aws_iam_role.task_execution.arn
   execution_role_arn = aws_iam_role.task_execution.arn
 
   container_definitions = <<EOL
@@ -383,8 +384,8 @@ resource "aws_ecs_service" "logorg-mailrelay" {
   task_definition = aws_ecs_task_definition.logorg-mailrelay.arn
 
   network_configuration {
-    subnets = module.network.public_subnet.id_all
-    security_groups = [module.network.security_group_id["sg-mailrelay"]]
+    subnets          = module.network.public_subnet.id_all
+    security_groups  = [module.network.security_group_id["sg-mailrelay"]]
     assign_public_ip = true
   }
 
@@ -396,9 +397,9 @@ resource "aws_ecs_service" "logorg-mailrelay" {
 
 # メールリレー用のサービスディスカバリ
 resource "aws_service_discovery_private_dns_namespace" "internal_mailrelay" {
-  name = "internal.logorg"
+  name        = "internal.logorg"
   description = "mailrelay for logorg"
-  vpc = module.network.vpc_id
+  vpc         = module.network.vpc_id
 }
 
 resource "aws_service_discovery_service" "mailrelay" {
@@ -408,7 +409,7 @@ resource "aws_service_discovery_service" "mailrelay" {
     namespace_id = aws_service_discovery_private_dns_namespace.internal_mailrelay.id
 
     dns_records {
-      ttl = 10
+      ttl  = 10
       type = "A"
     }
 
@@ -425,12 +426,12 @@ resource "aws_ecs_task_definition" "logorg-initdb" {
   family = "${local.name}-initdb"
 
   requires_compatibilities = ["FARGATE"]
-  network_mode = "awsvpc"
+  network_mode             = "awsvpc"
 
-  cpu = "256"
+  cpu    = "256"
   memory = "512"
 
-  task_role_arn = aws_iam_role.task_execution.arn
+  task_role_arn      = aws_iam_role.task_execution.arn
   execution_role_arn = aws_iam_role.task_execution.arn
 
   container_definitions = <<EOL
@@ -480,7 +481,7 @@ resource "aws_ecs_task_definition" "logorg" {
   family = local.name
 
   requires_compatibilities = ["FARGATE"]
-  network_mode = "awsvpc"
+  network_mode             = "awsvpc"
 
   # volume {
   #   name = "data-public"
@@ -490,10 +491,10 @@ resource "aws_ecs_task_definition" "logorg" {
   #   name = "data-tmp"
   # }
 
-  cpu = "256"
+  cpu    = "256"
   memory = "1024"
 
-  task_role_arn = aws_iam_role.task_execution.arn
+  task_role_arn      = aws_iam_role.task_execution.arn
   execution_role_arn = aws_iam_role.task_execution.arn
 
   container_definitions = <<EOL
@@ -518,6 +519,10 @@ resource "aws_ecs_task_definition" "logorg" {
         {
           "name": "RAILS_ENV",
           "valueFrom": "RAILS_ENV"
+        },
+        {
+          "name": "RAILS_LOG_TO_STDOUT",
+          "valueFrom": "RAILS_LOG_TO_STDOUT"
         },
         {
           "name": "MYSQL_HOST",
@@ -546,6 +551,26 @@ resource "aws_ecs_task_definition" "logorg" {
         {
           "name": "LOGORG_MAIL_DOMAIN",
           "valueFrom": "LOGORG_MAIL_DOMAIN"
+        },
+        {
+          "name": "LOGORG_CDN_HOST_NAME",
+          "valueFrom": "LOGORG_CDN_HOST_NAME"
+        },
+        {
+          "name": "LOGORG_CDN_AWS_BUCKET_NAME",
+          "valueFrom": "LOGORG_CDN_AWS_BUCKET_NAME"
+        },
+        {
+          "name": "LOGORG_CDN_AWS_ACCESS_KEY_ID",
+          "valueFrom": "LOGORG_CDN_AWS_ACCESS_KEY_ID"
+        },
+        {
+          "name": "LOGORG_CDN_AWS_SECRET_ACCESS_KEY",
+          "valueFrom": "LOGORG_CDN_AWS_SECRET_ACCESS_KEY"
+        },
+        {
+          "name": "LOGORG_CDN_AWS_REGION",
+          "valueFrom": "LOGORG_CDN_AWS_REGION"
         }
       ],
       "logConfiguration": {
@@ -612,22 +637,22 @@ resource "aws_ecs_service" "this" {
   task_definition = aws_ecs_task_definition.logorg.arn
 
   network_configuration {
-    subnets = module.network.private_subnet.id_all
+    subnets         = module.network.private_subnet.id_all
     security_groups = [module.network.security_group_id["sg-web"]]
   }
 
   load_balancer {
     target_group_arn = aws_lb_target_group.this.arn
-    container_name = "logorg-nginx"
-    container_port = "80"
+    container_name   = "logorg-nginx"
+    container_port   = "80"
   }
 }
 
 # endpoints ###################
 
 resource "aws_vpc_endpoint" "s3" {
-  vpc_id = module.network.vpc_id
-  service_name = "com.amazonaws.us-east-2.s3"
+  vpc_id            = module.network.vpc_id
+  service_name      = "com.amazonaws.us-east-2.s3"
   vpc_endpoint_type = "Gateway"
 }
 
@@ -635,53 +660,71 @@ resource "aws_vpc_endpoint_route_table_association" "private_s3" {
   for_each = module.network.private_subnet.key_all_map
 
   vpc_endpoint_id = aws_vpc_endpoint.s3.id
-  route_table_id = module.network.private_route_table[each.key].id
+  route_table_id  = module.network.private_route_table[each.key].id
 }
 
 resource "aws_vpc_endpoint" "ecr_dkr" {
-  vpc_id = module.network.vpc_id
-  service_name = "com.amazonaws.us-east-2.ecr.dkr"
-  vpc_endpoint_type = "Interface"
-  subnet_ids = module.network.private_subnet.id_all
-  security_group_ids = [module.network.security_group_id["sg-endpoint"]]
+  vpc_id              = module.network.vpc_id
+  service_name        = "com.amazonaws.us-east-2.ecr.dkr"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = module.network.private_subnet.id_all
+  security_group_ids  = [module.network.security_group_id["sg-endpoint"]]
   private_dns_enabled = true
 }
 
 resource "aws_vpc_endpoint" "ecr_api" {
-  vpc_id = module.network.vpc_id
-  service_name = "com.amazonaws.us-east-2.ecr.api"
-  vpc_endpoint_type = "Interface"
-  subnet_ids = module.network.private_subnet.id_all
-  security_group_ids = [module.network.security_group_id["sg-endpoint"]]
+  vpc_id              = module.network.vpc_id
+  service_name        = "com.amazonaws.us-east-2.ecr.api"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = module.network.private_subnet.id_all
+  security_group_ids  = [module.network.security_group_id["sg-endpoint"]]
   private_dns_enabled = true
 }
 
 resource "aws_vpc_endpoint" "logs" {
-  vpc_id = module.network.vpc_id
-  service_name = "com.amazonaws.us-east-2.logs"
-  vpc_endpoint_type = "Interface"
-  subnet_ids = module.network.private_subnet.id_all
-  security_group_ids = [module.network.security_group_id["sg-endpoint"]]
+  vpc_id              = module.network.vpc_id
+  service_name        = "com.amazonaws.us-east-2.logs"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = module.network.private_subnet.id_all
+  security_group_ids  = [module.network.security_group_id["sg-endpoint"]]
   private_dns_enabled = true
 }
 
 resource "aws_vpc_endpoint" "ssm" {
-  vpc_id = module.network.vpc_id
-  service_name = "com.amazonaws.us-east-2.ssm"
-  vpc_endpoint_type = "Interface"
-  subnet_ids = module.network.private_subnet.id_all
-  security_group_ids = [module.network.security_group_id["sg-endpoint"]]
+  vpc_id              = module.network.vpc_id
+  service_name        = "com.amazonaws.us-east-2.ssm"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = module.network.private_subnet.id_all
+  security_group_ids  = [module.network.security_group_id["sg-endpoint"]]
   private_dns_enabled = true
 }
 
 resource "aws_vpc_endpoint" "rds" {
-  vpc_id = module.network.vpc_id
-  service_name = "com.amazonaws.us-east-2.rds"
-  vpc_endpoint_type = "Interface"
-  subnet_ids = module.network.private_subnet.id_all
-  security_group_ids = [module.network.security_group_id["sg-endpoint"]]
+  vpc_id              = module.network.vpc_id
+  service_name        = "com.amazonaws.us-east-2.rds"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = module.network.private_subnet.id_all
+  security_group_ids  = [module.network.security_group_id["sg-endpoint"]]
   private_dns_enabled = true
 }
+
+###############################################
+# EFS
+###############################################
+
+# resource "aws_efs_file_system" "uploads" {
+#   tags = {
+#     Name = "efs-logorg-public"
+#   }
+# }
+# 
+# resource "aws_efs_mount_target" "uploads" {
+#   for_each = module.network.private_subnet.key_all_map
+# 
+#   file_system_id = aws_efs_file_system.uploads.id
+#   subnet_id = module.network.private_subnets_ids[each.key]
+#   security_groups = [module.network.security_group["sg-efs"].id]
+# }
 
 
 ###############################################
@@ -706,34 +749,88 @@ resource "aws_acm_certificate" "main" {
 resource "aws_route53_record" "validation" {
   for_each = {
     for dvo in aws_acm_certificate.main.domain_validation_options : dvo.domain_name => {
-      name = dvo.resource_record_name
+      name   = dvo.resource_record_name
       record = dvo.resource_record_value
-      type = dvo.resource_record_type
+      type   = dvo.resource_record_type
     }
   }
 
   allow_overwrite = true
-  ttl = 60
-  zone_id = aws_route53_zone.logorg.id
-  name = each.value.name
-  type = each.value.type
-  records = [each.value.record]
+  ttl             = 60
+  zone_id         = aws_route53_zone.logorg.id
+  name            = each.value.name
+  type            = each.value.type
+  records         = [each.value.record]
 }
 
 resource "aws_acm_certificate_validation" "main" {
-  certificate_arn = aws_acm_certificate.main.arn
-  validation_record_fqdns = [ for record in aws_route53_record.validation : record.fqdn ]
+  certificate_arn         = aws_acm_certificate.main.arn
+  validation_record_fqdns = [for record in aws_route53_record.validation : record.fqdn]
 }
 
 # lb alias ####################################
 resource "aws_route53_record" "www" {
   zone_id = aws_route53_zone.logorg.id
-  name = "www.logorg.work"
-  type = "A"
+  name    = "www.logorg.work"
+  type    = "A"
 
   alias {
-    name = aws_lb.main.dns_name
-    zone_id = aws_lb.main.zone_id
+    name                   = aws_lb.main.dns_name
+    zone_id                = aws_lb.main.zone_id
     evaluate_target_health = true
+  }
+}
+
+# SSL CDN #####################################
+
+resource "aws_route53_zone" "logorg_cdn" {
+  name = "cdn.logorg.work"
+}
+
+resource "aws_acm_certificate" "cdn" {
+  domain_name = "cdn.logorg.work"
+
+  validation_method = "DNS"
+
+  provider = aws.verginia
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_route53_record" "validation_cdn" {
+  for_each = {
+    for dvo in aws_acm_certificate.cdn.domain_validation_options : dvo.domain_name => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type   = dvo.resource_record_type
+    }
+  }
+
+  allow_overwrite = true
+  ttl             = 60
+  zone_id         = aws_route53_zone.logorg_cdn.id
+  name            = each.value.name
+  type            = each.value.type
+  records         = [each.value.record]
+}
+
+resource "aws_acm_certificate_validation" "cdn" {
+  certificate_arn         = aws_acm_certificate.cdn.arn
+  validation_record_fqdns = [for record in aws_route53_record.validation_cdn : record.fqdn]
+  provider                = aws.verginia
+}
+
+# alias CDN ####################################
+resource "aws_route53_record" "cdn" {
+  zone_id = aws_route53_zone.logorg_cdn.id
+  name    = "cdn.logorg.work"
+  type    = "A"
+
+  alias {
+    name                   = aws_cloudfront_distribution.logorg_cdn_dst.domain_name
+    zone_id                = aws_cloudfront_distribution.logorg_cdn_dst.hosted_zone_id
+    evaluate_target_health = false
   }
 }

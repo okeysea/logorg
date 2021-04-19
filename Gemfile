@@ -51,6 +51,7 @@ gem 'wasmer', '~> 0.4'
 
 # for file upload
 gem 'carrierwave', '~> 2.0'
+gem 'fog-aws' # s3
 
 gem 'mini_magick'
 
@@ -58,6 +59,9 @@ gem 'mini_magick'
 gem 'ransack'
 
 gem 'racc'
+
+# for log json format
+gem 'lograge'
 
 group :development, :test do
   gem 'faker'

@@ -9,12 +9,12 @@ variable "vpc_cidr_block" {
 }
 
 variable "vpc_enable_dns_hostnames" {
-  type = bool
+  type    = bool
   default = false
 }
 
 variable "vpc_enable_dns_support" {
-  type = bool
+  type    = bool
   default = false
 }
 

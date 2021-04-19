@@ -19,7 +19,7 @@ services:
     container_name: terraform
     volumes:
       - ./terraform:/terraform
-      - ./environments/secret/terraform.tfvars:/terraform/terraform.tfvars:ro
+      - ./environments/secret/terraform.tfvars:/terraform/terraform.tfvars
     env_file: ./environments/secret/terraform.env
     working_dir: ${TERRAFORM_WORK_DIR:-/terraform}
 

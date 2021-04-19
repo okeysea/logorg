@@ -61,6 +61,10 @@ yarn-debug.log*
 /environments/secret/*
 !/environments/secret/.keep
 
+# Ignore secret scripts
+/scripts/secret/*
+!/scripts/secret/.keep
+
 # Ignore terraform secrets
 *.tfvars
 .terraform/
