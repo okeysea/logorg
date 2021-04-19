@@ -2,6 +2,7 @@
 import { jsx, css } from "@emotion/react"
 import React, { useState, useCallback, useRef, useEffect } from "react"
 import FloatingLabelInput from "../UIParts/FloatingLabelInput"
+import ButtonOrLoading from "../UIParts/ButtonOrLoading"
 import AvatarPicker from "../UIParts/AvatarPicker"
 import {useAPIUser} from "../APIUserHooks"
 import {dispatchFlash} from "../../Events/FlashMessageEvent"
@@ -39,6 +40,7 @@ const FormUpdateUser: React.FC<Props> = props =>{
 
   const [ loaded, user ] = useAPIUser( props.userId );
   const [ errors, setErrors ] = useState({ name: [], password:[], passwordConfirmation: [] });
+  const [ submitting, setSubmitting ] = useState( false );
 
   const handleChanges = (name: string, value: string) => {
     if( user ){
@@ -48,8 +50,14 @@ const FormUpdateUser: React.FC<Props> = props =>{
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if( user ){
+    if( user && !submitting ){
+
+      setSubmitting( true );
+
       user.update().then( result => {
+
+        setSubmitting( false );
+
         if( result.isSuccess() ){
 
           window.Turbolinks.visit( result.value.getUrl() );
@@ -118,7 +126,7 @@ const FormUpdateUser: React.FC<Props> = props =>{
             <label>アバター</label>
             <AvatarPicker onChange={handleAvatar}/>
           </div>
-          <button>ユーザー情報を更新</button>
+          <ButtonOrLoading loading={submitting} text="ユーザ情報を更新" />
         </form>
     </div>
   }
