@@ -60,34 +60,43 @@
 
 ## 工夫した点
 
-### Terraform によるインフラのコード管理
+### 2ペインリアルタイムプレビュー機能付きエディタの実装
+  
+  ![iwe](https://user-images.githubusercontent.com/67820904/115322669-8958f280-a1c1-11eb-9a22-dd5b62a261c0.gif)
 
-  マネジメントコンソールでぽちぽち頑張っていましたが、トライ&エラーが重なると辛かったので、
-  Terraformを導入しました。非常に楽チンです。
-
-### CDNを導入
-
-  画像等のリソースを配信するためのサーバーをCloudFront + S3にて構築しました。
-  S3へのアップロードはfog_awsとCarrierWave gemで行っています。
-
-### ページネーション(gem kaminari)
-
-  ページネーションはgem kaminariにて実装しています。
+  
+  React, エディタ部分にはCodemirrorを利用して実装しています。なお、Codemirrorは装飾できるTextareaみたいな立ち位置での実装になっており
+  ほとんどの機能を活用できていないので、今後の課題です。
 
 ### Reactの導入(gem react-rails)
 
   エディタを作るにあたって生DOMを操作するのは辛いのでReactを導入しました。
   使っていくうちに、これは便利だということでUIの一部をReact化しました。
+  
+### ちょっとリッチな検索機能の実装(gem ransack)
+
+  ![search](https://user-images.githubusercontent.com/67820904/115323896-e5247b00-a1c3-11eb-93b6-6da559e52592.gif)
+
+  ransackによる検索機能の実装のほか、検索結果のハイライト機能(正規表現、rails highligter)を実装しました。
+  検索フォームはReactで、検索結果はRails viewによる実装です。
+
+### ページネーション(gem kaminari)
+
+ ![pagenation](https://user-images.githubusercontent.com/67820904/115324115-46e4e500-a1c4-11eb-829d-c7daf02e8e1a.gif)
+
+  ページネーションはgem kaminariにて実装しています。
+  
+### アバターピッカーUIの実装
+
+  ![avatar_picker](https://user-images.githubusercontent.com/67820904/115270748-9a7d1180-a177-11eb-99ec-3e86c6f28ce4.gif)
+
+  よくみかけるアバターのクロップUIをつけてみたかったので、Canvasにより実装しました。
+  サーバーへはDataURLによりPostしているので、バリデーション前に変換を行い、gem CarrierWaveへ渡しています。
 
 ### APIの導入
 
   Reactを導入したものの、Railsの各コントローラのCURDを叩くのが辛かったので一部の機能のAPIを用意しました。
   設計はRESTを参考にして、外部に公開する予定はないのでログイン機構は通常のクッキー&セッション方式を流用しています。
-
-### 2ペインリアルタイムプレビュー機能付きエディタの実装
-
-  React, エディタ部分にはCodemirrorを利用して実装しています。なお、Codemirrorは装飾できるTextareaみたいな立ち位置での実装になっており
-  ほとんどの機能を活用できていないので、今後の課題です。
 
 ### フロントAPIクラスの作成
 
@@ -100,24 +109,24 @@
   APIのラッパーにおいて透過的なキャッシュ機構を実装してサーバーの負荷低減を図っています。
   TurbolinksにのっかっていることによりSPA化しているので、ページ遷移後でもキャッシュが効ききます。
 
-### ちょっとリッチな検索機能の実装(gem ransack)
-
-  ransackによる検索機能の実装のほか、検索結果のハイライト機能(正規表現、rails highligter)を実装しました。
-  検索フォームはReactで、検索結果はRails viewによる実装です。
-
-### アバターピッカーUIの実装
-
-  ![avatar_picker](https://user-images.githubusercontent.com/67820904/115270748-9a7d1180-a177-11eb-99ec-3e86c6f28ce4.gif)
-
-  よくみかけるアバターのクロップUIをつけてみたかったので、Canvasにより実装しました。
-  サーバーへはDataURLによりPostしているので、バリデーション前に変換を行い、gem CarrierWaveへ渡しています。
-
 ### パーサをWebAssemblyにする(gem wasmer)
 
   サーバーサイドでフロントでのマークダウンプレビューと出力結果を同じにするために、WebAssemblyを使っています。
   そのWebAssemblyへのコンパイルが簡単そうだったRustも導入しました。WebAssembly化は簡単だけど、Rust自体は超重量級だったので苦労しました。
   なお、パーサーは別のプロジェクトとして切り出して、こちらではnpm packageとしてインストールする運用にしています。
   - [orgmd_parser](https://github.com/okeysea/orgmd_parser)
+
+
+### Terraform によるインフラのコード管理
+
+  マネジメントコンソールでぽちぽち頑張っていましたが、トライ&エラーが重なると辛かったので、
+  Terraformを導入しました。非常に楽チンです。
+
+### CDNを導入
+
+  画像等のリソースを配信するためのサーバーをCloudFront + S3にて構築しました。
+  S3へのアップロードはfog_awsとCarrierWave gemで行っています。
+
 
 ## 苦労したこと
 
