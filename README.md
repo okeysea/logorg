@@ -12,7 +12,7 @@
 
 ### インフラの構成
 
-![logorg_infra(1)](https://user-images.githubusercontent.com/67820904/115724044-8b86a100-a3bb-11eb-9b63-5886f00592a3.png)
+![logorg_infra](https://user-images.githubusercontent.com/67820904/115724943-5f1f5480-a3bc-11eb-80bf-779631d5ab18.png)
 
 
 ## 制作した動機
