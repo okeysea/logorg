@@ -10,6 +10,11 @@
 
   - [www.logorg.work](https://www.logorg.work/)
 
+### インフラの構成
+
+![logorg_infra(1)](https://user-images.githubusercontent.com/67820904/115724044-8b86a100-a3bb-11eb-9b63-5886f00592a3.png)
+
+
 ## 制作した動機
 
  エンジニアになるにあたって、日々の細々としたメモから研究、はては文芸まで多彩にこなせるエディタ実装がほしいな、
