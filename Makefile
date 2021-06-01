@@ -4,7 +4,7 @@ WORKDIR = /terraform
 .PHONY: secret_convert build_prod ecr_push deliver
 .PHONY: tfcmd tfinit tfplan tfapply tfdestroy tfcheck terraform_chown 
 .PHONY: sync_bundle sync_packs get_node_bin rm_public up_dev
-.PHONY: cm
+.PHONY: cm diagrams
 
 tfcmd:
 	@TERRAFORM_WORK_DIR=${WORKDIR} docker-compose run --rm terraform ${ARG}
@@ -73,4 +73,7 @@ deliver: build_prod ecr_push secret_convert tfapply
 
 cm:
 	docker-compose -f docker-compose.cloudmapper.yml run --service-ports cm bash
+
+diagrams:
+	docker-compose -f docker-compose.diagrams.yml run --rm diagrams bash
 
