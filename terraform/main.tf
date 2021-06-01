@@ -637,8 +637,12 @@ resource "aws_ecs_service" "this" {
   task_definition = aws_ecs_task_definition.logorg.arn
 
   network_configuration {
-    subnets         = module.network.private_subnet.id_all
+    # subnets         = module.network.private_subnet.id_all
+    subnets         = module.network.public_subnet.id_all
     security_groups = [module.network.security_group_id["sg-web"]]
+
+    # public subnet 化時追加 ↓
+    assign_public_ip = true
   }
 
   load_balancer {
@@ -650,63 +654,63 @@ resource "aws_ecs_service" "this" {
 
 # endpoints ###################
 
-resource "aws_vpc_endpoint" "s3" {
-  vpc_id            = module.network.vpc_id
-  service_name      = "com.amazonaws.us-east-2.s3"
-  vpc_endpoint_type = "Gateway"
-}
-
-resource "aws_vpc_endpoint_route_table_association" "private_s3" {
-  for_each = module.network.private_subnet.key_all_map
-
-  vpc_endpoint_id = aws_vpc_endpoint.s3.id
-  route_table_id  = module.network.private_route_table[each.key].id
-}
-
-resource "aws_vpc_endpoint" "ecr_dkr" {
-  vpc_id              = module.network.vpc_id
-  service_name        = "com.amazonaws.us-east-2.ecr.dkr"
-  vpc_endpoint_type   = "Interface"
-  subnet_ids          = module.network.private_subnet.id_all
-  security_group_ids  = [module.network.security_group_id["sg-endpoint"]]
-  private_dns_enabled = true
-}
-
-resource "aws_vpc_endpoint" "ecr_api" {
-  vpc_id              = module.network.vpc_id
-  service_name        = "com.amazonaws.us-east-2.ecr.api"
-  vpc_endpoint_type   = "Interface"
-  subnet_ids          = module.network.private_subnet.id_all
-  security_group_ids  = [module.network.security_group_id["sg-endpoint"]]
-  private_dns_enabled = true
-}
-
-resource "aws_vpc_endpoint" "logs" {
-  vpc_id              = module.network.vpc_id
-  service_name        = "com.amazonaws.us-east-2.logs"
-  vpc_endpoint_type   = "Interface"
-  subnet_ids          = module.network.private_subnet.id_all
-  security_group_ids  = [module.network.security_group_id["sg-endpoint"]]
-  private_dns_enabled = true
-}
-
-resource "aws_vpc_endpoint" "ssm" {
-  vpc_id              = module.network.vpc_id
-  service_name        = "com.amazonaws.us-east-2.ssm"
-  vpc_endpoint_type   = "Interface"
-  subnet_ids          = module.network.private_subnet.id_all
-  security_group_ids  = [module.network.security_group_id["sg-endpoint"]]
-  private_dns_enabled = true
-}
-
-resource "aws_vpc_endpoint" "rds" {
-  vpc_id              = module.network.vpc_id
-  service_name        = "com.amazonaws.us-east-2.rds"
-  vpc_endpoint_type   = "Interface"
-  subnet_ids          = module.network.private_subnet.id_all
-  security_group_ids  = [module.network.security_group_id["sg-endpoint"]]
-  private_dns_enabled = true
-}
+# resource "aws_vpc_endpoint" "s3" {
+#   vpc_id            = module.network.vpc_id
+#   service_name      = "com.amazonaws.us-east-2.s3"
+#   vpc_endpoint_type = "Gateway"
+# }
+# 
+# resource "aws_vpc_endpoint_route_table_association" "private_s3" {
+#   for_each = module.network.private_subnet.key_all_map
+# 
+#   vpc_endpoint_id = aws_vpc_endpoint.s3.id
+#   route_table_id  = module.network.private_route_table[each.key].id
+# }
+# 
+# resource "aws_vpc_endpoint" "ecr_dkr" {
+#   vpc_id              = module.network.vpc_id
+#   service_name        = "com.amazonaws.us-east-2.ecr.dkr"
+#   vpc_endpoint_type   = "Interface"
+#   subnet_ids          = module.network.private_subnet.id_all
+#   security_group_ids  = [module.network.security_group_id["sg-endpoint"]]
+#   private_dns_enabled = true
+# }
+# 
+# resource "aws_vpc_endpoint" "ecr_api" {
+#   vpc_id              = module.network.vpc_id
+#   service_name        = "com.amazonaws.us-east-2.ecr.api"
+#   vpc_endpoint_type   = "Interface"
+#   subnet_ids          = module.network.private_subnet.id_all
+#   security_group_ids  = [module.network.security_group_id["sg-endpoint"]]
+#   private_dns_enabled = true
+# }
+# 
+# resource "aws_vpc_endpoint" "logs" {
+#   vpc_id              = module.network.vpc_id
+#   service_name        = "com.amazonaws.us-east-2.logs"
+#   vpc_endpoint_type   = "Interface"
+#   subnet_ids          = module.network.private_subnet.id_all
+#   security_group_ids  = [module.network.security_group_id["sg-endpoint"]]
+#   private_dns_enabled = true
+# }
+# 
+# resource "aws_vpc_endpoint" "ssm" {
+#   vpc_id              = module.network.vpc_id
+#   service_name        = "com.amazonaws.us-east-2.ssm"
+#   vpc_endpoint_type   = "Interface"
+#   subnet_ids          = module.network.private_subnet.id_all
+#   security_group_ids  = [module.network.security_group_id["sg-endpoint"]]
+#   private_dns_enabled = true
+# }
+# 
+# resource "aws_vpc_endpoint" "rds" {
+#   vpc_id              = module.network.vpc_id
+#   service_name        = "com.amazonaws.us-east-2.rds"
+#   vpc_endpoint_type   = "Interface"
+#   subnet_ids          = module.network.private_subnet.id_all
+#   security_group_ids  = [module.network.security_group_id["sg-endpoint"]]
+#   private_dns_enabled = true
+# }
 
 ###############################################
 # EFS
